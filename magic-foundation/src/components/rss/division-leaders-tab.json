@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_rss_division_leaders_tabs",
+  "info": {
+    "displayName": "RSS Division Leaders Tab",
+    "description": "Content for the Division Leaders tab"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "richtext"
+    },
+    "leaders": {
+      "type": "component",
+      "repeatable": true,
+      "component": "rss.division-leader"
+    }
+  }
+}

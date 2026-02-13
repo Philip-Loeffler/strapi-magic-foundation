@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_rss_resources_tabs",
+  "info": {
+    "displayName": "RSS Resources Tab",
+    "description": "Content for the Resources tab"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "richtext"
+    },
+    "resourceCategories": {
+      "type": "component",
+      "repeatable": true,
+      "component": "rss.resource-category"
+    }
+  }
+}

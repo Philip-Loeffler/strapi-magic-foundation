@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_rss_faq_items",
+  "info": {
+    "displayName": "RSS FAQ Item",
+    "description": "A single FAQ question and answer"
+  },
+  "options": {},
+  "attributes": {
+    "question": {
+      "type": "string",
+      "required": true
+    },
+    "answer": {
+      "type": "richtext",
+      "required": true
+    }
+  }
+}

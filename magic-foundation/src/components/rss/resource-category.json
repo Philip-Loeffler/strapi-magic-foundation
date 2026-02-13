@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_rss_resource_categories",
+  "info": {
+    "displayName": "RSS Resource Category",
+    "description": "A category of resources"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "resources": {
+      "type": "component",
+      "repeatable": true,
+      "component": "rss.resource-item"
+    }
+  }
+}

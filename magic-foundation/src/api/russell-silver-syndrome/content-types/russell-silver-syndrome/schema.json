@@ -1,0 +1,45 @@
+{
+  "kind": "collectionType",
+  "collectionName": "russell_silver_syndromes",
+  "info": {
+    "singularName": "russell-silver-syndrome",
+    "pluralName": "russell-silver-syndromes",
+    "displayName": "Russell Silver Syndrome",
+    "description": "Main content for Russell Silver Syndrome page"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title",
+      "required": true
+    },
+    "overviewTab": {
+      "type": "component",
+      "component": "rss.overview-tab",
+      "repeatable": false
+    },
+    "personalStoriesTab": {
+      "type": "component",
+      "component": "rss.personal-stories-tab",
+      "repeatable": false
+    },
+    "resourcesTab": {
+      "type": "component",
+      "component": "rss.resources-tab",
+      "repeatable": false
+    },
+    "divisionLeadersTab": {
+      "type": "component",
+      "component": "rss.division-leaders-tab",
+      "repeatable": false
+    }
+  }
+}

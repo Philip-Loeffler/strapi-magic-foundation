@@ -1,0 +1,41 @@
+# OS / Editor
+.DS_Store
+*.swp
+*.swo
+.idea
+
+# Dependencies (both frontend and magic-foundation)
+node_modules/
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# Build / cache
+.next/
+out/
+build/
+dist/
+.tmp
+*.tsbuildinfo
+.turbo
+
+# Strapi
+.strapi
+.strapi-updater.json
+.strapi-cloud.json
+public/uploads/*
+!magic-foundation/public/uploads/.gitkeep
+
+# Logs / DB
+*.log
+*.sqlite
+*.sqlite3
+
+# Vercel
+.vercel
+
+# Misc
+*.pem
+coverage/

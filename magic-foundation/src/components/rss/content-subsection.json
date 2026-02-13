@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_rss_content_subsections",
+  "info": {
+    "displayName": "RSS Content Subsection",
+    "description": "A subsection within a content section"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "content": {
+      "type": "richtext",
+      "required": true
+    },
+    "listItems": {
+      "type": "component",
+      "repeatable": true,
+      "component": "rss.list-item"
+    }
+  }
+}

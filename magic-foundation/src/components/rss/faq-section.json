@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_rss_faq_sections",
+  "info": {
+    "displayName": "RSS FAQ Section",
+    "description": "FAQ section with questions and answers"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "faqs": {
+      "type": "component",
+      "repeatable": true,
+      "component": "rss.faq-item"
+    }
+  }
+}

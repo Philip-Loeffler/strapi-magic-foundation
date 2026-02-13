@@ -1,0 +1,23 @@
+{
+  "collectionName": "components_rss_content_sections",
+  "info": {
+    "displayName": "RSS Content Section",
+    "description": "A content section with title and rich text content"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "content": {
+      "type": "richtext",
+      "required": true
+    },
+    "subsections": {
+      "type": "component",
+      "repeatable": true,
+      "component": "rss.content-subsection"
+    }
+  }
+}

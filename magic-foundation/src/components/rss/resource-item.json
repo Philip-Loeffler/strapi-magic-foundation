@@ -1,0 +1,31 @@
+{
+  "collectionName": "components_rss_resource_items",
+  "info": {
+    "displayName": "RSS Resource Item",
+    "description": "A single resource item"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "url": {
+      "type": "string"
+    },
+    "file": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["files", "images", "videos"]
+    },
+    "resourceType": {
+      "type": "enumeration",
+      "enum": ["link", "document", "video", "other"],
+      "default": "link"
+    }
+  }
+}

@@ -1,0 +1,95 @@
+{
+  "collectionName": "components_rss_overview_tabs",
+  "info": {
+    "displayName": "RSS Overview Tab",
+    "description": "Content for the Overview tab"
+  },
+  "options": {},
+  "attributes": {
+    "heroSection": {
+      "type": "component",
+      "repeatable": false,
+      "component": "rss.hero-section"
+    },
+    "whatIsRss": {
+      "type": "component",
+      "repeatable": false,
+      "component": "rss.content-section"
+    },
+    "diagnosis": {
+      "type": "component",
+      "repeatable": false,
+      "component": "rss.content-section"
+    },
+    "phenotype": {
+      "type": "component",
+      "repeatable": false,
+      "component": "rss.content-section"
+    },
+    "cognitiveAbilities": {
+      "type": "component",
+      "repeatable": false,
+      "component": "rss.content-section"
+    },
+    "firstSteps": {
+      "type": "component",
+      "repeatable": false,
+      "component": "rss.content-section"
+    },
+    "hypoglycemia": {
+      "type": "component",
+      "repeatable": false,
+      "component": "rss.content-section"
+    },
+    "treatments": {
+      "type": "component",
+      "repeatable": false,
+      "component": "rss.content-section"
+    },
+    "weightManagement": {
+      "type": "component",
+      "repeatable": false,
+      "component": "rss.content-section"
+    },
+    "boneAge": {
+      "type": "component",
+      "repeatable": false,
+      "component": "rss.content-section"
+    },
+    "puberty": {
+      "type": "component",
+      "repeatable": false,
+      "component": "rss.content-section"
+    },
+    "heightImprovement": {
+      "type": "component",
+      "repeatable": false,
+      "component": "rss.content-section"
+    },
+    "growthHormoneTherapy": {
+      "type": "component",
+      "repeatable": false,
+      "component": "rss.content-section"
+    },
+    "insuranceCoverage": {
+      "type": "component",
+      "repeatable": false,
+      "component": "rss.content-section"
+    },
+    "factorsAffectingGht": {
+      "type": "component",
+      "repeatable": false,
+      "component": "rss.content-section"
+    },
+    "adulthoodHealthIssues": {
+      "type": "component",
+      "repeatable": false,
+      "component": "rss.content-section"
+    },
+    "faqSection": {
+      "type": "component",
+      "repeatable": false,
+      "component": "rss.faq-section"
+    }
+  }
+}
