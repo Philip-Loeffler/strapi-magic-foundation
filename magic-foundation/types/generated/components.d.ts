@@ -1,5 +1,34 @@
 import type { Schema, Struct } from '@strapi/strapi';
 
+export interface EmergencyEmergencyAccordionItem
+  extends Struct.ComponentSchema {
+  collectionName: 'components_emergency_emergency_accordion_items';
+  info: {
+    description: 'An accordion item for a genetic disorder';
+    displayName: 'Emergency Accordion Item';
+  };
+  attributes: {
+    geneticDisorderName: Schema.Attribute.String & Schema.Attribute.Required;
+    geneticDisorderResponse: Schema.Attribute.Component<
+      'emergency.genetic-disorder-response',
+      true
+    >;
+  };
+}
+
+export interface EmergencyGeneticDisorderResponse
+  extends Struct.ComponentSchema {
+  collectionName: 'components_emergency_genetic_disorder_responses';
+  info: {
+    description: 'A Q&A response item for an emergency accordion';
+    displayName: 'Genetic Disorder Response';
+  };
+  attributes: {
+    geneticRsponseAnswer: Schema.Attribute.Text & Schema.Attribute.Required;
+    geneticRsponseTitle: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
 export interface RssContentSection extends Struct.ComponentSchema {
   collectionName: 'components_rss_content_sections';
   info: {
@@ -223,6 +252,8 @@ export interface RssResourcesTab extends Struct.ComponentSchema {
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
+      'emergency.emergency-accordion-item': EmergencyEmergencyAccordionItem;
+      'emergency.genetic-disorder-response': EmergencyGeneticDisorderResponse;
       'rss.content-section': RssContentSection;
       'rss.content-subsection': RssContentSubsection;
       'rss.division-leader': RssDivisionLeader;

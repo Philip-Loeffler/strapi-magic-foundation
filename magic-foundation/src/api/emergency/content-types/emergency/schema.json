@@ -1,0 +1,25 @@
+{
+  "kind": "collectionType",
+  "collectionName": "emergencies",
+  "info": {
+    "singularName": "emergency",
+    "pluralName": "emergencies",
+    "displayName": "Emergency",
+    "description": "Emergency page content with genetic disorder accordion"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "overView": {
+      "type": "text",
+      "required": true
+    },
+    "emergencyAccordion": {
+      "type": "component",
+      "repeatable": true,
+      "component": "emergency.emergency-accordion-item"
+    }
+  }
+}

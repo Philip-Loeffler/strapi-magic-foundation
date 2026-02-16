@@ -508,6 +508,39 @@ export interface ApiArticleArticle extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiEmergencyEmergency extends Struct.CollectionTypeSchema {
+  collectionName: 'emergencies';
+  info: {
+    description: 'Emergency page content with genetic disorder accordion';
+    displayName: 'Emergency';
+    pluralName: 'emergencies';
+    singularName: 'emergency';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    emergencyAccordion: Schema.Attribute.Component<
+      'emergency.emergency-accordion-item',
+      true
+    >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::emergency.emergency'
+    > &
+      Schema.Attribute.Private;
+    overView: Schema.Attribute.Text & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiRussellSilverSyndromeRussellSilverSyndrome
   extends Struct.CollectionTypeSchema {
   collectionName: 'russell_silver_syndromes';
@@ -1088,6 +1121,7 @@ declare module '@strapi/strapi' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
       'api::article.article': ApiArticleArticle;
+      'api::emergency.emergency': ApiEmergencyEmergency;
       'api::russell-silver-syndrome.russell-silver-syndrome': ApiRussellSilverSyndromeRussellSilverSyndrome;
       'api::test.test': ApiTestTest;
       'plugin::content-releases.release': PluginContentReleasesRelease;

@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_emergency_emergency_accordion_items",
+  "info": {
+    "displayName": "Emergency Accordion Item",
+    "description": "An accordion item for a genetic disorder"
+  },
+  "options": {},
+  "attributes": {
+    "geneticDisorderName": {
+      "type": "string",
+      "required": true
+    },
+    "geneticDisorderResponse": {
+      "type": "component",
+      "repeatable": true,
+      "component": "emergency.genetic-disorder-response"
+    }
+  }
+}

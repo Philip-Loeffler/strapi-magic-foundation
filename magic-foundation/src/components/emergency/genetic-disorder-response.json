@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_emergency_genetic_disorder_responses",
+  "info": {
+    "displayName": "Genetic Disorder Response",
+    "description": "A Q&A response item for an emergency accordion"
+  },
+  "options": {},
+  "attributes": {
+    "geneticRsponseTitle": {
+      "type": "string",
+      "required": true
+    },
+    "geneticRsponseAnswer": {
+      "type": "text",
+      "required": true
+    }
+  }
+}
