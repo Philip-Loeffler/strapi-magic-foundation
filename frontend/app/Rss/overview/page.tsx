@@ -1,12 +1,57 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { RSSContentRenderer } from "@/components/rss/RSSContentRenderer";
 
+const OVERVIEW_CONTENT_SECTIONS = [
+  "whatIsRss",
+  "diagnosis",
+  "phenotype",
+  "cognitiveAbilities",
+  "firstSteps",
+  "hypoglycemia",
+  "treatments",
+  "weightManagement",
+  "boneAge",
+  "puberty",
+  "heightImprovement",
+  "growthHormoneTherapy",
+  "insuranceCoverage",
+  "factorsAffectingGht",
+  "adulthoodHealthIssues",
+] as const;
+
+function buildRSSPopulateQuery(): string {
+  const populate: string[] = [
+    "overviewTab",
+    "overviewTab.heroSection",
+    "overviewTab.faqSection",
+    "overviewTab.faqSection.faqs",
+  ];
+  OVERVIEW_CONTENT_SECTIONS.forEach((section) => {
+    populate.push(`overviewTab.${section}`);
+    populate.push(`overviewTab.${section}.subsections`);
+    populate.push(`overviewTab.${section}.subsections.listItems`);
+  });
+  populate.push(
+    "personalStoriesTab",
+    "personalStoriesTab.stories",
+    "personalStoriesTab.stories.image",
+    "resourcesTab",
+    "resourcesTab.resourceCategories",
+    "divisionLeadersTab",
+    "divisionLeadersTab.leaders",
+    "divisionLeadersTab.leaders.image",
+  );
+
+  return populate.map((p, i) => `populate[${i}]=${p}`).join("&");
+}
+
 async function getRSSData() {
   try {
     const strapiUrl =
       process.env.NEXT_PUBLIC_STRAPI_URL || "http://localhost:1337";
+    const populateQuery = buildRSSPopulateQuery();
     const res = await fetch(
-      `${strapiUrl}/api/russell-silver-syndromes?populate[overviewTab][populate]=*&populate[personalStoriesTab][populate]=*&populate[resourcesTab][populate]=*&populate[divisionLeadersTab][populate]=*`,
+      `${strapiUrl}/api/russell-silver-syndromes?${populateQuery}`,
       {
         cache: "no-store",
         headers: {
@@ -65,7 +110,12 @@ export default async function RSSOverviewPage() {
           )}
         </TabsContent>
 
-        <TabsContent value="personal-stories" className="w-full mt-8">
+        <TabsContent value="personal-stories" className="w-full mt-0">
+          <div className="h-[50px] mb-8 bg-[#B0C3FF] p-[12px_24px] gap-[10px] rounded-[12px] font-bold">
+            <h2 className="text-xl font-semibold text-slate-800 dark:text-slate-200">
+              Personal Stories
+            </h2>
+          </div>
           {rssData?.personalStoriesTab ? (
             <RSSContentRenderer content={rssData.personalStoriesTab} />
           ) : (
@@ -87,7 +137,12 @@ export default async function RSSOverviewPage() {
           )}
         </TabsContent>
 
-        <TabsContent value="division-leaders" className="w-full mt-8">
+        <TabsContent value="division-leaders" className="w-full mt-0">
+          <div className="h-[50px] bg-[#B0C3FF] p-[12px_24px] gap-[10px] rounded-[12px] font-bold mb-8">
+            <h2 className="text-xl font-semibold text-slate-800 dark:text-slate-200">
+              Division Leaders
+            </h2>
+          </div>
           {rssData?.divisionLeadersTab ? (
             <RSSContentRenderer content={rssData.divisionLeadersTab} />
           ) : (

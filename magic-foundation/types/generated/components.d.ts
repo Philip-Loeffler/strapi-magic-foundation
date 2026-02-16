@@ -7,7 +7,7 @@ export interface RssContentSection extends Struct.ComponentSchema {
     displayName: 'RSS Content Section';
   };
   attributes: {
-    content: Schema.Attribute.RichText & Schema.Attribute.Required;
+    content: Schema.Attribute.RichText;
     subsections: Schema.Attribute.Component<'rss.content-subsection', true>;
     title: Schema.Attribute.String & Schema.Attribute.Required;
   };
@@ -20,7 +20,7 @@ export interface RssContentSubsection extends Struct.ComponentSchema {
     displayName: 'RSS Content Subsection';
   };
   attributes: {
-    content: Schema.Attribute.RichText & Schema.Attribute.Required;
+    content: Schema.Attribute.RichText;
     listItems: Schema.Attribute.Component<'rss.list-item', true>;
     title: Schema.Attribute.String;
   };

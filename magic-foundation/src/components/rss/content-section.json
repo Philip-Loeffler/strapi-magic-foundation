@@ -11,8 +11,7 @@
       "required": true
     },
     "content": {
-      "type": "richtext",
-      "required": true
+      "type": "richtext"
     },
     "subsections": {
       "type": "component",
