@@ -1,0 +1,1 @@
+{"collectionName":"components_sga_content_subsections","info":{"displayName":"SGA Content Subsection","description":"A subsection within an SGA content section"},"options":{},"attributes":{"title":{"type":"string"},"content":{"type":"richtext"},"listItems":{"type":"component","repeatable":true,"component":"sga.list-item"}}}

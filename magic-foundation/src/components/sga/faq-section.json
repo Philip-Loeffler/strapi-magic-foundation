@@ -1,0 +1,1 @@
+{"collectionName":"components_sga_faq_sections","info":{"displayName":"SGA FAQ Section","description":"FAQ section with questions and answers for SGA"},"options":{},"attributes":{"title":{"type":"string"},"faqs":{"type":"component","repeatable":true,"component":"sga.faq-item"}}}

@@ -1,0 +1,1 @@
+{"collectionName":"components_sga_personal_stories_tabs","info":{"displayName":"SGA Personal Stories Tab","description":"Content for the SGA Personal Stories tab"},"options":{},"attributes":{"title":{"type":"string"},"description":{"type":"richtext"},"stories":{"type":"component","repeatable":true,"component":"sga.personal-story"}}}

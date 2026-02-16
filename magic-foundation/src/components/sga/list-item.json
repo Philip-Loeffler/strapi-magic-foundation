@@ -1,0 +1,1 @@
+{"collectionName":"components_sga_list_items","info":{"displayName":"SGA List Item","description":"A single list item for SGA content"},"options":{},"attributes":{"text":{"type":"text","required":true},"isHighlighted":{"type":"boolean","default":false}}}

@@ -1,0 +1,1 @@
+{"collectionName":"components_sga_faq_items","info":{"displayName":"SGA FAQ Item","description":"A single FAQ question and answer for SGA"},"options":{},"attributes":{"question":{"type":"string","required":true},"answer":{"type":"richtext","required":true}}}

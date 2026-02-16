@@ -1,11 +1,11 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { RSSContentRenderer } from "@/components/rss/RSSContentRenderer";
+import { SGAContentRenderer } from "@/components/sga/SGAContentRenderer";
 
-const OVERVIEW_CONTENT_SECTIONS = [
-  "whatIsRss",
-  "diagnosis",
-  "phenotype",
-  "cognitiveAbilities",
+const SGA_OVERVIEW_CONTENT_SECTIONS = [
+  "whatDoesSgaMean",
+  "howDetermined",
+  "assessments",
+  "physicalCharacteristics",
   "firstSteps",
   "hypoglycemia",
   "treatments",
@@ -19,14 +19,15 @@ const OVERVIEW_CONTENT_SECTIONS = [
   "adulthoodHealthIssues",
 ] as const;
 
-function buildRSSPopulateQuery(): string {
+function buildSGAPopulateQuery(): string {
   const populate: string[] = [
     "overviewTab",
     "overviewTab.heroSection",
+    "overviewTab.heroSection.image",
     "overviewTab.faqSection",
     "overviewTab.faqSection.faqs",
   ];
-  OVERVIEW_CONTENT_SECTIONS.forEach((section) => {
+  SGA_OVERVIEW_CONTENT_SECTIONS.forEach((section) => {
     populate.push(`overviewTab.${section}`);
     populate.push(`overviewTab.${section}.subsections`);
     populate.push(`overviewTab.${section}.subsections.listItems`);
@@ -47,13 +48,13 @@ function buildRSSPopulateQuery(): string {
   return populate.map((p, i) => `populate[${i}]=${p}`).join("&");
 }
 
-async function getRSSData() {
+async function getSGAData() {
   try {
     const strapiUrl =
       process.env.NEXT_PUBLIC_STRAPI_URL || "http://localhost:1337";
-    const populateQuery = buildRSSPopulateQuery();
+    const populateQuery = buildSGAPopulateQuery();
     const res = await fetch(
-      `${strapiUrl}/api/russell-silver-syndromes?${populateQuery}`,
+      `${strapiUrl}/api/small-for-gestational-ages?${populateQuery}`,
       {
         cache: "no-store",
         headers: {
@@ -62,21 +63,19 @@ async function getRSSData() {
       },
     );
     if (!res.ok) {
-      console.error("Failed to fetch RSS data:", res.status, res.statusText);
+      console.error("Failed to fetch SGA data:", res.status, res.statusText);
       return null;
     }
     return res.json();
   } catch (error) {
-    console.error("Error fetching RSS data:", error);
+    console.error("Error fetching SGA data:", error);
     return null;
   }
 }
 
-export default async function RSSOverviewPage() {
-  const data = await getRSSData();
-  console.log(data, "data");
-  const rssData = data?.data?.[0];
-  console.log(rssData, "rssData");
+export default async function SGAOverviewPage() {
+  const data = await getSGAData();
+  const sgaData = data?.data?.[0];
 
   const tabs = [
     { slug: "overview", title: "Overview" },
@@ -103,8 +102,8 @@ export default async function RSSOverviewPage() {
         </div>
 
         <TabsContent value="overview" className="w-full mt-8">
-          {rssData?.overviewTab ? (
-            <RSSContentRenderer content={rssData.overviewTab} />
+          {sgaData?.overviewTab ? (
+            <SGAContentRenderer content={sgaData.overviewTab} />
           ) : (
             <div className="text-center py-12">
               <p className="text-muted-foreground">Content coming soon...</p>
@@ -118,8 +117,8 @@ export default async function RSSOverviewPage() {
               Personal Stories
             </h2>
           </div>
-          {rssData?.personalStoriesTab ? (
-            <RSSContentRenderer content={rssData.personalStoriesTab} />
+          {sgaData?.personalStoriesTab ? (
+            <SGAContentRenderer content={sgaData.personalStoriesTab} />
           ) : (
             <div className="text-center py-12">
               <p className="text-muted-foreground">
@@ -130,8 +129,8 @@ export default async function RSSOverviewPage() {
         </TabsContent>
 
         <TabsContent value="resources" className="w-full mt-8">
-          {rssData?.resourcesTab ? (
-            <RSSContentRenderer content={rssData.resourcesTab} />
+          {sgaData?.resourcesTab ? (
+            <SGAContentRenderer content={sgaData.resourcesTab} />
           ) : (
             <div className="text-center py-12">
               <p className="text-muted-foreground">Resources coming soon...</p>
@@ -145,8 +144,8 @@ export default async function RSSOverviewPage() {
               Division Leaders
             </h2>
           </div>
-          {rssData?.divisionLeadersTab ? (
-            <RSSContentRenderer content={rssData.divisionLeadersTab} />
+          {sgaData?.divisionLeadersTab ? (
+            <SGAContentRenderer content={sgaData.divisionLeadersTab} />
           ) : (
             <div className="text-center py-12">
               <p className="text-muted-foreground">

@@ -26,15 +26,15 @@ import {
   MorphingDialogContainer,
 } from "@/components/motion-primitives/morphing-dialog";
 
-interface RSSContentRendererProps {
+interface SGAContentRendererProps {
   content: any;
 }
 
-export function RSSContentRenderer({ content }: RSSContentRendererProps) {
+export function SGAContentRenderer({ content }: SGAContentRendererProps) {
   if (!content) return null;
 
-  // Handle Overview Tab
-  if (content.heroSection || content.whatIsRss) {
+  // Handle Overview Tab (SGA-specific section keys)
+  if (content.heroSection || content.whatDoesSgaMean) {
     return <OverviewTabRenderer content={content} />;
   }
 
@@ -83,7 +83,7 @@ function OverviewTabRenderer({ content }: { content: any }) {
             <div className="relative w-full h-64 md:h-96">
               <Image
                 src={getImageUrl(content.heroSection.image)}
-                alt={content.heroSection.title || "RSS Hero"}
+                alt={content.heroSection.title || "SGA Hero"}
                 fill
                 className="object-cover rounded-lg"
               />
@@ -92,13 +92,13 @@ function OverviewTabRenderer({ content }: { content: any }) {
         </div>
       )}
 
-      {/* Content Sections - Accordion */}
+      {/* Content Sections - Accordion (SGA-specific keys) */}
       {(() => {
         const sections = [
-          content.whatIsRss,
-          content.diagnosis,
-          content.phenotype,
-          content.cognitiveAbilities,
+          content.whatDoesSgaMean,
+          content.howDetermined,
+          content.assessments,
+          content.physicalCharacteristics,
           content.firstSteps,
           content.hypoglycemia,
           content.treatments,
@@ -424,6 +424,26 @@ function DivisionLeadersTabRenderer({ content }: { content: any }) {
                             </p>
                           )}
                         </div>
+                        <ul>
+                          <li>
+                            <a
+                              className="text-blue-900 font-bold underline"
+                              href="https://www.facebook.com/groups/RSS.SGA.Families/"
+                            >
+                              Join
+                            </a>{" "}
+                            our closed SGA Facebook group for parents
+                          </li>
+                          <li>
+                            <a
+                              className="text-blue-900 font-bold underline"
+                              href="https://www.facebook.com/TheMAGICFoundation"
+                            >
+                              Like
+                            </a>{" "}
+                            The MAGIC Foundation's Facebook page
+                          </li>
+                        </ul>
                       </div>
                     </div>
                     <MorphingDialogClose className="text-zinc-500" />

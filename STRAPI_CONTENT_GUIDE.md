@@ -183,3 +183,40 @@ Sample FAQs:
 - Images can be uploaded through the media library
 - Make sure to populate all four tabs (Overview, Personal Stories, Resources, Division Leaders)
 - The frontend will automatically fetch and display this content
+
+---
+
+# Strapi Content Guide for Small for Gestational Age (SGA) Page
+
+SGA uses the **same structure** as RSS but with **SGA-specific names** in the admin (e.g. "SGA Content Section", "SGA Division Leaders Tab") so editors can tell them apart.
+
+## Collection Type: Small for Gestational Age
+
+The main collection type is `small-for-gestational-age` with four tabs (same as RSS):
+
+1. **SGA Overview Tab** - Main informational content
+2. **SGA Personal Stories Tab** - Personal stories
+3. **SGA Resources Tab** - Educational resources
+4. **SGA Division Leaders Tab** - Division leaders and consultants
+
+## SGA Overview Tab Section Fields
+
+Overview uses the same component types but with SGA-specific section names in Strapi:
+
+- **whatDoesSgaMean** – What does SGA mean
+- **howDetermined** – How SGA is determined
+- **assessments** – Assessments
+- **physicalCharacteristics** – Physical characteristics
+- **firstSteps** – First steps
+- **hypoglycemia** – Hypoglycemia
+- **treatments** – Treatments
+- **weightManagement** – Weight management
+- **boneAge** – Bone age
+- **puberty** – Puberty
+- **heightImprovement** – Height improvement
+- **growthHormoneTherapy** – Growth hormone therapy
+- **insuranceCoverage** – Insurance coverage
+- **factorsAffectingGht** – Factors affecting GHT
+- **adulthoodHealthIssues** – Adulthood health issues
+
+Components in Strapi are named **SGA Hero Section**, **SGA Content Section**, **SGA Content Subsection**, **SGA List Item**, **SGA FAQ Section**, **SGA FAQ Item**, **SGA Division Leader**, **SGA Personal Story**, **SGA Resource Category**, **SGA Resource Item**, and the tab components **SGA Overview Tab**, **SGA Personal Stories Tab**, **SGA Resources Tab**, **SGA Division Leaders Tab**. Field structure (title, content, subsections, listItems, etc.) is the same as RSS.

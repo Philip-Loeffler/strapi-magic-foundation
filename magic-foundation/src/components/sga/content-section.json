@@ -1,0 +1,1 @@
+{"collectionName":"components_sga_content_sections","info":{"displayName":"SGA Content Section","description":"A content section with title and rich text content for SGA"},"options":{},"attributes":{"title":{"type":"string","required":true},"content":{"type":"richtext"},"subsections":{"type":"component","repeatable":true,"component":"sga.content-subsection"}}}

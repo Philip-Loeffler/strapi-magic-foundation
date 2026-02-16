@@ -1,0 +1,1 @@
+{"collectionName":"components_sga_resources_tabs","info":{"displayName":"SGA Resources Tab","description":"Content for the SGA Resources tab"},"options":{},"attributes":{"title":{"type":"string"},"description":{"type":"richtext"},"resourceCategories":{"type":"component","repeatable":true,"component":"sga.resource-category"}}}

@@ -1,0 +1,1 @@
+{"collectionName":"components_sga_resource_categories","info":{"displayName":"SGA Resource Category","description":"A category of resources for SGA"},"options":{},"attributes":{"title":{"type":"string","required":true},"description":{"type":"text"},"resources":{"type":"component","repeatable":true,"component":"sga.resource-item"}}}

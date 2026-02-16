@@ -582,6 +582,47 @@ export interface ApiRussellSilverSyndromeRussellSilverSyndrome
   };
 }
 
+export interface ApiSmallForGestationalAgeSmallForGestationalAge
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'small_for_gestational_ages';
+  info: {
+    description: 'Main content for Small for Gestational Age (SGA) page';
+    displayName: 'Small for Gestational Age';
+    pluralName: 'small-for-gestational-ages';
+    singularName: 'small-for-gestational-age';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    divisionLeadersTab: Schema.Attribute.Component<
+      'sga.division-leaders-tab',
+      false
+    >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::small-for-gestational-age.small-for-gestational-age'
+    > &
+      Schema.Attribute.Private;
+    overviewTab: Schema.Attribute.Component<'sga.overview-tab', false>;
+    personalStoriesTab: Schema.Attribute.Component<
+      'sga.personal-stories-tab',
+      false
+    >;
+    publishedAt: Schema.Attribute.DateTime;
+    resourcesTab: Schema.Attribute.Component<'sga.resources-tab', false>;
+    slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiTestTest extends Struct.CollectionTypeSchema {
   collectionName: 'tests';
   info: {
@@ -1123,6 +1164,7 @@ declare module '@strapi/strapi' {
       'api::article.article': ApiArticleArticle;
       'api::emergency.emergency': ApiEmergencyEmergency;
       'api::russell-silver-syndrome.russell-silver-syndrome': ApiRussellSilverSyndromeRussellSilverSyndrome;
+      'api::small-for-gestational-age.small-for-gestational-age': ApiSmallForGestationalAgeSmallForGestationalAge;
       'api::test.test': ApiTestTest;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
