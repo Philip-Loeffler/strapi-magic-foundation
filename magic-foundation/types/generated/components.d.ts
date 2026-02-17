@@ -93,7 +93,6 @@ export interface RssFaqItem extends Struct.ComponentSchema {
   };
   attributes: {
     answer: Schema.Attribute.RichText & Schema.Attribute.Required;
-    question: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 

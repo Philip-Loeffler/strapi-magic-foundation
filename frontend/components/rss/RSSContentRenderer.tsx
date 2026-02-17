@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import {
   Accordion,
   AccordionContent,
@@ -59,34 +58,36 @@ export function RSSContentRenderer({ content }: RSSContentRendererProps) {
 function OverviewTabRenderer({ content }: { content: any }) {
   return (
     <div className="space-y-12">
-      {/* Hero Section */}
       {content.heroSection && (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {/* Left: heading content */}
           <div className="space-y-4">
             {content.heroSection.title && (
-              <h1 className="text-4xl font-bold">
-                {content.heroSection.title}
-              </h1>
+              <h1 className=" font-bold">{content.heroSection.title}</h1>
             )}
+
             {content.heroSection.subtitle && (
-              <p className="text-xl text-muted-foreground">
-                {content.heroSection.subtitle}
-              </p>
+              <RichTextRenderer content={content.heroSection.subtitle} />
             )}
-            {content.heroSection.description && (
+          </div>
+
+          {/* Right: image */}
+          {content.heroSection.image && (
+            <div className="relative w-full h-64 md:h-96 overflow-hidden rounded-lg">
+              <img
+                src={getImageUrl(content.heroSection.image)}
+                alt={content.heroSection.title || "RSS Hero"}
+                className="w-full h-full object-cover"
+              />
+            </div>
+          )}
+
+          {/* Full-width rich text below */}
+          {content.heroSection.description && (
+            <div className="md:col-span-2">
               <div className="prose max-w-none">
                 <RichTextRenderer content={content.heroSection.description} />
               </div>
-            )}
-          </div>
-          {content.heroSection.image && (
-            <div className="relative w-full h-64 md:h-96">
-              <Image
-                src={getImageUrl(content.heroSection.image)}
-                alt={content.heroSection.title || "RSS Hero"}
-                fill
-                className="object-cover rounded-lg"
-              />
             </div>
           )}
         </div>
@@ -118,7 +119,7 @@ function OverviewTabRenderer({ content }: { content: any }) {
           <Accordion className="w-full" type="single" collapsible>
             {sections.map((section: any, index: number) => (
               <AccordionItem key={index} value={`section-${index}`}>
-                <AccordionTrigger className="text-left">
+                <AccordionTrigger className="text-left  font-bold">
                   {section.title || `Section ${index + 1}`}
                 </AccordionTrigger>
                 <AccordionContent className="pl-6 space-y-2">
@@ -132,25 +133,21 @@ function OverviewTabRenderer({ content }: { content: any }) {
 
       {/* FAQ Section */}
       {content.faqSection && (
-        <div className="space-y-4">
+        <div className="space-y-6">
           {content.faqSection.title && (
-            <h2 className="text-3xl font-bold mb-6">
-              {content.faqSection.title}
-            </h2>
+            <h2 className="font-bold mb-6">{content.faqSection.title}</h2>
           )}
           {content.faqSection.faqs && content.faqSection.faqs.length > 0 && (
-            <Accordion type="single" collapsible className="w-full">
+            <div className="space-y-6 text-left">
               {content.faqSection.faqs.map((faq: any, index: number) => (
-                <AccordionItem key={index} value={`faq-${index}`}>
-                  <AccordionTrigger className="text-left">
-                    {faq.question}
-                  </AccordionTrigger>
-                  <AccordionContent className="pl-6">
+                <div key={index} className="space-y-2">
+                  <div className="font-semibold">{faq.question}</div>
+                  <div className="pl-0">
                     <RichTextRenderer content={faq.answer} />
-                  </AccordionContent>
-                </AccordionItem>
+                  </div>
+                </div>
               ))}
-            </Accordion>
+            </div>
           )}
         </div>
       )}
@@ -186,7 +183,7 @@ function PersonalStoriesTabRenderer({ content }: { content: any }) {
               >
                 <MorphingDialogTrigger className="cursor-pointer text-left w-[264px]">
                   <div
-                    className="w-[264px] h-[200px] overflow-hidden bg-gray-200 border-2 border-blue-900"
+                    className="w-[264px] h-[200px] overflow-hidden bg-gray-200"
                     style={{ borderRadius: "4px" }}
                   >
                     <MorphingDialogImage
@@ -212,7 +209,7 @@ function PersonalStoriesTabRenderer({ content }: { content: any }) {
                 <MorphingDialogContainer>
                   <MorphingDialogContent
                     style={{ borderRadius: "12px" }}
-                    className="relative h-auto max-h-[90vh] w-full max-w-[500px] border-2 border-blue-900 bg-white overflow-hidden"
+                    className="relative h-auto max-h-[90vh] w-full max-w-[500px] border border-gray-100 bg-white overflow-hidden"
                   >
                     <div className="overflow-y-auto max-h-[90vh]">
                       <div className="relative p-6">
@@ -349,7 +346,7 @@ function DivisionLeadersTabRenderer({ content }: { content: any }) {
               >
                 <MorphingDialogTrigger className="cursor-pointer text-left w-[264px]">
                   <div
-                    className="w-[264px] h-[200px] overflow-hidden bg-gray-200 border-2 border-blue-900"
+                    className="w-[264px] h-[200px] overflow-hidden bg-gray-200"
                     style={{ borderRadius: "4px" }}
                   >
                     <MorphingDialogImage
@@ -370,7 +367,7 @@ function DivisionLeadersTabRenderer({ content }: { content: any }) {
                 <MorphingDialogContainer>
                   <MorphingDialogContent
                     style={{ borderRadius: "12px" }}
-                    className="relative h-auto max-h-[90vh] w-full max-w-[500px] border-2 border-blue-900 bg-white overflow-hidden"
+                    className="relative h-auto max-h-[90vh] w-full max-w-[500px] border border-gray-100 bg-white overflow-hidden"
                   >
                     <div className="overflow-y-auto max-h-[90vh]">
                       <div className="relative p-6">
@@ -486,7 +483,7 @@ function ContentSectionBody({ section }: { section: any }) {
           {section.subsections.map((subsection: any, index: number) => (
             <div key={index} className="space-y-3">
               {subsection.title && (
-                <h3 className="text-2xl font-semibold">{subsection.title}</h3>
+                <h3 className="text-md font-bold">{subsection.title}</h3>
               )}
               {subsection.content && (
                 <div className="prose max-w-none">

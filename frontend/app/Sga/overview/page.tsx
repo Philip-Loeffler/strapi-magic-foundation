@@ -85,76 +85,83 @@ export default async function SGAOverviewPage() {
   ];
 
   return (
-    <div className="flex flex-col w-full items-center justify-center min-h-screen py-8 px-4">
-      <Tabs defaultValue="overview" className="w-full max-w-7xl">
-        <div className="flex justify-center mb-8">
-          <TabsList className="grid w-full max-w-4xl grid-cols-4 gap-2">
-            {tabs.map((tab) => (
-              <TabsTrigger
-                key={tab.slug}
-                value={tab.slug}
-                className="text-sm md:text-base"
-              >
-                {tab.title}
-              </TabsTrigger>
-            ))}
-          </TabsList>
+    <div className="min-h-screen py-8 px-4">
+      <div className="flex flex-col w-full items-center justify-center">
+        <div className="w-full max-w-7xl mb-12">
+          <h1 className="text-3xl font-bold">Small For Gestational Age</h1>
         </div>
-
-        <TabsContent value="overview" className="w-full mt-8">
-          {sgaData?.overviewTab ? (
-            <SGAContentRenderer content={sgaData.overviewTab} />
-          ) : (
-            <div className="text-center py-12">
-              <p className="text-muted-foreground">Content coming soon...</p>
-            </div>
-          )}
-        </TabsContent>
-
-        <TabsContent value="personal-stories" className="w-full mt-0">
-          <div className="h-[50px] mb-8 bg-[#B0C3FF] p-[12px_24px] gap-[10px] rounded-[12px] font-bold">
-            <h2 className="text-xl font-semibold text-slate-800 dark:text-slate-200">
-              Personal Stories
-            </h2>
+        <Tabs defaultValue="overview" className="w-full max-w-7xl">
+          <div className="flex justify-center mb-8">
+            <TabsList className="grid w-full max-w-4xl grid-cols-4 gap-2">
+              {tabs.map((tab) => (
+                <TabsTrigger
+                  key={tab.slug}
+                  value={tab.slug}
+                  className="text-sm md:text-base"
+                >
+                  {tab.title}
+                </TabsTrigger>
+              ))}
+            </TabsList>
           </div>
-          {sgaData?.personalStoriesTab ? (
-            <SGAContentRenderer content={sgaData.personalStoriesTab} />
-          ) : (
-            <div className="text-center py-12">
-              <p className="text-muted-foreground">
-                Personal stories coming soon...
-              </p>
-            </div>
-          )}
-        </TabsContent>
 
-        <TabsContent value="resources" className="w-full mt-8">
-          {sgaData?.resourcesTab ? (
-            <SGAContentRenderer content={sgaData.resourcesTab} />
-          ) : (
-            <div className="text-center py-12">
-              <p className="text-muted-foreground">Resources coming soon...</p>
-            </div>
-          )}
-        </TabsContent>
+          <TabsContent value="overview" className="w-full mt-8">
+            {sgaData?.overviewTab ? (
+              <SGAContentRenderer content={sgaData.overviewTab} />
+            ) : (
+              <div className="text-center py-12">
+                <p className="text-muted-foreground">Content coming soon...</p>
+              </div>
+            )}
+          </TabsContent>
 
-        <TabsContent value="division-leaders" className="w-full mt-0">
-          <div className="h-[50px] bg-[#B0C3FF] p-[12px_24px] gap-[10px] rounded-[12px] font-bold mb-8">
-            <h2 className="text-xl font-semibold text-slate-800 dark:text-slate-200">
-              Division Leaders
-            </h2>
-          </div>
-          {sgaData?.divisionLeadersTab ? (
-            <SGAContentRenderer content={sgaData.divisionLeadersTab} />
-          ) : (
-            <div className="text-center py-12">
-              <p className="text-muted-foreground">
-                Division leaders coming soon...
-              </p>
+          <TabsContent value="personal-stories" className="w-full mt-0">
+            <div className="h-[50px] mb-8 bg-[#B0C3FF] p-[12px_24px] gap-[10px] rounded-[12px] font-bold">
+              <h2 className="text-xl font-semibold text-slate-800 dark:text-slate-200">
+                Personal Stories
+              </h2>
             </div>
-          )}
-        </TabsContent>
-      </Tabs>
+            {sgaData?.personalStoriesTab ? (
+              <SGAContentRenderer content={sgaData.personalStoriesTab} />
+            ) : (
+              <div className="text-center py-12">
+                <p className="text-muted-foreground">
+                  Personal stories coming soon...
+                </p>
+              </div>
+            )}
+          </TabsContent>
+
+          <TabsContent value="resources" className="w-full mt-8">
+            {sgaData?.resourcesTab ? (
+              <SGAContentRenderer content={sgaData.resourcesTab} />
+            ) : (
+              <div className="text-center py-12">
+                <p className="text-muted-foreground">
+                  Resources coming soon...
+                </p>
+              </div>
+            )}
+          </TabsContent>
+
+          <TabsContent value="division-leaders" className="w-full mt-0">
+            <div className="h-[50px] bg-[#B0C3FF] p-[12px_24px] gap-[10px] rounded-[12px] font-bold mb-8">
+              <h2 className="text-xl font-semibold text-slate-800 dark:text-slate-200">
+                Division Leaders
+              </h2>
+            </div>
+            {sgaData?.divisionLeadersTab ? (
+              <SGAContentRenderer content={sgaData.divisionLeadersTab} />
+            ) : (
+              <div className="text-center py-12">
+                <p className="text-muted-foreground">
+                  Division leaders coming soon...
+                </p>
+              </div>
+            )}
+          </TabsContent>
+        </Tabs>
+      </div>
     </div>
   );
 }

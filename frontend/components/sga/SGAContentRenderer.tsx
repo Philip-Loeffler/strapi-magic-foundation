@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+// import Image from "next/image";
 import {
   Accordion,
   AccordionContent,
@@ -61,32 +61,29 @@ function OverviewTabRenderer({ content }: { content: any }) {
     <div className="space-y-12">
       {/* Hero Section */}
       {content.heroSection && (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div className="space-y-4">
             {content.heroSection.title && (
-              <h1 className="text-4xl font-bold">
-                {content.heroSection.title}
-              </h1>
+              <h1 className=" font-bold">{content.heroSection.title}</h1>
             )}
             {content.heroSection.subtitle && (
-              <p className="text-xl text-muted-foreground">
-                {content.heroSection.subtitle}
-              </p>
-            )}
-            {content.heroSection.description && (
-              <div className="prose max-w-none">
-                <RichTextRenderer content={content.heroSection.description} />
-              </div>
+              <RichTextRenderer content={content.heroSection.subtitle} />
             )}
           </div>
           {content.heroSection.image && (
-            <div className="relative w-full h-64 md:h-96">
-              <Image
+            <div className="relative w-full h-64 md:h-96 overflow-hidden rounded-lg">
+              <img
                 src={getImageUrl(content.heroSection.image)}
                 alt={content.heroSection.title || "SGA Hero"}
-                fill
-                className="object-cover rounded-lg"
+                className="w-full h-full object-cover"
               />
+            </div>
+          )}
+          {content.heroSection.description && (
+            <div className="md:col-span-2">
+              <div className="prose max-w-none">
+                <RichTextRenderer content={content.heroSection.description} />
+              </div>
             </div>
           )}
         </div>
