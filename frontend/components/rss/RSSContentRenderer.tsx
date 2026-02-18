@@ -266,52 +266,63 @@ function ResourcesTabRenderer({ content }: { content: any }) {
       )}
       {content.resourceCategories && content.resourceCategories.length > 0 && (
         <div className="space-y-8">
-          {content.resourceCategories.map((category: any, index: number) => (
-            <div key={index} className="space-y-4">
-              <h2 className="text-2xl font-semibold">{category.title}</h2>
-              {category.description && (
-                <p className="text-muted-foreground">{category.description}</p>
-              )}
-              {category.resources && category.resources.length > 0 && (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {category.resources.map((resource: any, resIndex: number) => (
-                    <Card key={resIndex}>
-                      <CardHeader>
-                        <CardTitle>{resource.title}</CardTitle>
-                        {resource.description && (
-                          <CardDescription>
-                            {resource.description}
-                          </CardDescription>
-                        )}
-                      </CardHeader>
-                      <CardContent>
-                        {resource.url && (
-                          <Link
-                            href={resource.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-primary hover:underline"
-                          >
-                            View Resource →
-                          </Link>
-                        )}
-                        {resource.file && (
-                          <Link
-                            href={getImageUrl(resource.file)}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-primary hover:underline"
-                          >
-                            Download File →
-                          </Link>
-                        )}
-                      </CardContent>
-                    </Card>
-                  ))}
-                </div>
-              )}
-            </div>
-          ))}
+          {content.resourceCategories
+            .filter(
+              (category: any, index: number) =>
+                category.title !== "RSS/SGA Growth Charts",
+            )
+            .map((category: any, index: number) => (
+              //filtering out the growth charts till i figure out the charts
+              // {content.resourceCategories.map((category: any, index: number) => (
+              <div key={index} className="space-y-4">
+                <h2 className="text-2xl font-semibold">{category.title}</h2>
+                {category.description && (
+                  <p className="text-muted-foreground">
+                    {category.description}
+                  </p>
+                )}
+                {category.resources && category.resources.length > 0 && (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {category.resources.map(
+                      (resource: any, resIndex: number) => (
+                        <Card key={resIndex}>
+                          <CardHeader>
+                            <CardTitle>{resource.title}</CardTitle>
+                            {resource.description && (
+                              <CardDescription>
+                                {resource.description}
+                              </CardDescription>
+                            )}
+                          </CardHeader>
+                          <CardContent>
+                            {resource.url && (
+                              <Link
+                                href={resource.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-primary hover:underline"
+                              >
+                                View Resource →
+                              </Link>
+                            )}
+                            {resource.file && (
+                              <Link
+                                href={getImageUrl(resource.file)}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-primary hover:underline"
+                              >
+                                Download File →
+                              </Link>
+                            )}
+                          </CardContent>
+                        </Card>
+                      ),
+                    )}
+                  </div>
+                )}
+              </div>
+            ))}
         </div>
       )}
     </div>
