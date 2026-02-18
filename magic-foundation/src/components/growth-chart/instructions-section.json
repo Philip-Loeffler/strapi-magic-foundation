@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_growth_chart_instructions_sections",
+  "info": {
+    "displayName": "Growth Chart Instructions Section",
+    "description": "Instructions section for using growth charts"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "content": {
+      "type": "richtext"
+    },
+    "steps": {
+      "type": "component",
+      "repeatable": true,
+      "component": "growth-chart.instruction-step"
+    }
+  }
+}

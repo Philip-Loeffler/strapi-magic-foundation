@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_growth_chart_chart_categories",
+  "info": {
+    "displayName": "Growth Chart Category",
+    "description": "A category of growth charts"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "richtext"
+    },
+    "charts": {
+      "type": "component",
+      "repeatable": true,
+      "component": "growth-chart.chart-item"
+    }
+  }
+}

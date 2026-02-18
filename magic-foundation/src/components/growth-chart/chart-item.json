@@ -1,0 +1,39 @@
+{
+  "collectionName": "components_growth_chart_chart_items",
+  "info": {
+    "displayName": "Growth Chart Item",
+    "description": "A single growth chart item"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "url": {
+      "type": "string"
+    },
+    "file": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["files", "images"]
+    },
+    "chartType": {
+      "type": "enumeration",
+      "enum": ["link", "file", "excel"],
+      "default": "link"
+    },
+    "ageRange": {
+      "type": "string"
+    },
+    "gender": {
+      "type": "enumeration",
+      "enum": ["boys", "girls", "both"],
+      "default": "both"
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "collectionName": "components_growth_chart_intro_sections",
+  "info": {
+    "displayName": "Growth Chart Intro Section",
+    "description": "Introduction section for growth charts page"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "richtext"
+    },
+    "instructionLink": {
+      "type": "string"
+    },
+    "instructionLinkText": {
+      "type": "string",
+      "default": "at home instructions"
+    }
+  }
+}

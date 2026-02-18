@@ -500,6 +500,48 @@ export interface ApiEmergencyEmergency extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiGrowthChartGrowthChart extends Struct.CollectionTypeSchema {
+  collectionName: 'growth_charts';
+  info: {
+    description: 'RSS-SGA Growth Charts content';
+    displayName: 'Growth Chart';
+    pluralName: 'growth-charts';
+    singularName: 'growth-chart';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    chartCategories: Schema.Attribute.Component<
+      'growth-chart.chart-category',
+      true
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    instructionsSections: Schema.Attribute.Component<
+      'growth-chart.instructions-section',
+      true
+    >;
+    introSection: Schema.Attribute.Component<
+      'growth-chart.intro-section',
+      false
+    >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::growth-chart.growth-chart'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiRussellSilverSyndromeRussellSilverSyndrome
   extends Struct.CollectionTypeSchema {
   collectionName: 'russell_silver_syndromes';
@@ -1136,6 +1178,7 @@ declare module '@strapi/strapi' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
       'api::emergency.emergency': ApiEmergencyEmergency;
+      'api::growth-chart.growth-chart': ApiGrowthChartGrowthChart;
       'api::russell-silver-syndrome.russell-silver-syndrome': ApiRussellSilverSyndromeRussellSilverSyndrome;
       'api::small-for-gestational-age.small-for-gestational-age': ApiSmallForGestationalAgeSmallForGestationalAge;
       'api::temple-syndrome.temple-syndrome': ApiTempleSyndromeTempleSyndrome;

@@ -29,6 +29,79 @@ export interface EmergencyGeneticDisorderResponse
   };
 }
 
+export interface GrowthChartChartCategory extends Struct.ComponentSchema {
+  collectionName: 'components_growth_chart_chart_categories';
+  info: {
+    description: 'A category of growth charts';
+    displayName: 'Growth Chart Category';
+  };
+  attributes: {
+    charts: Schema.Attribute.Component<'growth-chart.chart-item', true>;
+    description: Schema.Attribute.RichText;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface GrowthChartChartItem extends Struct.ComponentSchema {
+  collectionName: 'components_growth_chart_chart_items';
+  info: {
+    description: 'A single growth chart item';
+    displayName: 'Growth Chart Item';
+  };
+  attributes: {
+    ageRange: Schema.Attribute.String;
+    chartType: Schema.Attribute.Enumeration<['link', 'file', 'excel']> &
+      Schema.Attribute.DefaultTo<'link'>;
+    description: Schema.Attribute.Text;
+    file: Schema.Attribute.Media<'files' | 'images'>;
+    gender: Schema.Attribute.Enumeration<['boys', 'girls', 'both']> &
+      Schema.Attribute.DefaultTo<'both'>;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    url: Schema.Attribute.String;
+  };
+}
+
+export interface GrowthChartInstructionStep extends Struct.ComponentSchema {
+  collectionName: 'components_growth_chart_instruction_steps';
+  info: {
+    description: 'A single step in instructions';
+    displayName: 'Instruction Step';
+  };
+  attributes: {
+    content: Schema.Attribute.RichText;
+    stepNumber: Schema.Attribute.Integer;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface GrowthChartInstructionsSection extends Struct.ComponentSchema {
+  collectionName: 'components_growth_chart_instructions_sections';
+  info: {
+    description: 'Instructions section for using growth charts';
+    displayName: 'Growth Chart Instructions Section';
+  };
+  attributes: {
+    content: Schema.Attribute.RichText;
+    steps: Schema.Attribute.Component<'growth-chart.instruction-step', true>;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface GrowthChartIntroSection extends Struct.ComponentSchema {
+  collectionName: 'components_growth_chart_intro_sections';
+  info: {
+    description: 'Introduction section for growth charts page';
+    displayName: 'Growth Chart Intro Section';
+  };
+  attributes: {
+    description: Schema.Attribute.RichText;
+    instructionLink: Schema.Attribute.String;
+    instructionLinkText: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'at home instructions'>;
+    title: Schema.Attribute.String;
+  };
+}
+
 export interface RssContentSection extends Struct.ComponentSchema {
   collectionName: 'components_rss_content_sections';
   info: {
@@ -703,6 +776,11 @@ declare module '@strapi/strapi' {
     export interface ComponentSchemas {
       'emergency.emergency-accordion-item': EmergencyEmergencyAccordionItem;
       'emergency.genetic-disorder-response': EmergencyGeneticDisorderResponse;
+      'growth-chart.chart-category': GrowthChartChartCategory;
+      'growth-chart.chart-item': GrowthChartChartItem;
+      'growth-chart.instruction-step': GrowthChartInstructionStep;
+      'growth-chart.instructions-section': GrowthChartInstructionsSection;
+      'growth-chart.intro-section': GrowthChartIntroSection;
       'rss.content-section': RssContentSection;
       'rss.content-subsection': RssContentSubsection;
       'rss.division-leader': RssDivisionLeader;

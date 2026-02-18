@@ -1,0 +1,40 @@
+{
+  "kind": "collectionType",
+  "collectionName": "growth_charts",
+  "info": {
+    "singularName": "growth-chart",
+    "pluralName": "growth-charts",
+    "displayName": "Growth Chart",
+    "description": "RSS-SGA Growth Charts content"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title",
+      "required": true
+    },
+    "introSection": {
+      "type": "component",
+      "component": "growth-chart.intro-section",
+      "repeatable": false
+    },
+    "chartCategories": {
+      "type": "component",
+      "component": "growth-chart.chart-category",
+      "repeatable": true
+    },
+    "instructionsSections": {
+      "type": "component",
+      "component": "growth-chart.instructions-section",
+      "repeatable": true
+    }
+  }
+}
