@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_growth_chart_instruction_steps",
+  "info": {
+    "displayName": "Instruction Step",
+    "description": "A single step in an instruction list"
+  },
+  "options": {},
+  "attributes": {
+    "stepNumber": {
+      "type": "integer"
+    },
+    "content": {
+      "type": "richtext",
+      "required": true
+    },
+    "subSteps": {
+      "type": "component",
+      "repeatable": true,
+      "component": "growth-chart.instruction-step"
+    }
+  }
+}

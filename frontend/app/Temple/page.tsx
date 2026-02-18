@@ -1,120 +1,168 @@
-import Image from "next/image";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
+import { TempleContentRenderer } from "@/components/temple/TempleContentRenderer";
 
-const Page = () => {
-  const tabs = [
-    {
-      title: "OverView",
-    },
+const TEMPLE_OVERVIEW_SECTIONS = [
+  "whatIsTemple",
+  "diagnosis",
+  "phenotype",
+  "cognitiveAbilities",
+  "firstSteps",
+  "hypoglycemia",
+  "treatments",
+  "weightManagement",
+  "boneAge",
+  "puberty",
+  "heightImprovement",
+  "growthHormoneTherapy",
+  "insuranceCoverage",
+  "factorsAffectingGht",
+  "adulthoodHealthIssues",
+] as const;
+
+function buildTemplePopulateQuery(): string {
+  const populate: string[] = [
+    "overviewTab",
+    "overviewTab.heroSection",
+    "overviewTab.heroSection.image",
+    "overviewTab.faqSection",
+    "overviewTab.faqSection.faqs",
   ];
-  return (
-    <div className="flex flex-row w-full items-center justify-center">
-      <Tabs defaultValue="OverView" className="w-full">
-        <div className="flex justify-center">
-          <TabsList className="grid w-1/2 grid-cols-6">
-            {tabs.map((x) => (
-              <TabsTrigger key={x.title} value={x.title}>
-                {x.title}
-              </TabsTrigger>
-            ))}
-          </TabsList>
-        </div>
-        {tabs.map((x) => (
-          <TabsContent key={x.title} className="w-full" value={x.title}>
-            <div className="w-full space-y-4 py-4">
-              {x.title === "OverView" && (
-                <div className="grid grid-cols-2 gap-10 w-full">
-                  <div className="grid col-span-1">
-                    <div>
-                      Russell-Silver syndrome (or Silver-Russell syndrome) is a
-                      rare genetic disorder characterized by delayed growth
-                      in-utero (IUGR) that spares head growth (meaning the
-                      newborn has a head size that is large for his body) and
-                      ongoing postnatal growth failure.  This disorder includes
-                      feeding difficulties and/or low BMI, dysmorphic features
-                      including a protruding forehead, and frequently body
-                      asymmetry (hemihypotrophy).  The true incidence is unknown
-                      but is estimated at 1 per every 35,000 – 100,000 live
-                      births.   It was way back in 1953 and 1954 that Dr. Silver
-                      and Dr. Russell independently described groups of
-                      small-for-gestational-age [SGA] children whose pregnancies
-                      had been complicated by intrauterine growth restriction
-                      [IUGR]. Their common findings were short stature without
-                      catch-up growth, normal head size for age, a distinctive
-                      triangular face, low-set ears and incurving fifth fingers.
-                      These two groups of patients are now considered to have
-                      had variations of the same disorder that we now call
-                      Russell-Silver syndrome [RSS] in North America, and
-                      Silver-Russell syndrome [SRS] in Europe.   One interesting
-                      and important aspect of the Russell-Silver syndrome is its
-                      variation in phenotype. In this context, a phenotype is
-                      all the physical characteristics and abnormalities found
-                      in an individual patient that are attributed specifically
-                      to RSS. Some individuals with RSS have many traits, thus a
-                      severe phenotype, while others have very few traits, thus
-                      a mild phenotype.   When first described, RSS was NOT
-                      thought to be a genetic disorder because it recurred
-                      within families rarely, and when it did recur, its pattern
-                      of transmission failed to follow a consistent genetic mode
-                      of inheritance. More recent understandings of genetic
-                      mechanisms have led scientists to conclude that
-                      Russell-Silver syndrome is genetic, but its genetics are
-                      not simple. Scientists now know that the RSS phenotype is
-                      associated with more than one genotype.   A genotype is
-                      the status of a specific gene at a specific location on a
-                      specific chromosome. Therefore, an abnormal genotype means
-                      there has been a specific alteration, such as a deletion,
-                      duplication, insertion, substitution or imprinting error
-                      within the code of a specific gene located at a specific
-                      site in an individual's genetic code.   Since our genotype
-                      is responsible for our phenotype, abnormal genotypes
-                      result in abnormal phenotypes. If we assume several
-                      genotypes for Russell-Silver syndrome, then we should not
-                      be surprised at a variety of phenotypes. We view this as
-                      one reason for the marked variability within the group of
-                      patients considered to have RSS. But deciding which child
-                      should be considered to have RSS is not always easy. When
-                      more is known about the genetics of Russell-Silver
-                      syndrome, we will find that some patients were incorrectly
-                      included while others were incorrectly excluded.
-                    </div>
-                  </div>
-                  <div className="grid col-span-1">
-                    <Image
-                      src={"/laugh.png"}
-                      width={364}
-                      height={254}
-                      alt="phone"
-                    />
-                  </div>
-                </div>
-              )}
+  TEMPLE_OVERVIEW_SECTIONS.forEach((section) => {
+    populate.push(`overviewTab.${section}`);
+    populate.push(`overviewTab.${section}.subsections`);
+    populate.push(`overviewTab.${section}.subsections.listItems`);
+    populate.push(`overviewTab.${section}.listItems`);
+  });
+  populate.push(
+    "personalStoriesTab",
+    "personalStoriesTab.stories",
+    "personalStoriesTab.stories.image",
+    "resourcesTab",
+    "resourcesTab.resourceCategories",
+    "resourcesTab.resourceCategories.resources",
+    "resourcesTab.resourceCategories.resources.file",
+    "divisionLeadersTab",
+    "divisionLeadersTab.leaders",
+    "divisionLeadersTab.leaders.image",
+  );
 
-              <Accordion className="w-full" type="single" collapsible>
-                {/* {x.questionsAndAnswers.map((component) => (
-                  <AccordionItem key={component.question} value={component.question}>
-                    <AccordionTrigger>{component.question}</AccordionTrigger>
-                    <AccordionContent className="pl-6 space-y-2">
-                      <li>
-                        <span className="font-bold">{component.question}:</span>
-                        <span className="pl-2">{component.answer}</span>
-                      </li>
-                    </AccordionContent>
-                  </AccordionItem>
-                ))} */}
-              </Accordion>
-            </div>
+  return populate.map((p, i) => `populate[${i}]=${p}`).join("&");
+}
+
+async function getTempleData() {
+  try {
+    const strapiUrl =
+      process.env.NEXT_PUBLIC_STRAPI_URL || "http://localhost:1337";
+    const populateQuery = buildTemplePopulateQuery();
+    const res = await fetch(
+      `${strapiUrl}/api/temple-syndromes?${populateQuery}`,
+      {
+        cache: "no-store",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      },
+    );
+    if (!res.ok) {
+      console.error("Failed to fetch Temple data:", res.status, res.statusText);
+      return null;
+    }
+    return res.json();
+  } catch (error) {
+    console.error("Error fetching Temple data:", error);
+    return null;
+  }
+}
+
+export default async function TemplePage() {
+  const data = await getTempleData();
+  const templeData = data?.data?.[0];
+
+  const tabs = [
+    { slug: "overview", title: "Overview" },
+    { slug: "personal-stories", title: "Personal Stories" },
+    { slug: "resources", title: "Resources" },
+    { slug: "division-leaders", title: "Division Leaders" },
+  ];
+
+  return (
+    <div className="min-h-screen py-8 px-4">
+      <div className="flex flex-col w-full items-center justify-center">
+        <div className="w-full max-w-7xl mb-12">
+          <h1 className="text-3xl font-bold">Temple Syndrome (TS14)</h1>
+          <p className="text-muted-foreground mt-2">
+            A rare imprinting disorder involving chromosome 14 that affects
+            growth, development, and puberty.
+          </p>
+        </div>
+        <Tabs defaultValue="overview" className="w-full max-w-7xl flex flex-col">
+          <div className="flex justify-center mb-8">
+            <TabsList className="grid w-full max-w-4xl grid-cols-4 gap-2">
+              {tabs.map((tab) => (
+                <TabsTrigger
+                  key={tab.slug}
+                  value={tab.slug}
+                  className="text-sm md:text-base"
+                >
+                  {tab.title}
+                </TabsTrigger>
+              ))}
+            </TabsList>
+          </div>
+          <TabsContent value="overview" className="w-full mt-8">
+            {templeData?.overviewTab ? (
+              <TempleContentRenderer content={templeData.overviewTab} />
+            ) : (
+              <div className="text-center py-12">
+                <p className="text-muted-foreground">Content coming soon...</p>
+              </div>
+            )}
           </TabsContent>
-        ))}
-      </Tabs>
+          <TabsContent value="personal-stories" className="w-full mt-0">
+            <div className="h-[50px] mb-8 bg-[#B0C3FF] p-[12px_24px] gap-[10px] rounded-[12px] font-bold">
+              <h2 className="text-xl font-semibold text-slate-800 dark:text-slate-200">
+                Personal Stories
+              </h2>
+            </div>
+            {templeData?.personalStoriesTab ? (
+              <TempleContentRenderer content={templeData.personalStoriesTab} />
+            ) : (
+              <div className="text-center py-12">
+                <p className="text-muted-foreground">
+                  Personal stories coming soon...
+                </p>
+              </div>
+            )}
+          </TabsContent>
+          <TabsContent value="resources" className="w-full mt-8">
+            {templeData?.resourcesTab ? (
+              <TempleContentRenderer content={templeData.resourcesTab} />
+            ) : (
+              <div className="text-center py-12">
+                <p className="text-muted-foreground">
+                  Resources coming soon...
+                </p>
+              </div>
+            )}
+          </TabsContent>
+          <TabsContent value="division-leaders" className="w-full mt-0">
+            <div className="h-[50px] bg-[#B0C3FF] p-[12px_24px] gap-[10px] rounded-[12px] font-bold mb-8">
+              <h2 className="text-xl font-semibold text-slate-800 dark:text-slate-200">
+                Division Leaders
+              </h2>
+            </div>
+            {templeData?.divisionLeadersTab ? (
+              <TempleContentRenderer content={templeData.divisionLeadersTab} />
+            ) : (
+              <div className="text-center py-12">
+                <p className="text-muted-foreground">
+                  Division leaders coming soon...
+                </p>
+              </div>
+            )}
+          </TabsContent>
+        </Tabs>
+      </div>
     </div>
   );
-};
-
-export default Page;
+}

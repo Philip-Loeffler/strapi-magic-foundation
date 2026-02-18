@@ -1,0 +1,1 @@
+{"collectionName":"components_temple_content_subsections","info":{"displayName":"Temple Content Subsection","description":"A subsection within a content section"},"options":{},"attributes":{"title":{"type":"string"},"content":{"type":"richtext"},"listItems":{"type":"component","repeatable":true,"component":"temple.list-item"}}}

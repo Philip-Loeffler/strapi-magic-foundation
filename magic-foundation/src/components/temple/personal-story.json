@@ -1,0 +1,30 @@
+{
+  "collectionName": "components_temple_personal_stories",
+  "info": {
+    "displayName": "Temple Personal Story",
+    "description": "A personal story from someone with Temple Syndrome"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "author": {
+      "type": "string"
+    },
+    "content": {
+      "type": "richtext",
+      "required": true
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"]
+    },
+    "date": {
+      "type": "date"
+    }
+  }
+}

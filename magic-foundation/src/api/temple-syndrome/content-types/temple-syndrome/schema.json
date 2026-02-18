@@ -1,0 +1,36 @@
+{
+  "kind": "collectionType",
+  "collectionName": "temple_syndromes",
+  "info": {
+    "singularName": "temple-syndrome",
+    "pluralName": "temple-syndromes",
+    "displayName": "Temple Syndrome",
+    "description": "Main content for Temple Syndrome (TS14) page"
+  },
+  "options": { "draftAndPublish": true },
+  "pluginOptions": {},
+  "attributes": {
+    "title": { "type": "string", "required": true },
+    "slug": { "type": "uid", "targetField": "title", "required": true },
+    "overviewTab": {
+      "type": "component",
+      "component": "temple.overview-tab",
+      "repeatable": false
+    },
+    "personalStoriesTab": {
+      "type": "component",
+      "component": "temple.personal-stories-tab",
+      "repeatable": false
+    },
+    "resourcesTab": {
+      "type": "component",
+      "component": "temple.resources-tab",
+      "repeatable": false
+    },
+    "divisionLeadersTab": {
+      "type": "component",
+      "component": "temple.division-leaders-tab",
+      "repeatable": false
+    }
+  }
+}

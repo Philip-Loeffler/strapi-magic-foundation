@@ -90,7 +90,7 @@ export default async function SGAOverviewPage() {
         <div className="w-full max-w-7xl mb-12">
           <h1 className="text-3xl font-bold">Small For Gestational Age</h1>
         </div>
-        <Tabs defaultValue="overview" className="w-full max-w-7xl">
+        <Tabs defaultValue="overview" className="w-full max-w-7xl flex flex-col">
           <div className="flex justify-center mb-8">
             <TabsList className="grid w-full max-w-4xl grid-cols-4 gap-2">
               {tabs.map((tab) => (

@@ -1,0 +1,1 @@
+{"collectionName":"components_temple_hero_sections","info":{"displayName":"Temple Hero Section","description":"Hero section with title and image"},"options":{},"attributes":{"title":{"type":"string","required":true},"subtitle":{"type":"text"},"image":{"type":"media","multiple":false,"required":false,"allowedTypes":["images"]},"description":{"type":"richtext"}}}

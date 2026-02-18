@@ -1,0 +1,20 @@
+{
+  "collectionName": "components_growth_chart_specialty_chart_items",
+  "info": {
+    "displayName": "Specialty Chart Item",
+    "description": "A specialty growth chart list item"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "linkName": {
+      "type": "string"
+    },
+    "linkNameTwo": {
+      "type": "string"
+    }
+  }
+}

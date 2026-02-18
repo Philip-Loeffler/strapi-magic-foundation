@@ -1,0 +1,35 @@
+{
+  "collectionName": "components_temple_division_leaders",
+  "info": {
+    "displayName": "Temple Division Leader",
+    "description": "A division leader or consultant"
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "title": {
+      "type": "string"
+    },
+    "bio": {
+      "type": "richtext"
+    },
+    "email": {
+      "type": "email"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"]
+    },
+    "specializations": {
+      "type": "text"
+    }
+  }
+}

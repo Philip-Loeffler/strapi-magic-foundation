@@ -1,0 +1,1 @@
+{"collectionName":"components_temple_faq_sections","info":{"displayName":"Temple FAQ Section","description":"FAQ section with questions and answers"},"options":{},"attributes":{"title":{"type":"string"},"faqs":{"type":"component","repeatable":true,"component":"temple.faq-item"}}}

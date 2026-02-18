@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_temple_personal_stories_tabs",
+  "info": {
+    "displayName": "Temple Personal Stories Tab",
+    "description": "Content for the Personal Stories tab"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "richtext"
+    },
+    "stories": {
+      "type": "component",
+      "repeatable": true,
+      "component": "temple.personal-story"
+    }
+  }
+}

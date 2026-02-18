@@ -1,0 +1,1 @@
+{"collectionName":"components_temple_faq_items","info":{"displayName":"Temple FAQ Item","description":"A single FAQ question and answer"},"options":{},"attributes":{"question":{"type":"string"},"answer":{"type":"richtext","required":true}}}

@@ -1,0 +1,15 @@
+{
+  "collectionName": "components_growth_chart_instructions_sections",
+  "info": {
+    "displayName": "Instructions Section",
+    "description": "Section containing instructions for using growth charts"
+  },
+  "options": {},
+  "attributes": {
+    "instructions": {
+      "type": "component",
+      "repeatable": true,
+      "component": "growth-chart.instruction-item"
+    }
+  }
+}

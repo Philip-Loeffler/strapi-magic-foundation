@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_temple_division_leaders_tabs",
+  "info": {
+    "displayName": "Temple Division Leaders Tab",
+    "description": "Content for the Division Leaders tab"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "richtext"
+    },
+    "leaders": {
+      "type": "component",
+      "repeatable": true,
+      "component": "temple.division-leader"
+    }
+  }
+}

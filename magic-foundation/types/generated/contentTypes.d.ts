@@ -467,47 +467,6 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
-export interface ApiArticleArticle extends Struct.CollectionTypeSchema {
-  collectionName: 'articles';
-  info: {
-    description: 'A blog article content type';
-    displayName: 'Article';
-    pluralName: 'articles';
-    singularName: 'article';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    author: Schema.Attribute.String;
-    content: Schema.Attribute.RichText & Schema.Attribute.Required;
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    excerpt: Schema.Attribute.Text &
-      Schema.Attribute.SetMinMaxLength<{
-        maxLength: 500;
-      }>;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::article.article'
-    > &
-      Schema.Attribute.Private;
-    publishedAt: Schema.Attribute.DateTime;
-    slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
-    title: Schema.Attribute.String &
-      Schema.Attribute.Required &
-      Schema.Attribute.SetMinMaxLength<{
-        maxLength: 200;
-        minLength: 3;
-      }>;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-  };
-}
-
 export interface ApiEmergencyEmergency extends Struct.CollectionTypeSchema {
   collectionName: 'emergencies';
   info: {
@@ -623,12 +582,14 @@ export interface ApiSmallForGestationalAgeSmallForGestationalAge
   };
 }
 
-export interface ApiTestTest extends Struct.CollectionTypeSchema {
-  collectionName: 'tests';
+export interface ApiTempleSyndromeTempleSyndrome
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'temple_syndromes';
   info: {
-    displayName: 'test';
-    pluralName: 'tests';
-    singularName: 'test';
+    description: 'Main content for Temple Syndrome (TS14) page';
+    displayName: 'Temple Syndrome';
+    pluralName: 'temple-syndromes';
+    singularName: 'temple-syndrome';
   };
   options: {
     draftAndPublish: true;
@@ -637,12 +598,25 @@ export interface ApiTestTest extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    divisionLeadersTab: Schema.Attribute.Component<
+      'temple.division-leaders-tab',
+      false
+    >;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<'oneToMany', 'api::test.test'> &
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::temple-syndrome.temple-syndrome'
+    > &
       Schema.Attribute.Private;
+    overviewTab: Schema.Attribute.Component<'temple.overview-tab', false>;
+    personalStoriesTab: Schema.Attribute.Component<
+      'temple.personal-stories-tab',
+      false
+    >;
     publishedAt: Schema.Attribute.DateTime;
-    test: Schema.Attribute.String & Schema.Attribute.DefaultTo<'test'>;
-    test2: Schema.Attribute.String;
+    resourcesTab: Schema.Attribute.Component<'temple.resources-tab', false>;
+    slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1161,11 +1135,10 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
-      'api::article.article': ApiArticleArticle;
       'api::emergency.emergency': ApiEmergencyEmergency;
       'api::russell-silver-syndrome.russell-silver-syndrome': ApiRussellSilverSyndromeRussellSilverSyndrome;
       'api::small-for-gestational-age.small-for-gestational-age': ApiSmallForGestationalAgeSmallForGestationalAge;
-      'api::test.test': ApiTestTest;
+      'api::temple-syndrome.temple-syndrome': ApiTempleSyndromeTempleSyndrome;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;

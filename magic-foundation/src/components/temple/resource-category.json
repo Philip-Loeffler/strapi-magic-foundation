@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_temple_resource_categories",
+  "info": {
+    "displayName": "Temple Resource Category",
+    "description": "A category of resources"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "resources": {
+      "type": "component",
+      "repeatable": true,
+      "component": "temple.resource-item"
+    }
+  }
+}

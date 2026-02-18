@@ -1,0 +1,27 @@
+{
+  "collectionName": "components_growth_chart_chart_items",
+  "info": {
+    "displayName": "Chart Item",
+    "description": "Individual chart item with title, link, paragraph, and image"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "link": {
+      "type": "string",
+      "required": true
+    },
+    "paragraph": {
+      "type": "text"
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"]
+    }
+  }
+}

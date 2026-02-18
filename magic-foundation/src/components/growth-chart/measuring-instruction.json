@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_growth_chart_measuring_instructions",
+  "info": {
+    "displayName": "Measuring Instruction",
+    "description": "A single instruction item with instructions and sub-instructions"
+  },
+  "options": {},
+  "attributes": {
+    "instructions": {
+      "type": "text",
+      "required": true
+    },
+    "subInstructionsArray": {
+      "type": "component",
+      "repeatable": true,
+      "component": "growth-chart.sub-instruction"
+    }
+  }
+}

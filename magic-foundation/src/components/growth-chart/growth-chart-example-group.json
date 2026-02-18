@@ -1,0 +1,34 @@
+{
+  "collectionName": "components_growth_chart_growth_chart_example_groups",
+  "info": {
+    "displayName": "Growth Chart Example Group",
+    "description": "Growth chart example with paragraphs and image"
+  },
+  "options": {},
+  "attributes": {
+    "paragraphOne": {
+      "type": "text"
+    },
+    "paragraphTwo": {
+      "type": "text"
+    },
+    "paragraphThree": {
+      "type": "text"
+    },
+    "paragraphFour": {
+      "type": "text"
+    },
+    "paragraphFive": {
+      "type": "text"
+    },
+    "paragraphSix": {
+      "type": "text"
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"]
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_temple_resources_tabs",
+  "info": {
+    "displayName": "Temple Resources Tab",
+    "description": "Content for the Resources tab"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "richtext"
+    },
+    "resourceCategories": {
+      "type": "component",
+      "repeatable": true,
+      "component": "temple.resource-category"
+    }
+  }
+}

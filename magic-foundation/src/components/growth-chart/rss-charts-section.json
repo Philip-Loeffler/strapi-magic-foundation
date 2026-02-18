@@ -1,0 +1,30 @@
+{
+  "collectionName": "components_growth_chart_rss_charts_sections",
+  "info": {
+    "displayName": "RSS Charts Section",
+    "description": "Section for Russell-Silver Syndrome Growth Charts"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "default": "Russell-Silver Syndrome Growth Charts"
+    },
+    "description": {
+      "type": "richtext"
+    },
+    "cdcCharts": {
+      "type": "component",
+      "repeatable": true,
+      "component": "growth-chart.chart-link"
+    },
+    "rssCurvesDescription": {
+      "type": "richtext"
+    },
+    "rssCurveCharts": {
+      "type": "component",
+      "repeatable": true,
+      "component": "growth-chart.chart-link"
+    }
+  }
+}

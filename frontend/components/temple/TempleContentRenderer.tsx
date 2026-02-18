@@ -25,16 +25,34 @@ import {
   MorphingDialogContainer,
 } from "@/components/motion-primitives/morphing-dialog";
 
-interface RSSContentRendererProps {
+interface TempleContentRendererProps {
   content: any;
 }
 
-export function RSSContentRenderer({ content }: RSSContentRendererProps) {
+const TEMPLE_OVERVIEW_SECTIONS = [
+  "whatIsTemple",
+  "diagnosis",
+  "phenotype",
+  "cognitiveAbilities",
+  "firstSteps",
+  "hypoglycemia",
+  "treatments",
+  "weightManagement",
+  "boneAge",
+  "puberty",
+  "heightImprovement",
+  "growthHormoneTherapy",
+  "insuranceCoverage",
+  "factorsAffectingGht",
+  "adulthoodHealthIssues",
+] as const;
+
+export function TempleContentRenderer({ content }: TempleContentRendererProps) {
   if (!content) return null;
 
   // Handle Overview Tab
-  if (content.heroSection || content.whatIsRss) {
-    return <OverviewTabRenderer content={content} />;
+  if (content.heroSection || content.whatIsTemple) {
+    return <TempleOverviewRenderer content={content} />;
   }
 
   // Handle Personal Stories Tab
@@ -55,7 +73,7 @@ export function RSSContentRenderer({ content }: RSSContentRendererProps) {
   return null;
 }
 
-function OverviewTabRenderer({ content }: { content: any }) {
+function TempleOverviewRenderer({ content }: { content: any }) {
   return (
     <div className="space-y-12">
       {content.heroSection && (
@@ -63,7 +81,7 @@ function OverviewTabRenderer({ content }: { content: any }) {
           {/* Left: heading content */}
           <div className="space-y-4">
             {content.heroSection.title && (
-              <h1 className=" font-bold">{content.heroSection.title}</h1>
+              <h1 className="font-bold">{content.heroSection.title}</h1>
             )}
 
             {content.heroSection.subtitle && (
@@ -76,7 +94,7 @@ function OverviewTabRenderer({ content }: { content: any }) {
             <div className="relative w-full h-64 md:h-96 overflow-hidden rounded-lg">
               <img
                 src={getImageUrl(content.heroSection.image)}
-                alt={content.heroSection.title || "RSS Hero"}
+                alt={content.heroSection.title || "Temple Syndrome Hero"}
                 className="w-full h-full object-cover"
               />
             </div>
@@ -95,23 +113,9 @@ function OverviewTabRenderer({ content }: { content: any }) {
 
       {/* Content Sections - Accordion */}
       {(() => {
-        const sections = [
-          content.whatIsRss,
-          content.diagnosis,
-          content.phenotype,
-          content.cognitiveAbilities,
-          content.firstSteps,
-          content.hypoglycemia,
-          content.treatments,
-          content.weightManagement,
-          content.boneAge,
-          content.puberty,
-          content.heightImprovement,
-          content.growthHormoneTherapy,
-          content.insuranceCoverage,
-          content.factorsAffectingGht,
-          content.adulthoodHealthIssues,
-        ].filter(Boolean);
+        const sections = TEMPLE_OVERVIEW_SECTIONS.map(
+          (key) => content[key],
+        ).filter(Boolean);
 
         if (sections.length === 0) return null;
 
@@ -119,7 +123,7 @@ function OverviewTabRenderer({ content }: { content: any }) {
           <Accordion className="w-full" type="single" collapsible>
             {sections.map((section: any, index: number) => (
               <AccordionItem key={index} value={`section-${index}`}>
-                <AccordionTrigger className="text-left  font-bold">
+                <AccordionTrigger className="text-left font-bold">
                   {section.title || `Section ${index + 1}`}
                 </AccordionTrigger>
                 <AccordionContent className="pl-6 space-y-2">
@@ -437,7 +441,7 @@ function DivisionLeadersTabRenderer({ content }: { content: any }) {
 
 function getListItems(items: any): any[] {
   if (!items) return [];
-  const arr = Array.isArray(items) ? items : items.data;
+  const arr = Array.isArray(items) ? items : items?.data;
   return Array.isArray(arr) ? arr : [];
 }
 
@@ -476,7 +480,6 @@ function ContentSectionBody({ section }: { section: any }) {
           <RichTextRenderer content={section.content} />
         </div>
       )}
-      {/* Top-level list items (if present) */}
       <ListItems items={section.listItems} />
       {section.subsections && section.subsections.length > 0 && (
         <div className="space-y-6 mt-6">
@@ -495,17 +498,6 @@ function ContentSectionBody({ section }: { section: any }) {
           ))}
         </div>
       )}
-    </div>
-  );
-}
-
-function ContentSectionRenderer({ section }: { section: any }) {
-  if (!section) return null;
-
-  return (
-    <div className="space-y-4">
-      {section.title && <h2 className="text-3xl font-bold">{section.title}</h2>}
-      <ContentSectionBody section={section} />
     </div>
   );
 }
@@ -570,7 +562,7 @@ function renderChildren(children: any[]): React.ReactNode {
   if (!children) return null;
   return children.map((child: any, index: number) => {
     if (child.type === "text") {
-      let text = child.text;
+      let text: React.ReactNode = child.text;
       if (child.bold) text = <strong key={index}>{text}</strong>;
       if (child.italic) text = <em key={index}>{text}</em>;
       if (child.underline) text = <u key={index}>{text}</u>;

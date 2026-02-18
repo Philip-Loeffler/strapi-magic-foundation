@@ -1,0 +1,25 @@
+{
+  "collectionName": "components_growth_chart_chart_links",
+  "info": {
+    "displayName": "Chart Link",
+    "description": "A link to a growth chart resource"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "url": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "isExcelFile": {
+      "type": "boolean",
+      "default": false
+    }
+  }
+}

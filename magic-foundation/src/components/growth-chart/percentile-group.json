@@ -1,0 +1,31 @@
+{
+  "collectionName": "components_growth_chart_percentile_groups",
+  "info": {
+    "displayName": "Percentile Group",
+    "description": "Percentile group with multiple paragraphs and a link"
+  },
+  "options": {},
+  "attributes": {
+    "paragraphOne": {
+      "type": "text"
+    },
+    "paragraphTwo": {
+      "type": "text"
+    },
+    "paragraphThree": {
+      "type": "text"
+    },
+    "paragraphFour": {
+      "type": "text"
+    },
+    "paragraphFive": {
+      "type": "text"
+    },
+    "paragraphSix": {
+      "type": "text"
+    },
+    "seeAlsoLink": {
+      "type": "string"
+    }
+  }
+}

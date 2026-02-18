@@ -29,6 +29,215 @@ export interface EmergencyGeneticDisorderResponse
   };
 }
 
+export interface GrowthChartChartItem extends Struct.ComponentSchema {
+  collectionName: 'components_growth_chart_chart_items';
+  info: {
+    description: 'Individual chart item with title, link, paragraph, and image';
+    displayName: 'Chart Item';
+  };
+  attributes: {
+    image: Schema.Attribute.Media<'images'>;
+    link: Schema.Attribute.String & Schema.Attribute.Required;
+    paragraph: Schema.Attribute.Text;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface GrowthChartChartLink extends Struct.ComponentSchema {
+  collectionName: 'components_growth_chart_chart_links';
+  info: {
+    description: 'A link to a growth chart resource';
+    displayName: 'Chart Link';
+  };
+  attributes: {
+    description: Schema.Attribute.Text;
+    isExcelFile: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    url: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface GrowthChartGeneralGrowthChart extends Struct.ComponentSchema {
+  collectionName: 'components_growth_chart_general_growth_charts';
+  info: {
+    description: 'General growth chart section with boy and girl charts';
+    displayName: 'General Growth Chart';
+  };
+  attributes: {
+    boyChart: Schema.Attribute.Component<'growth-chart.chart-item', false>;
+    girlChart: Schema.Attribute.Component<'growth-chart.chart-item', false>;
+  };
+}
+
+export interface GrowthChartGrowthChartExampleGroup
+  extends Struct.ComponentSchema {
+  collectionName: 'components_growth_chart_growth_chart_example_groups';
+  info: {
+    description: 'Growth chart example with paragraphs and image';
+    displayName: 'Growth Chart Example Group';
+  };
+  attributes: {
+    image: Schema.Attribute.Media<'images'>;
+    paragraphFive: Schema.Attribute.Text;
+    paragraphFour: Schema.Attribute.Text;
+    paragraphOne: Schema.Attribute.Text;
+    paragraphSix: Schema.Attribute.Text;
+    paragraphThree: Schema.Attribute.Text;
+    paragraphTwo: Schema.Attribute.Text;
+  };
+}
+
+export interface GrowthChartInstructionItem extends Struct.ComponentSchema {
+  collectionName: 'components_growth_chart_instruction_items';
+  info: {
+    description: 'A single instruction section with title and steps';
+    displayName: 'Instruction Item';
+  };
+  attributes: {
+    description: Schema.Attribute.Text;
+    note: Schema.Attribute.RichText;
+    steps: Schema.Attribute.Component<'growth-chart.instruction-step', true>;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface GrowthChartInstructionStep extends Struct.ComponentSchema {
+  collectionName: 'components_growth_chart_instruction_steps';
+  info: {
+    description: 'A single step in an instruction list';
+    displayName: 'Instruction Step';
+  };
+  attributes: {
+    content: Schema.Attribute.RichText & Schema.Attribute.Required;
+    stepNumber: Schema.Attribute.Integer;
+    subSteps: Schema.Attribute.Component<'growth-chart.instruction-step', true>;
+  };
+}
+
+export interface GrowthChartInstructionsSection extends Struct.ComponentSchema {
+  collectionName: 'components_growth_chart_instructions_sections';
+  info: {
+    description: 'Section containing instructions for using growth charts';
+    displayName: 'Instructions Section';
+  };
+  attributes: {
+    instructions: Schema.Attribute.Component<
+      'growth-chart.instruction-item',
+      true
+    >;
+  };
+}
+
+export interface GrowthChartMeasuringInstruction
+  extends Struct.ComponentSchema {
+  collectionName: 'components_growth_chart_measuring_instructions';
+  info: {
+    description: 'A single instruction item with instructions and sub-instructions';
+    displayName: 'Measuring Instruction';
+  };
+  attributes: {
+    instructions: Schema.Attribute.Text & Schema.Attribute.Required;
+    subInstructionsArray: Schema.Attribute.Component<
+      'growth-chart.sub-instruction',
+      true
+    >;
+  };
+}
+
+export interface GrowthChartOtherSpecialtyGrowthCharts
+  extends Struct.ComponentSchema {
+  collectionName: 'components_growth_chart_other_specialty_growth_charts';
+  info: {
+    description: 'Other specialty growth charts section';
+    displayName: 'Other Specialty Growth Charts';
+  };
+  attributes: {
+    emailLink: Schema.Attribute.String;
+    paragraphOne: Schema.Attribute.Text;
+    paragraphOneContinued: Schema.Attribute.Text;
+    specialityGrowthChartList: Schema.Attribute.Component<
+      'growth-chart.specialty-chart-item',
+      true
+    >;
+  };
+}
+
+export interface GrowthChartPercentileGroup extends Struct.ComponentSchema {
+  collectionName: 'components_growth_chart_percentile_groups';
+  info: {
+    description: 'Percentile group with multiple paragraphs and a link';
+    displayName: 'Percentile Group';
+  };
+  attributes: {
+    paragraphFive: Schema.Attribute.Text;
+    paragraphFour: Schema.Attribute.Text;
+    paragraphOne: Schema.Attribute.Text;
+    paragraphSix: Schema.Attribute.Text;
+    paragraphThree: Schema.Attribute.Text;
+    paragraphTwo: Schema.Attribute.Text;
+    seeAlsoLink: Schema.Attribute.String;
+  };
+}
+
+export interface GrowthChartRssChartsSection extends Struct.ComponentSchema {
+  collectionName: 'components_growth_chart_rss_charts_sections';
+  info: {
+    description: 'Section for Russell-Silver Syndrome Growth Charts';
+    displayName: 'RSS Charts Section';
+  };
+  attributes: {
+    cdcCharts: Schema.Attribute.Component<'growth-chart.chart-link', true>;
+    description: Schema.Attribute.RichText;
+    rssCurveCharts: Schema.Attribute.Component<'growth-chart.chart-link', true>;
+    rssCurvesDescription: Schema.Attribute.RichText;
+    title: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Russell-Silver Syndrome Growth Charts'>;
+  };
+}
+
+export interface GrowthChartRssSgaCurvesSection extends Struct.ComponentSchema {
+  collectionName: 'components_growth_chart_rss_sga_curves_sections';
+  info: {
+    description: 'Section for RSS/SGA Growth Curves with Excel spreadsheets';
+    displayName: 'RSS/SGA Curves Section';
+  };
+  attributes: {
+    description: Schema.Attribute.RichText;
+    excelCharts: Schema.Attribute.Component<'growth-chart.chart-link', true>;
+    instructions: Schema.Attribute.Component<
+      'growth-chart.instruction-item',
+      true
+    >;
+    password: Schema.Attribute.String & Schema.Attribute.DefaultTo<'hormones'>;
+    title: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'RSS/SGA Growth Curves'>;
+  };
+}
+
+export interface GrowthChartSpecialtyChartItem extends Struct.ComponentSchema {
+  collectionName: 'components_growth_chart_specialty_chart_items';
+  info: {
+    description: 'A specialty growth chart list item';
+    displayName: 'Specialty Chart Item';
+  };
+  attributes: {
+    linkName: Schema.Attribute.String;
+    linkNameTwo: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface GrowthChartSubInstruction extends Struct.ComponentSchema {
+  collectionName: 'components_growth_chart_sub_instructions';
+  info: {
+    description: 'A sub-instruction item';
+    displayName: 'Sub Instruction';
+  };
+  attributes: {
+    subInstructions: Schema.Attribute.Text & Schema.Attribute.Required;
+  };
+}
+
 export interface RssContentSection extends Struct.ComponentSchema {
   collectionName: 'components_rss_content_sections';
   info: {
@@ -468,11 +677,255 @@ export interface SgaResourcesTab extends Struct.ComponentSchema {
   };
 }
 
+export interface TempleContentSection extends Struct.ComponentSchema {
+  collectionName: 'components_temple_content_sections';
+  info: {
+    description: 'A content section with title and rich text content';
+    displayName: 'Temple Content Section';
+  };
+  attributes: {
+    content: Schema.Attribute.RichText;
+    listItems: Schema.Attribute.Component<'temple.list-item', true>;
+    subsections: Schema.Attribute.Component<'temple.content-subsection', true>;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface TempleContentSubsection extends Struct.ComponentSchema {
+  collectionName: 'components_temple_content_subsections';
+  info: {
+    description: 'A subsection within a content section';
+    displayName: 'Temple Content Subsection';
+  };
+  attributes: {
+    content: Schema.Attribute.RichText;
+    listItems: Schema.Attribute.Component<'temple.list-item', true>;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface TempleDivisionLeader extends Struct.ComponentSchema {
+  collectionName: 'components_temple_division_leaders';
+  info: {
+    description: 'A division leader or consultant';
+    displayName: 'Temple Division Leader';
+  };
+  attributes: {
+    bio: Schema.Attribute.RichText;
+    email: Schema.Attribute.Email;
+    image: Schema.Attribute.Media<'images'>;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    phone: Schema.Attribute.String;
+    specializations: Schema.Attribute.Text;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface TempleDivisionLeadersTab extends Struct.ComponentSchema {
+  collectionName: 'components_temple_division_leaders_tabs';
+  info: {
+    description: 'Content for the Division Leaders tab';
+    displayName: 'Temple Division Leaders Tab';
+  };
+  attributes: {
+    description: Schema.Attribute.RichText;
+    leaders: Schema.Attribute.Component<'temple.division-leader', true>;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface TempleFaqItem extends Struct.ComponentSchema {
+  collectionName: 'components_temple_faq_items';
+  info: {
+    description: 'A single FAQ question and answer';
+    displayName: 'Temple FAQ Item';
+  };
+  attributes: {
+    answer: Schema.Attribute.RichText & Schema.Attribute.Required;
+    question: Schema.Attribute.String;
+  };
+}
+
+export interface TempleFaqSection extends Struct.ComponentSchema {
+  collectionName: 'components_temple_faq_sections';
+  info: {
+    description: 'FAQ section with questions and answers';
+    displayName: 'Temple FAQ Section';
+  };
+  attributes: {
+    faqs: Schema.Attribute.Component<'temple.faq-item', true>;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface TempleHeroSection extends Struct.ComponentSchema {
+  collectionName: 'components_temple_hero_sections';
+  info: {
+    description: 'Hero section with title and image';
+    displayName: 'Temple Hero Section';
+  };
+  attributes: {
+    description: Schema.Attribute.RichText;
+    image: Schema.Attribute.Media<'images'>;
+    subtitle: Schema.Attribute.Text;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface TempleListItem extends Struct.ComponentSchema {
+  collectionName: 'components_temple_list_items';
+  info: {
+    description: 'A single list item';
+    displayName: 'Temple List Item';
+  };
+  attributes: {
+    isHighlighted: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    text: Schema.Attribute.Text & Schema.Attribute.Required;
+  };
+}
+
+export interface TempleOverviewTab extends Struct.ComponentSchema {
+  collectionName: 'components_temple_overview_tabs';
+  info: {
+    description: 'Content for the Temple Syndrome Overview tab';
+    displayName: 'Temple Overview Tab';
+  };
+  attributes: {
+    adulthoodHealthIssues: Schema.Attribute.Component<
+      'temple.content-section',
+      false
+    >;
+    boneAge: Schema.Attribute.Component<'temple.content-section', false>;
+    cognitiveAbilities: Schema.Attribute.Component<
+      'temple.content-section',
+      false
+    >;
+    diagnosis: Schema.Attribute.Component<'temple.content-section', false>;
+    factorsAffectingGht: Schema.Attribute.Component<
+      'temple.content-section',
+      false
+    >;
+    faqSection: Schema.Attribute.Component<'temple.faq-section', false>;
+    firstSteps: Schema.Attribute.Component<'temple.content-section', false>;
+    growthHormoneTherapy: Schema.Attribute.Component<
+      'temple.content-section',
+      false
+    >;
+    heightImprovement: Schema.Attribute.Component<
+      'temple.content-section',
+      false
+    >;
+    heroSection: Schema.Attribute.Component<'temple.hero-section', false>;
+    hypoglycemia: Schema.Attribute.Component<'temple.content-section', false>;
+    insuranceCoverage: Schema.Attribute.Component<
+      'temple.content-section',
+      false
+    >;
+    phenotype: Schema.Attribute.Component<'temple.content-section', false>;
+    puberty: Schema.Attribute.Component<'temple.content-section', false>;
+    treatments: Schema.Attribute.Component<'temple.content-section', false>;
+    weightManagement: Schema.Attribute.Component<
+      'temple.content-section',
+      false
+    >;
+    whatIsTemple: Schema.Attribute.Component<'temple.content-section', false>;
+  };
+}
+
+export interface TemplePersonalStoriesTab extends Struct.ComponentSchema {
+  collectionName: 'components_temple_personal_stories_tabs';
+  info: {
+    description: 'Content for the Personal Stories tab';
+    displayName: 'Temple Personal Stories Tab';
+  };
+  attributes: {
+    description: Schema.Attribute.RichText;
+    stories: Schema.Attribute.Component<'temple.personal-story', true>;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface TemplePersonalStory extends Struct.ComponentSchema {
+  collectionName: 'components_temple_personal_stories';
+  info: {
+    description: 'A personal story from someone with Temple Syndrome';
+    displayName: 'Temple Personal Story';
+  };
+  attributes: {
+    author: Schema.Attribute.String;
+    content: Schema.Attribute.RichText & Schema.Attribute.Required;
+    date: Schema.Attribute.Date;
+    image: Schema.Attribute.Media<'images'>;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface TempleResourceCategory extends Struct.ComponentSchema {
+  collectionName: 'components_temple_resource_categories';
+  info: {
+    description: 'A category of resources';
+    displayName: 'Temple Resource Category';
+  };
+  attributes: {
+    description: Schema.Attribute.Text;
+    resources: Schema.Attribute.Component<'temple.resource-item', true>;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface TempleResourceItem extends Struct.ComponentSchema {
+  collectionName: 'components_temple_resource_items';
+  info: {
+    description: 'A single resource item';
+    displayName: 'Temple Resource Item';
+  };
+  attributes: {
+    description: Schema.Attribute.Text;
+    file: Schema.Attribute.Media<'files' | 'images' | 'videos'>;
+    resourceType: Schema.Attribute.Enumeration<
+      ['link', 'document', 'video', 'other']
+    > &
+      Schema.Attribute.DefaultTo<'link'>;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    url: Schema.Attribute.String;
+  };
+}
+
+export interface TempleResourcesTab extends Struct.ComponentSchema {
+  collectionName: 'components_temple_resources_tabs';
+  info: {
+    description: 'Content for the Resources tab';
+    displayName: 'Temple Resources Tab';
+  };
+  attributes: {
+    description: Schema.Attribute.RichText;
+    resourceCategories: Schema.Attribute.Component<
+      'temple.resource-category',
+      true
+    >;
+    title: Schema.Attribute.String;
+  };
+}
+
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
       'emergency.emergency-accordion-item': EmergencyEmergencyAccordionItem;
       'emergency.genetic-disorder-response': EmergencyGeneticDisorderResponse;
+      'growth-chart.chart-item': GrowthChartChartItem;
+      'growth-chart.chart-link': GrowthChartChartLink;
+      'growth-chart.general-growth-chart': GrowthChartGeneralGrowthChart;
+      'growth-chart.growth-chart-example-group': GrowthChartGrowthChartExampleGroup;
+      'growth-chart.instruction-item': GrowthChartInstructionItem;
+      'growth-chart.instruction-step': GrowthChartInstructionStep;
+      'growth-chart.instructions-section': GrowthChartInstructionsSection;
+      'growth-chart.measuring-instruction': GrowthChartMeasuringInstruction;
+      'growth-chart.other-specialty-growth-charts': GrowthChartOtherSpecialtyGrowthCharts;
+      'growth-chart.percentile-group': GrowthChartPercentileGroup;
+      'growth-chart.rss-charts-section': GrowthChartRssChartsSection;
+      'growth-chart.rss-sga-curves-section': GrowthChartRssSgaCurvesSection;
+      'growth-chart.specialty-chart-item': GrowthChartSpecialtyChartItem;
+      'growth-chart.sub-instruction': GrowthChartSubInstruction;
       'rss.content-section': RssContentSection;
       'rss.content-subsection': RssContentSubsection;
       'rss.division-leader': RssDivisionLeader;
@@ -501,6 +954,20 @@ declare module '@strapi/strapi' {
       'sga.resource-category': SgaResourceCategory;
       'sga.resource-item': SgaResourceItem;
       'sga.resources-tab': SgaResourcesTab;
+      'temple.content-section': TempleContentSection;
+      'temple.content-subsection': TempleContentSubsection;
+      'temple.division-leader': TempleDivisionLeader;
+      'temple.division-leaders-tab': TempleDivisionLeadersTab;
+      'temple.faq-item': TempleFaqItem;
+      'temple.faq-section': TempleFaqSection;
+      'temple.hero-section': TempleHeroSection;
+      'temple.list-item': TempleListItem;
+      'temple.overview-tab': TempleOverviewTab;
+      'temple.personal-stories-tab': TemplePersonalStoriesTab;
+      'temple.personal-story': TemplePersonalStory;
+      'temple.resource-category': TempleResourceCategory;
+      'temple.resource-item': TempleResourceItem;
+      'temple.resources-tab': TempleResourcesTab;
     }
   }
 }

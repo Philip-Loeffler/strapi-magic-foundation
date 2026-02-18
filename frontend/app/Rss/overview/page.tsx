@@ -92,7 +92,7 @@ export default async function RSSOverviewPage() {
         <div className="w-full max-w-7xl mb-12">
           <h1 className="text-3xl font-bold">Russel Silver Syndrome</h1>
         </div>
-        <Tabs defaultValue="overview" className="w-full max-w-7xl">
+        <Tabs defaultValue="overview" className="w-full max-w-7xl flex flex-col">
           <div className="flex justify-center mb-8">
             <TabsList className="grid w-full max-w-4xl grid-cols-4 gap-2">
               {tabs.map((tab) => (
@@ -106,7 +106,6 @@ export default async function RSSOverviewPage() {
               ))}
             </TabsList>
           </div>
-
           <TabsContent value="overview" className="w-full mt-8">
             {rssData?.overviewTab ? (
               <RSSContentRenderer content={rssData.overviewTab} />
@@ -116,7 +115,6 @@ export default async function RSSOverviewPage() {
               </div>
             )}
           </TabsContent>
-
           <TabsContent value="personal-stories" className="w-full mt-0">
             <div className="h-[50px] mb-8 bg-[#B0C3FF] p-[12px_24px] gap-[10px] rounded-[12px] font-bold">
               <h2 className="text-xl font-semibold text-slate-800 dark:text-slate-200">
@@ -133,7 +131,6 @@ export default async function RSSOverviewPage() {
               </div>
             )}
           </TabsContent>
-
           <TabsContent value="resources" className="w-full mt-8">
             {rssData?.resourcesTab ? (
               <RSSContentRenderer content={rssData.resourcesTab} />
@@ -145,7 +142,6 @@ export default async function RSSOverviewPage() {
               </div>
             )}
           </TabsContent>
-
           <TabsContent value="division-leaders" className="w-full mt-0">
             <div className="h-[50px] bg-[#B0C3FF] p-[12px_24px] gap-[10px] rounded-[12px] font-bold mb-8">
               <h2 className="text-xl font-semibold text-slate-800 dark:text-slate-200">
