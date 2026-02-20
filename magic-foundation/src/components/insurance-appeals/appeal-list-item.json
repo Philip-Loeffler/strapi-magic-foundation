@@ -1,0 +1,17 @@
+{
+  "collectionName": "components_insurance_appeals_appeal_list_items",
+  "info": {
+    "displayName": "Appeal Process List Item",
+    "description": "Bullet item for Appeal Process tab"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "richtext"
+    }
+  }
+}

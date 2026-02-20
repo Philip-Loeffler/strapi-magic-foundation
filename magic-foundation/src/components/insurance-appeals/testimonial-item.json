@@ -1,0 +1,20 @@
+{
+  "collectionName": "components_insurance_appeals_testimonial_items",
+  "info": {
+    "displayName": "Insurance Testimonial",
+    "description": "Patient assistance testimonial"
+  },
+  "options": {},
+  "attributes": {
+    "quote": {
+      "type": "richtext",
+      "required": true
+    },
+    "author": {
+      "type": "string"
+    },
+    "location": {
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "collectionName": "components_insurance_appeals_appeal_process_tabs",
+  "info": {
+    "displayName": "Insurance Appeal Process Tab",
+    "description": "Appeal Process tab content"
+  },
+  "options": {},
+  "attributes": {
+    "intro": {
+      "type": "richtext"
+    },
+    "listItems": {
+      "type": "component",
+      "repeatable": true,
+      "component": "insurance-appeals.appeal-list-item"
+    },
+    "buttonText": {
+      "type": "string"
+    },
+    "buttonUrl": {
+      "type": "string"
+    },
+    "footnote": {
+      "type": "text"
+    }
+  }
+}

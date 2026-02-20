@@ -1,0 +1,39 @@
+{
+  "kind": "singleType",
+  "collectionName": "insurance_appeals",
+  "info": {
+    "singularName": "insurance-appeals",
+    "pluralName": "insurance-appeals-pages",
+    "displayName": "Insurance Appeals",
+    "description": "Insurance Appeals page content"
+  },
+  "options": {},
+  "pluginOptions": {},
+  "attributes": {
+    "overviewTab": {
+      "type": "component",
+      "component": "insurance-appeals.overview-tab",
+      "repeatable": false
+    },
+    "faqTab": {
+      "type": "component",
+      "component": "insurance-appeals.faq-tab",
+      "repeatable": false
+    },
+    "appealProcessTab": {
+      "type": "component",
+      "component": "insurance-appeals.appeal-process-tab",
+      "repeatable": false
+    },
+    "followUpProcedureTab": {
+      "type": "component",
+      "component": "insurance-appeals.follow-up-procedure-tab",
+      "repeatable": false
+    },
+    "patientAssistanceTab": {
+      "type": "component",
+      "component": "insurance-appeals.patient-assistance-tab",
+      "repeatable": false
+    }
+  }
+}

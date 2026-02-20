@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_insurance_appeals_overview_tabs",
+  "info": {
+    "displayName": "Insurance Overview Tab",
+    "description": "Overview tab with video and accordion sections"
+  },
+  "options": {},
+  "attributes": {
+    "intro": {
+      "type": "richtext"
+    },
+    "videoEmbedUrl": {
+      "type": "string"
+    },
+    "accordionSections": {
+      "type": "component",
+      "repeatable": true,
+      "component": "insurance-appeals.accordion-section"
+    }
+  }
+}

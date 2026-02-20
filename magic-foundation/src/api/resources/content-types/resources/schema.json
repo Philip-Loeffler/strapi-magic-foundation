@@ -1,0 +1,29 @@
+{
+  "kind": "singleType",
+  "collectionName": "resources_pages",
+  "info": {
+    "singularName": "resources",
+    "pluralName": "resources-pages",
+    "displayName": "Resources",
+    "description": "Resources page with Overview, Informational Videos, and Social Media tabs"
+  },
+  "options": {},
+  "pluginOptions": {},
+  "attributes": {
+    "overviewTab": {
+      "type": "component",
+      "component": "resources.overview-tab",
+      "repeatable": false
+    },
+    "informationalVideosTab": {
+      "type": "component",
+      "component": "resources.informational-videos-tab",
+      "repeatable": false
+    },
+    "socialMediaTab": {
+      "type": "component",
+      "component": "resources.social-media-tab",
+      "repeatable": false
+    }
+  }
+}

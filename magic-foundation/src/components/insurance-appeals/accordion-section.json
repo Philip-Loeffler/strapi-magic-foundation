@@ -1,0 +1,17 @@
+{
+  "collectionName": "components_insurance_appeals_accordion_sections",
+  "info": {
+    "displayName": "Insurance Accordion Section",
+    "description": "Expandable section for Overview tab"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "content": {
+      "type": "richtext"
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "collectionName": "components_resources_social_media_tabs",
+  "info": {
+    "displayName": "Social Media Tab",
+    "description": "Parents and adults division-specific groups"
+  },
+  "options": {},
+  "attributes": {
+    "parentsSectionTitle": {
+      "type": "string",
+      "required": false,
+      "default": "PARENTS of affected children, connect to our closed division specific FB groups through the links below:"
+    },
+    "parentsGroups": {
+      "type": "component",
+      "repeatable": true,
+      "component": "resources.social-link"
+    },
+    "adultsSectionTitle": {
+      "type": "string",
+      "required": false,
+      "default": "Affected Adults - connect to our closed division specific FB groups through the links below:"
+    },
+    "adultsGroups": {
+      "type": "component",
+      "repeatable": true,
+      "component": "resources.social-link"
+    }
+  }
+}

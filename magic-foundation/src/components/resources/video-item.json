@@ -1,0 +1,24 @@
+{
+  "collectionName": "components_resources_video_items",
+  "info": {
+    "displayName": "Video Item",
+    "description": "Single video entry with thumbnail and link"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "thumbnail": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"]
+    },
+    "videoUrl": {
+      "type": "string",
+      "required": false
+    }
+  }
+}

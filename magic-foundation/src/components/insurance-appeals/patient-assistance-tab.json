@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_insurance_appeals_patient_assistance_tabs",
+  "info": {
+    "displayName": "Insurance Patient Assistance Tab",
+    "description": "Patient Assistance tab with intro and testimonials"
+  },
+  "options": {},
+  "attributes": {
+    "intro": {
+      "type": "richtext"
+    },
+    "testimonials": {
+      "type": "component",
+      "repeatable": true,
+      "component": "insurance-appeals.testimonial-item"
+    }
+  }
+}

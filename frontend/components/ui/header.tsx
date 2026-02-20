@@ -15,50 +15,57 @@ import {
 
 const components = [
   {
-    title: "RSS",
-    href: "/Rss",
-    description: null,
-    isTrigger: true,
-    isButton: false,
-
-    items: [
-      {
-        title: "About us",
-        href: "/docs",
-      },
-      {
-        title: "History",
-        href: "/docs/installation",
-      },
-      {
-        title: "Staff",
-        href: "/docs/primitives/typography",
-      },
-      {
-        title: "Board of Directors",
-        href: "/docs",
-      },
-      {
-        title: "Division Consultants",
-        href: "/docs/installation",
-      },
-      {
-        title: "Medical Advisory Board",
-        href: "/docs/primitives/typography",
-      },
-    ],
-  },
-  {
-    title: "SGA",
-    href: "/Sga",
+    title: "Disorder",
+    href: "/disorder",
     description: null,
     isTrigger: false,
     isButton: false,
     items: [],
   },
   {
-    title: "Temple",
-    href: "/Temple",
+    title: "Insurance Appeals",
+    href: "/insurance-appeals",
+    description: null,
+    isTrigger: false,
+    isButton: false,
+    items: [],
+  },
+
+  {
+    title: "Events",
+    href: "/events",
+    description: null,
+    isTrigger: false,
+    isButton: false,
+    items: [],
+  },
+  {
+    title: "Resources",
+    href: "/resources",
+    description: null,
+    isTrigger: false,
+    isButton: false,
+    items: [],
+  },
+  {
+    title: "Give",
+    href: "/give",
+    description: null,
+    isTrigger: false,
+    isButton: false,
+    items: [],
+  },
+  {
+    title: "Growth Charts",
+    href: "/growth-charts",
+    description: null,
+    isTrigger: false,
+    isButton: false,
+    items: [],
+  },
+  {
+    title: "About",
+    href: "/About",
     description: null,
     isTrigger: false,
     isButton: false,
@@ -109,7 +116,7 @@ const ListItem = React.forwardRef<
           ref={ref}
           className={cn(
             "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
-            className
+            className,
           )}
           {...props}
         >

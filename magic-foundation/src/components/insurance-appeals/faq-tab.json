@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_insurance_appeals_faq_tabs",
+  "info": {
+    "displayName": "Insurance FAQ Tab",
+    "description": "FAQ tab with Q&A list"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "faqItems": {
+      "type": "component",
+      "repeatable": true,
+      "component": "insurance-appeals.faq-item"
+    }
+  }
+}

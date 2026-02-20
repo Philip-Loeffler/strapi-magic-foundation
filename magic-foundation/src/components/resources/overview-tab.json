@@ -1,0 +1,14 @@
+{
+  "collectionName": "components_resources_overview_tabs",
+  "info": {
+    "displayName": "Resources Overview Tab",
+    "description": "Overview tab content (brochures, links, etc.)"
+  },
+  "options": {},
+  "attributes": {
+    "content": {
+      "type": "richtext",
+      "required": false
+    }
+  }
+}

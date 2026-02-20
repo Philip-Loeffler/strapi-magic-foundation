@@ -616,6 +616,36 @@ export interface ApiEmergencyEmergency extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiEventEvent extends Struct.CollectionTypeSchema {
+  collectionName: 'events';
+  info: {
+    description: 'Upcoming events for the Events page carousel';
+    displayName: 'Event';
+    pluralName: 'events';
+    singularName: 'event';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    date: Schema.Attribute.String & Schema.Attribute.Required;
+    fullDescription: Schema.Attribute.RichText;
+    image: Schema.Attribute.Media<'images'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::event.event'> &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    shortDescription: Schema.Attribute.Text & Schema.Attribute.Required;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiGrowthChartGrowthChart extends Struct.CollectionTypeSchema {
   collectionName: 'growth_charts';
   info: {
@@ -822,6 +852,52 @@ export interface ApiInsulinLikeGrowthFactorDeficiencyInsulinLikeGrowthFactorDefi
   };
 }
 
+export interface ApiInsuranceAppealsInsuranceAppeals
+  extends Struct.SingleTypeSchema {
+  collectionName: 'insurance_appeals';
+  info: {
+    description: 'Insurance Appeals page content';
+    displayName: 'Insurance Appeals';
+    pluralName: 'insurance-appeals-pages';
+    singularName: 'insurance-appeals';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    appealProcessTab: Schema.Attribute.Component<
+      'insurance-appeals.appeal-process-tab',
+      false
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    faqTab: Schema.Attribute.Component<'insurance-appeals.faq-tab', false>;
+    followUpProcedureTab: Schema.Attribute.Component<
+      'insurance-appeals.follow-up-procedure-tab',
+      false
+    >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::insurance-appeals.insurance-appeals'
+    > &
+      Schema.Attribute.Private;
+    overviewTab: Schema.Attribute.Component<
+      'insurance-appeals.overview-tab',
+      false
+    >;
+    patientAssistanceTab: Schema.Attribute.Component<
+      'insurance-appeals.patient-assistance-tab',
+      false
+    >;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiIntrauterineGrowthRestrictionIntrauterineGrowthRestriction
   extends Struct.CollectionTypeSchema {
   collectionName: 'intrauterine_growth_restrictions';
@@ -1021,6 +1097,43 @@ export interface ApiPrecociousPubertyPrecociousPuberty
     resourcesTab: Schema.Attribute.Component<'disorder.resources-tab', false>;
     slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
     title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiResourcesResources extends Struct.SingleTypeSchema {
+  collectionName: 'resources_pages';
+  info: {
+    description: 'Resources page with Overview, Informational Videos, and Social Media tabs';
+    displayName: 'Resources';
+    pluralName: 'resources-pages';
+    singularName: 'resources';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    informationalVideosTab: Schema.Attribute.Component<
+      'resources.informational-videos-tab',
+      false
+    >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::resources.resources'
+    > &
+      Schema.Attribute.Private;
+    overviewTab: Schema.Attribute.Component<'resources.overview-tab', false>;
+    publishedAt: Schema.Attribute.DateTime;
+    socialMediaTab: Schema.Attribute.Component<
+      'resources.social-media-tab',
+      false
+    >;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1789,16 +1902,19 @@ declare module '@strapi/strapi' {
       'api::congenital-adrenal-hyperplasia.congenital-adrenal-hyperplasia': ApiCongenitalAdrenalHyperplasiaCongenitalAdrenalHyperplasia;
       'api::cushing-syndrome.cushing-syndrome': ApiCushingSyndromeCushingSyndrome;
       'api::emergency.emergency': ApiEmergencyEmergency;
+      'api::event.event': ApiEventEvent;
       'api::growth-chart.growth-chart': ApiGrowthChartGrowthChart;
       'api::growth-hormone-deficiency-adult.growth-hormone-deficiency-adult': ApiGrowthHormoneDeficiencyAdultGrowthHormoneDeficiencyAdult;
       'api::growth-hormone-deficiency-child.growth-hormone-deficiency-child': ApiGrowthHormoneDeficiencyChildGrowthHormoneDeficiencyChild;
       'api::idiopathic-short-stature.idiopathic-short-stature': ApiIdiopathicShortStatureIdiopathicShortStature;
       'api::insulin-like-growth-factor-deficiency.insulin-like-growth-factor-deficiency': ApiInsulinLikeGrowthFactorDeficiencyInsulinLikeGrowthFactorDeficiency;
+      'api::insurance-appeals.insurance-appeals': ApiInsuranceAppealsInsuranceAppeals;
       'api::intrauterine-growth-restriction.intrauterine-growth-restriction': ApiIntrauterineGrowthRestrictionIntrauterineGrowthRestriction;
       'api::mccune-albright-syndrome.mccune-albright-syndrome': ApiMccuneAlbrightSyndromeMccuneAlbrightSyndrome;
       'api::optic-nerve-hypoplasia.optic-nerve-hypoplasia': ApiOpticNerveHypoplasiaOpticNerveHypoplasia;
       'api::panhypopituitarism-tumor.panhypopituitarism-tumor': ApiPanhypopituitarismTumorPanhypopituitarismTumor;
       'api::precocious-puberty.precocious-puberty': ApiPrecociousPubertyPrecociousPuberty;
+      'api::resources.resources': ApiResourcesResources;
       'api::russell-silver-syndrome.russell-silver-syndrome': ApiRussellSilverSyndromeRussellSilverSyndrome;
       'api::septo-optic-dysplasia.septo-optic-dysplasia': ApiSeptoOpticDysplasiaSeptoOpticDysplasia;
       'api::small-for-gestational-age.small-for-gestational-age': ApiSmallForGestationalAgeSmallForGestationalAge;

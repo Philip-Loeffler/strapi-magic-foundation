@@ -1,0 +1,575 @@
+"use client";
+
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import Link from "next/link";
+import {
+  MorphingDialog,
+  MorphingDialogTrigger,
+  MorphingDialogContent,
+  MorphingDialogTitle,
+  MorphingDialogSubtitle,
+  MorphingDialogImage,
+  MorphingDialogClose,
+  MorphingDialogContainer,
+} from "@/components/motion-primitives/morphing-dialog";
+
+interface AboutContentRendererProps {
+  content: any;
+}
+
+export function AboutContentRenderer({ content }: AboutContentRendererProps) {
+  if (!content) return null;
+
+  // Handle Overview Tab
+  if (content.introParagraphs || content.goalsForChildren || content.goalsForAdults) {
+    return <OverviewTabRenderer content={content} />;
+  }
+
+  // Handle History Tab
+  if (content.founders || content.historySections) {
+    return <HistoryTabRenderer content={content} />;
+  }
+
+  // Handle Team Structure Tab
+  if (content.boardMembers || content.staffMembers || content.divisionConsultants) {
+    return <TeamStructureTabRenderer content={content} />;
+  }
+
+  // Handle Contact Tab
+  if (content.mapEmbedUrl || content.address || content.phoneNumbers) {
+    return <ContactTabRenderer content={content} />;
+  }
+
+  return null;
+}
+
+function OverviewTabRenderer({ content }: { content: any }) {
+  return (
+    <div className="space-y-8">
+      {/* Intro Paragraphs */}
+      {content.introParagraphs && content.introParagraphs.length > 0 && (
+        <div className="space-y-4">
+          {content.introParagraphs.map((paragraph: any, index: number) => (
+            <div key={index} className="prose max-w-none">
+              <RichTextRenderer content={paragraph.content} />
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Goals for Children */}
+      {content.goalsForChildren && (
+        <div className="space-y-4">
+          <h2 className="text-2xl font-bold">{content.goalsForChildren.title || "For affected children"}</h2>
+          {content.goalsForChildren.goals && content.goalsForChildren.goals.length > 0 && (
+            <ul className="list-disc pl-6 space-y-2">
+              {content.goalsForChildren.goals.map((goal: any, index: number) => (
+                <li key={index}>
+                  <RichTextRenderer content={goal.text} />
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      )}
+
+      {/* Goals for Adults */}
+      {content.goalsForAdults && (
+        <div className="space-y-4">
+          <h2 className="text-2xl font-bold">{content.goalsForAdults.title || "For affected adults"}</h2>
+          {content.goalsForAdults.goals && content.goalsForAdults.goals.length > 0 && (
+            <ul className="list-disc pl-6 space-y-2">
+              {content.goalsForAdults.goals.map((goal: any, index: number) => (
+                <li key={index}>
+                  <RichTextRenderer content={goal.text} />
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      )}
+
+      {/* Disclaimer */}
+      {content.disclaimer && (
+        <div className="prose max-w-none">
+          <RichTextRenderer content={content.disclaimer.content} />
+        </div>
+      )}
+
+      {/* Height Measurement Instructions */}
+      {content.heightMeasurementInstructions && (
+        <div className="space-y-4">
+          {content.heightMeasurementInstructions.title && (
+            <h2 className="text-2xl font-bold">{content.heightMeasurementInstructions.title}</h2>
+          )}
+          {content.heightMeasurementInstructions.instructions && content.heightMeasurementInstructions.instructions.length > 0 && (
+            <ol className="list-decimal pl-6 space-y-2">
+              {content.heightMeasurementInstructions.instructions.map((instruction: any, index: number) => (
+                <li key={index}>
+                  <RichTextRenderer content={instruction.text} />
+                </li>
+              ))}
+            </ol>
+          )}
+          {content.heightMeasurementInstructions.footerText && (
+            <p className="text-muted-foreground">{content.heightMeasurementInstructions.footerText}</p>
+          )}
+        </div>
+      )}
+
+      {/* Testimonial */}
+      {content.testimonial && (
+        <div className="border-l-4 border-primary pl-4 italic my-8">
+          <RichTextRenderer content={content.testimonial.quote} />
+          {content.testimonial.author && (
+            <p className="mt-2 not-italic">
+              <strong>{content.testimonial.author}</strong>
+              {content.testimonial.location && `, ${content.testimonial.location}`}
+            </p>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function HistoryTabRenderer({ content }: { content: any }) {
+  const PLACEHOLDER_AVATAR =
+    "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2394a3b8'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E";
+
+  return (
+    <div className="space-y-12">
+      {/* Meet the Founders */}
+      {content.founders && content.founders.length > 0 && (
+        <div className="space-y-6">
+          <h2 className="text-3xl font-bold text-center">Meet the Founders</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            {content.founders.map((founder: any, index: number) => {
+              const imageUrl = founder.image
+                ? getImageUrl(founder.image)
+                : PLACEHOLDER_AVATAR;
+              return (
+                <div key={index} className="text-center">
+                  <div className="w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden bg-gray-200">
+                    <img
+                      src={imageUrl}
+                      alt={founder.name}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <h3 className="text-lg font-semibold">{founder.name}</h3>
+                  {founder.bioUrl && (
+                    <Link
+                      href={founder.bioUrl}
+                      className="text-primary hover:underline text-sm"
+                    >
+                      View Bio
+                    </Link>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+      {/* History Sections */}
+      {content.historySections && content.historySections.length > 0 && (
+        <div className="space-y-8">
+          {content.historySections.map((section: any, index: number) => (
+            <div key={index} className="space-y-4">
+              {section.title && (
+                <h2 className="text-2xl font-bold">{section.title}</h2>
+              )}
+              {section.content && (
+                <div className="prose max-w-none">
+                  <RichTextRenderer content={section.content} />
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function TeamStructureTabRenderer({ content }: { content: any }) {
+  const PLACEHOLDER_AVATAR =
+    "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2394a3b8'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E";
+
+  return (
+    <div className="space-y-12">
+      {/* Board Members */}
+      {content.boardMembers && content.boardMembers.length > 0 && (
+        <div className="space-y-6">
+          <div className="h-[50px] bg-[#B0C3FF] p-[12px_24px] gap-[10px] rounded-[12px] font-bold">
+            <h2 className="text-xl font-semibold text-slate-800">MAGIC'S BOARD</h2>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {content.boardMembers.map((member: any, index: number) => {
+              const imageUrl = member.image
+                ? getImageUrl(member.image)
+                : PLACEHOLDER_AVATAR;
+              return (
+                <div key={index} className="text-center">
+                  <div className="w-48 h-48 mx-auto mb-4 overflow-hidden bg-gray-200 border-2 border-blue-900 rounded">
+                    <img
+                      src={imageUrl}
+                      alt={member.name}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <h3 className="text-lg font-semibold">{member.name}</h3>
+                  <p className="text-sm text-muted-foreground">{member.title}</p>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+      {/* Division Consultants */}
+      {content.divisionConsultants && (
+        <div className="space-y-6">
+          <div className="h-[50px] bg-[#B0C3FF] p-[12px_24px] gap-[10px] rounded-[12px] font-bold">
+            <h2 className="text-xl font-semibold text-slate-800">DIVISION CONSULTANTS</h2>
+          </div>
+          {content.divisionConsultants.description && (
+            <div className="prose max-w-none">
+              <RichTextRenderer content={content.divisionConsultants.description} />
+            </div>
+          )}
+          {content.divisionConsultants.consultants && content.divisionConsultants.consultants.length > 0 && (
+            <ul className="list-disc pl-6 space-y-2">
+              {content.divisionConsultants.consultants.map((consultant: any, index: number) => (
+                <li key={index}>
+                  <strong>{consultant.disorder}</strong> - {consultant.consultantName}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      )}
+
+      {/* Staff Members */}
+      {content.staffMembers && content.staffMembers.length > 0 && (
+        <div className="space-y-6">
+          <div className="h-[50px] bg-[#B0C3FF] p-[12px_24px] gap-[10px] rounded-[12px] font-bold">
+            <h2 className="text-xl font-semibold text-slate-800">STAFF</h2>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            {content.staffMembers.map((member: any, index: number) => {
+              const imageUrl = member.image
+                ? getImageUrl(member.image)
+                : PLACEHOLDER_AVATAR;
+              return (
+                <div key={index} className="text-center">
+                  <div className="w-48 h-48 mx-auto mb-4 overflow-hidden bg-gray-200 border-2 border-blue-900 rounded">
+                    <img
+                      src={imageUrl}
+                      alt={member.name}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <h3 className="text-lg font-semibold">{member.name}</h3>
+                  <p className="text-sm text-muted-foreground">{member.title}</p>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+      {/* Medical Advisory Board */}
+      {content.medicalAdvisoryBoard && content.medicalAdvisoryBoard.length > 0 && (
+        <div className="space-y-6">
+          <div className="h-[50px] bg-[#B0C3FF] p-[12px_24px] gap-[10px] rounded-[12px] font-bold">
+            <h2 className="text-xl font-semibold text-slate-800">MEDICAL ADVISORY BOARD</h2>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            {content.medicalAdvisoryBoard.map((advisor: any, index: number) => {
+              const imageUrl = advisor.image
+                ? getImageUrl(advisor.image)
+                : PLACEHOLDER_AVATAR;
+              return (
+                <div key={index} className="text-center">
+                  <div className="w-48 h-48 mx-auto mb-4 overflow-hidden bg-gray-200 border-2 border-blue-900 rounded">
+                    <img
+                      src={imageUrl}
+                      alt={advisor.name}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <h3 className="text-lg font-semibold">{advisor.name}</h3>
+                  {advisor.qualifications && (
+                    <div className="text-sm text-muted-foreground mt-2">
+                      <RichTextRenderer content={advisor.qualifications} />
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function ContactTabRenderer({ content }: { content: any }) {
+  return (
+    <div className="space-y-8">
+      {/* Map and Contact Info */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        {/* Map */}
+        <div className="lg:col-span-2">
+          {content.mapEmbedUrl ? (
+            <div className="w-full h-96 rounded-lg overflow-hidden">
+              <iframe
+                src={content.mapEmbedUrl}
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+            </div>
+          ) : (
+            <div className="w-full h-96 bg-gray-200 rounded-lg flex items-center justify-center">
+              <p className="text-muted-foreground">Map placeholder</p>
+            </div>
+          )}
+        </div>
+
+        {/* Contact Information */}
+        <div className="space-y-4">
+          <h3 className="text-xl font-bold">Contact</h3>
+          {content.address && (
+            <div>
+              <p className="text-sm text-muted-foreground">Address:</p>
+              <p className="text-sm">{content.address}</p>
+            </div>
+          )}
+          {content.phoneNumbers && content.phoneNumbers.length > 0 && (
+            <div className="space-y-2">
+              {content.phoneNumbers.map((phone: any, index: number) => (
+                <div key={index}>
+                  {phone.label && (
+                    <span className="text-sm text-muted-foreground">{phone.label}: </span>
+                  )}
+                  <a href={`tel:${phone.value}`} className="text-sm hover:underline">
+                    {phone.value}
+                  </a>
+                </div>
+              ))}
+            </div>
+          )}
+          {content.fax && (
+            <div>
+              <p className="text-sm text-muted-foreground">Fax:</p>
+              <p className="text-sm">{content.fax}</p>
+            </div>
+          )}
+          {content.email && (
+            <div>
+              <p className="text-sm text-muted-foreground">Email:</p>
+              <a href={`mailto:${content.email}`} className="text-sm hover:underline">
+                {content.email}
+              </a>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Contact Form */}
+      <div className="space-y-6">
+        <h2 className="text-2xl font-bold">Send us a Message</h2>
+        <form className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label htmlFor="fullName" className="block text-sm font-medium mb-2">
+                Full Name
+              </label>
+              <input
+                type="text"
+                id="fullName"
+                name="fullName"
+                placeholder="Full Name Here"
+                className="w-full px-4 py-2 border rounded-md"
+              />
+            </div>
+            <div>
+              <label htmlFor="phone" className="block text-sm font-medium mb-2">
+                Phone Number
+              </label>
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                placeholder="000-000-0000"
+                className="w-full px-4 py-2 border rounded-md"
+              />
+            </div>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium mb-2">
+                Email Address
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Your Email Address Here"
+                className="w-full px-4 py-2 border rounded-md"
+              />
+            </div>
+            <div>
+              <label htmlFor="subject" className="block text-sm font-medium mb-2">
+                Subject
+              </label>
+              <select
+                id="subject"
+                name="subject"
+                className="w-full px-4 py-2 border rounded-md"
+              >
+                {content.contactFormSubjects && content.contactFormSubjects.length > 0 ? (
+                  content.contactFormSubjects.map((subject: any, index: number) => (
+                    <option key={index} value={subject.value}>
+                      {subject.label}
+                    </option>
+                  ))
+                ) : (
+                  <option value="general">General Comment or Inquiry</option>
+                )}
+              </select>
+            </div>
+          </div>
+          <div>
+            <label htmlFor="message" className="block text-sm font-medium mb-2">
+              Message
+            </label>
+            <textarea
+              id="message"
+              name="message"
+              rows={6}
+              className="w-full px-4 py-2 border rounded-md"
+              placeholder="Your message here..."
+            />
+          </div>
+          <button
+            type="submit"
+            className="px-6 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700"
+          >
+            SEND MESSAGE
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+}
+
+function RichTextRenderer({ content }: { content: any }) {
+  if (!content) return null;
+
+  // Handle Strapi RichText format
+  if (typeof content === "string") {
+    return <div dangerouslySetInnerHTML={{ __html: content }} />;
+  }
+
+  if (Array.isArray(content)) {
+    return (
+      <div>
+        {content.map((node: any, index: number) => {
+          switch (node.type) {
+            case "paragraph":
+              return (
+                <p key={index} className="mb-4">
+                  {renderChildren(node.children)}
+                </p>
+              );
+            case "heading":
+              const HeadingTag =
+                `h${node.level}` as keyof JSX.IntrinsicElements;
+              return (
+                <HeadingTag key={index} className={`mb-4 font-bold`}>
+                  {renderChildren(node.children)}
+                </HeadingTag>
+              );
+            case "list":
+              const ListTag = node.format === "unordered" ? "ul" : "ol";
+              return (
+                <ListTag key={index} className="list-disc pl-6 mb-4 space-y-2">
+                  {node.children?.map((item: any, itemIndex: number) => (
+                    <li key={itemIndex}>{renderChildren(item.children)}</li>
+                  ))}
+                </ListTag>
+              );
+            case "quote":
+              return (
+                <blockquote
+                  key={index}
+                  className="border-l-4 border-primary pl-4 italic my-4"
+                >
+                  {renderChildren(node.children)}
+                </blockquote>
+              );
+            default:
+              return <div key={index}>{renderChildren(node.children)}</div>;
+          }
+        })}
+      </div>
+    );
+  }
+
+  return null;
+}
+
+function renderChildren(children: any[]): React.ReactNode {
+  if (!children) return null;
+  return children.map((child: any, index: number) => {
+    if (child.type === "text") {
+      let text = child.text;
+      if (child.bold) text = <strong key={index}>{text}</strong>;
+      if (child.italic) text = <em key={index}>{text}</em>;
+      if (child.underline) text = <u key={index}>{text}</u>;
+      return text;
+    }
+    if (child.type === "link") {
+      return (
+        <a
+          key={index}
+          href={child.url}
+          target={child.target || "_self"}
+          className="text-primary hover:underline"
+        >
+          {renderChildren(child.children)}
+        </a>
+      );
+    }
+    return renderChildren(child.children);
+  });
+}
+
+function getImageUrl(image: any): string {
+  if (!image) return "";
+  if (typeof image === "string") return image;
+  if (image.url) {
+    const baseUrl =
+      process.env.NEXT_PUBLIC_STRAPI_URL || "http://localhost:1337";
+    return image.url.startsWith("http") ? image.url : `${baseUrl}${image.url}`;
+  }
+  if (image.data?.attributes?.url) {
+    const baseUrl =
+      process.env.NEXT_PUBLIC_STRAPI_URL || "http://localhost:1337";
+    return `${baseUrl}${image.data.attributes.url}`;
+  }
+  return "";
+}

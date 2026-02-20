@@ -542,6 +542,201 @@ export interface GrowthChartIntroSection extends Struct.ComponentSchema {
   };
 }
 
+export interface InsuranceAppealsAccordionSection
+  extends Struct.ComponentSchema {
+  collectionName: 'components_insurance_appeals_accordion_sections';
+  info: {
+    description: 'Expandable section for Overview tab';
+    displayName: 'Insurance Accordion Section';
+  };
+  attributes: {
+    content: Schema.Attribute.RichText;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface InsuranceAppealsAppealListItem extends Struct.ComponentSchema {
+  collectionName: 'components_insurance_appeals_appeal_list_items';
+  info: {
+    description: 'Bullet item for Appeal Process tab';
+    displayName: 'Appeal Process List Item';
+  };
+  attributes: {
+    description: Schema.Attribute.RichText;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface InsuranceAppealsAppealProcessTab
+  extends Struct.ComponentSchema {
+  collectionName: 'components_insurance_appeals_appeal_process_tabs';
+  info: {
+    description: 'Appeal Process tab content';
+    displayName: 'Insurance Appeal Process Tab';
+  };
+  attributes: {
+    buttonText: Schema.Attribute.String;
+    buttonUrl: Schema.Attribute.String;
+    footnote: Schema.Attribute.Text;
+    intro: Schema.Attribute.RichText;
+    listItems: Schema.Attribute.Component<
+      'insurance-appeals.appeal-list-item',
+      true
+    >;
+  };
+}
+
+export interface InsuranceAppealsFaqItem extends Struct.ComponentSchema {
+  collectionName: 'components_insurance_appeals_faq_items';
+  info: {
+    description: 'Single FAQ question and answer';
+    displayName: 'Insurance FAQ Item';
+  };
+  attributes: {
+    answer: Schema.Attribute.RichText & Schema.Attribute.Required;
+    question: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface InsuranceAppealsFaqTab extends Struct.ComponentSchema {
+  collectionName: 'components_insurance_appeals_faq_tabs';
+  info: {
+    description: 'FAQ tab with Q&A list';
+    displayName: 'Insurance FAQ Tab';
+  };
+  attributes: {
+    faqItems: Schema.Attribute.Component<'insurance-appeals.faq-item', true>;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface InsuranceAppealsFollowUpProcedureTab
+  extends Struct.ComponentSchema {
+  collectionName: 'components_insurance_appeals_follow_up_procedure_tabs';
+  info: {
+    description: 'Follow up Procedure tab - intro and HIPAA form link';
+    displayName: 'Insurance Follow Up Procedure Tab';
+  };
+  attributes: {
+    hipaaFormFile: Schema.Attribute.Media<'files'>;
+    hipaaFormUrl: Schema.Attribute.String;
+    instructions: Schema.Attribute.RichText;
+    intro: Schema.Attribute.RichText;
+  };
+}
+
+export interface InsuranceAppealsOverviewTab extends Struct.ComponentSchema {
+  collectionName: 'components_insurance_appeals_overview_tabs';
+  info: {
+    description: 'Overview tab with video and accordion sections';
+    displayName: 'Insurance Overview Tab';
+  };
+  attributes: {
+    accordionSections: Schema.Attribute.Component<
+      'insurance-appeals.accordion-section',
+      true
+    >;
+    intro: Schema.Attribute.RichText;
+    videoEmbedUrl: Schema.Attribute.String;
+  };
+}
+
+export interface InsuranceAppealsPatientAssistanceTab
+  extends Struct.ComponentSchema {
+  collectionName: 'components_insurance_appeals_patient_assistance_tabs';
+  info: {
+    description: 'Patient Assistance tab with intro and testimonials';
+    displayName: 'Insurance Patient Assistance Tab';
+  };
+  attributes: {
+    intro: Schema.Attribute.RichText;
+    testimonials: Schema.Attribute.Component<
+      'insurance-appeals.testimonial-item',
+      true
+    >;
+  };
+}
+
+export interface InsuranceAppealsTestimonialItem
+  extends Struct.ComponentSchema {
+  collectionName: 'components_insurance_appeals_testimonial_items';
+  info: {
+    description: 'Patient assistance testimonial';
+    displayName: 'Insurance Testimonial';
+  };
+  attributes: {
+    author: Schema.Attribute.String;
+    location: Schema.Attribute.String;
+    quote: Schema.Attribute.RichText & Schema.Attribute.Required;
+  };
+}
+
+export interface ResourcesInformationalVideosTab
+  extends Struct.ComponentSchema {
+  collectionName: 'components_resources_informational_videos_tabs';
+  info: {
+    description: 'Intro text and video grid';
+    displayName: 'Informational Videos Tab';
+  };
+  attributes: {
+    intro: Schema.Attribute.RichText;
+    videos: Schema.Attribute.Component<'resources.video-item', true>;
+    youtubeChannelUrl: Schema.Attribute.String;
+  };
+}
+
+export interface ResourcesOverviewTab extends Struct.ComponentSchema {
+  collectionName: 'components_resources_overview_tabs';
+  info: {
+    description: 'Overview tab content (brochures, links, etc.)';
+    displayName: 'Resources Overview Tab';
+  };
+  attributes: {
+    content: Schema.Attribute.RichText;
+  };
+}
+
+export interface ResourcesSocialLink extends Struct.ComponentSchema {
+  collectionName: 'components_resources_social_links';
+  info: {
+    description: 'Label and URL for a social/group link';
+    displayName: 'Social Link';
+  };
+  attributes: {
+    label: Schema.Attribute.String & Schema.Attribute.Required;
+    url: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface ResourcesSocialMediaTab extends Struct.ComponentSchema {
+  collectionName: 'components_resources_social_media_tabs';
+  info: {
+    description: 'Parents and adults division-specific groups';
+    displayName: 'Social Media Tab';
+  };
+  attributes: {
+    adultsGroups: Schema.Attribute.Component<'resources.social-link', true>;
+    adultsSectionTitle: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Affected Adults - connect to our closed division specific FB groups through the links below:'>;
+    parentsGroups: Schema.Attribute.Component<'resources.social-link', true>;
+    parentsSectionTitle: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'PARENTS of affected children, connect to our closed division specific FB groups through the links below:'>;
+  };
+}
+
+export interface ResourcesVideoItem extends Struct.ComponentSchema {
+  collectionName: 'components_resources_video_items';
+  info: {
+    description: 'Single video entry with thumbnail and link';
+    displayName: 'Video Item';
+  };
+  attributes: {
+    thumbnail: Schema.Attribute.Media<'images'>;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    videoUrl: Schema.Attribute.String;
+  };
+}
+
 export interface RssContentSection extends Struct.ComponentSchema {
   collectionName: 'components_rss_content_sections';
   info: {
@@ -1253,6 +1448,20 @@ declare module '@strapi/strapi' {
       'growth-chart.instruction-step': GrowthChartInstructionStep;
       'growth-chart.instructions-section': GrowthChartInstructionsSection;
       'growth-chart.intro-section': GrowthChartIntroSection;
+      'insurance-appeals.accordion-section': InsuranceAppealsAccordionSection;
+      'insurance-appeals.appeal-list-item': InsuranceAppealsAppealListItem;
+      'insurance-appeals.appeal-process-tab': InsuranceAppealsAppealProcessTab;
+      'insurance-appeals.faq-item': InsuranceAppealsFaqItem;
+      'insurance-appeals.faq-tab': InsuranceAppealsFaqTab;
+      'insurance-appeals.follow-up-procedure-tab': InsuranceAppealsFollowUpProcedureTab;
+      'insurance-appeals.overview-tab': InsuranceAppealsOverviewTab;
+      'insurance-appeals.patient-assistance-tab': InsuranceAppealsPatientAssistanceTab;
+      'insurance-appeals.testimonial-item': InsuranceAppealsTestimonialItem;
+      'resources.informational-videos-tab': ResourcesInformationalVideosTab;
+      'resources.overview-tab': ResourcesOverviewTab;
+      'resources.social-link': ResourcesSocialLink;
+      'resources.social-media-tab': ResourcesSocialMediaTab;
+      'resources.video-item': ResourcesVideoItem;
       'rss.content-section': RssContentSection;
       'rss.content-subsection': RssContentSubsection;
       'rss.division-leader': RssDivisionLeader;
