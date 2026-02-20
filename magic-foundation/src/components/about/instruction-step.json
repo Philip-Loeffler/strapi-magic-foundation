@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_about_instruction_steps",
+  "info": {
+    "displayName": "About Instruction Step",
+    "description": "A single instruction step"
+  },
+  "options": {},
+  "attributes": {
+    "stepNumber": {
+      "type": "integer"
+    },
+    "text": {
+      "type": "richtext"
+    }
+  }
+}

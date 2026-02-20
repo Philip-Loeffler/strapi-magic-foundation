@@ -1,0 +1,13 @@
+{
+  "collectionName": "components_about_text_blocks",
+  "info": {
+    "displayName": "About Text Block",
+    "description": "A simple text block with rich text content"
+  },
+  "options": {},
+  "attributes": {
+    "content": {
+      "type": "richtext"
+    }
+  }
+}

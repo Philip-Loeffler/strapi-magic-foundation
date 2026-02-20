@@ -1,0 +1,17 @@
+{
+  "collectionName": "components_about_history_sections",
+  "info": {
+    "displayName": "About History Section",
+    "description": "A history section with title and content"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "content": {
+      "type": "richtext"
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "collectionName": "components_about_team_structure_tabs",
+  "info": {
+    "displayName": "About Team Structure Tab",
+    "description": "Content for the About Team Structure tab"
+  },
+  "options": {},
+  "attributes": {
+    "boardMembers": {
+      "type": "component",
+      "repeatable": true,
+      "component": "about.team-member"
+    },
+    "divisionConsultants": {
+      "type": "component",
+      "repeatable": false,
+      "component": "about.division-consultants-section"
+    },
+    "staffMembers": {
+      "type": "component",
+      "repeatable": true,
+      "component": "about.team-member"
+    },
+    "medicalAdvisoryBoard": {
+      "type": "component",
+      "repeatable": true,
+      "component": "about.medical-advisor"
+    }
+  }
+}

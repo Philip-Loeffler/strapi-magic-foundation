@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_about_goals_sections",
+  "info": {
+    "displayName": "About Goals Section",
+    "description": "A goals section with title and list items"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "goals": {
+      "type": "component",
+      "repeatable": true,
+      "component": "about.goal-item"
+    }
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "kind": "collectionType",
+  "collectionName": "abouts",
+  "info": {
+    "singularName": "about",
+    "pluralName": "abouts",
+    "displayName": "About",
+    "description": "Main content for About page"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title",
+      "required": true
+    },
+    "overviewTab": {
+      "type": "component",
+      "component": "about.overview-tab",
+      "repeatable": false
+    },
+    "historyTab": {
+      "type": "component",
+      "component": "about.history-tab",
+      "repeatable": false
+    },
+    "teamStructureTab": {
+      "type": "component",
+      "component": "about.team-structure-tab",
+      "repeatable": false
+    },
+    "contactTab": {
+      "type": "component",
+      "component": "about.contact-tab",
+      "repeatable": false
+    }
+  }
+}

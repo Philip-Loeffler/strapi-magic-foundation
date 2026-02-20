@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_about_instructions_sections",
+  "info": {
+    "displayName": "About Instructions Section",
+    "description": "A section with instructions/steps"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "instructions": {
+      "type": "component",
+      "repeatable": true,
+      "component": "about.instruction-step"
+    },
+    "footerText": {
+      "type": "text"
+    }
+  }
+}

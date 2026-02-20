@@ -1,0 +1,32 @@
+{
+  "collectionName": "components_about_contact_tabs",
+  "info": {
+    "displayName": "About Contact Tab",
+    "description": "Content for the About Contact Us tab"
+  },
+  "options": {},
+  "attributes": {
+    "mapEmbedUrl": {
+      "type": "string"
+    },
+    "address": {
+      "type": "text"
+    },
+    "phoneNumbers": {
+      "type": "component",
+      "repeatable": true,
+      "component": "about.contact-info"
+    },
+    "fax": {
+      "type": "string"
+    },
+    "email": {
+      "type": "email"
+    },
+    "contactFormSubjects": {
+      "type": "component",
+      "repeatable": true,
+      "component": "about.form-subject"
+    }
+  }
+}

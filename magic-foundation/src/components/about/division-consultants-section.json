@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_about_division_consultants_sections",
+  "info": {
+    "displayName": "About Division Consultants Section",
+    "description": "Section for division consultants"
+  },
+  "options": {},
+  "attributes": {
+    "description": {
+      "type": "richtext"
+    },
+    "consultants": {
+      "type": "component",
+      "repeatable": true,
+      "component": "about.division-consultant"
+    }
+  }
+}

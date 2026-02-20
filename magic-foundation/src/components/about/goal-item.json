@@ -1,0 +1,13 @@
+{
+  "collectionName": "components_about_goal_items",
+  "info": {
+    "displayName": "About Goal Item",
+    "description": "A single goal item"
+  },
+  "options": {},
+  "attributes": {
+    "text": {
+      "type": "richtext"
+    }
+  }
+}

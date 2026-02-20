@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_about_division_consultants",
+  "info": {
+    "displayName": "About Division Consultant",
+    "description": "A division consultant"
+  },
+  "options": {},
+  "attributes": {
+    "disorder": {
+      "type": "string",
+      "required": true
+    },
+    "consultantName": {
+      "type": "string",
+      "required": true
+    }
+  }
+}

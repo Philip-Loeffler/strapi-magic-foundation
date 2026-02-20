@@ -1,0 +1,40 @@
+{
+  "collectionName": "components_about_overview_tabs",
+  "info": {
+    "displayName": "About Overview Tab",
+    "description": "Content for the About Overview tab"
+  },
+  "options": {},
+  "attributes": {
+    "introParagraphs": {
+      "type": "component",
+      "repeatable": true,
+      "component": "about.text-block"
+    },
+    "goalsForChildren": {
+      "type": "component",
+      "repeatable": false,
+      "component": "about.goals-section"
+    },
+    "goalsForAdults": {
+      "type": "component",
+      "repeatable": false,
+      "component": "about.goals-section"
+    },
+    "disclaimer": {
+      "type": "component",
+      "repeatable": false,
+      "component": "about.text-block"
+    },
+    "heightMeasurementInstructions": {
+      "type": "component",
+      "repeatable": false,
+      "component": "about.instructions-section"
+    },
+    "testimonial": {
+      "type": "component",
+      "repeatable": false,
+      "component": "about.testimonial"
+    }
+  }
+}

@@ -1,0 +1,1 @@
+{"collectionName":"components_disorder_resource_categories","info":{"displayName":"Disorder Resource Category","description":"A category of resources"},"options":{},"attributes":{"title":{"type":"string","required":true},"description":{"type":"text"},"resources":{"type":"component","repeatable":true,"component":"disorder.resource-item"}}}

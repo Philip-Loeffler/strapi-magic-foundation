@@ -467,6 +467,122 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiAboutAbout extends Struct.CollectionTypeSchema {
+  collectionName: 'abouts';
+  info: {
+    description: 'Main content for About page';
+    displayName: 'About';
+    pluralName: 'abouts';
+    singularName: 'about';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    contactTab: Schema.Attribute.Component<'about.contact-tab', false>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    historyTab: Schema.Attribute.Component<'about.history-tab', false>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::about.about'> &
+      Schema.Attribute.Private;
+    overviewTab: Schema.Attribute.Component<'about.overview-tab', false>;
+    publishedAt: Schema.Attribute.DateTime;
+    slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
+    teamStructureTab: Schema.Attribute.Component<
+      'about.team-structure-tab',
+      false
+    >;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiCongenitalAdrenalHyperplasiaCongenitalAdrenalHyperplasia
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'congenital_adrenal_hyperplasias';
+  info: {
+    description: 'Main content for Congenital Adrenal Hyperplasia page';
+    displayName: 'Congenital Adrenal Hyperplasia';
+    pluralName: 'congenital-adrenal-hyperplasias';
+    singularName: 'congenital-adrenal-hyperplasia';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    divisionLeadersTab: Schema.Attribute.Component<
+      'disorder.division-leaders-tab',
+      false
+    >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::congenital-adrenal-hyperplasia.congenital-adrenal-hyperplasia'
+    > &
+      Schema.Attribute.Private;
+    overviewTab: Schema.Attribute.Component<'disorder.overview-tab', false>;
+    personalStoriesTab: Schema.Attribute.Component<
+      'disorder.personal-stories-tab',
+      false
+    >;
+    publishedAt: Schema.Attribute.DateTime;
+    resourcesTab: Schema.Attribute.Component<'disorder.resources-tab', false>;
+    slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiCushingSyndromeCushingSyndrome
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'cushing_syndromes';
+  info: {
+    description: 'Main content for Cushing Syndrome page';
+    displayName: 'Cushing Syndrome';
+    pluralName: 'cushing-syndromes';
+    singularName: 'cushing-syndrome';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    divisionLeadersTab: Schema.Attribute.Component<
+      'disorder.division-leaders-tab',
+      false
+    >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::cushing-syndrome.cushing-syndrome'
+    > &
+      Schema.Attribute.Private;
+    overviewTab: Schema.Attribute.Component<'disorder.overview-tab', false>;
+    personalStoriesTab: Schema.Attribute.Component<
+      'disorder.personal-stories-tab',
+      false
+    >;
+    publishedAt: Schema.Attribute.DateTime;
+    resourcesTab: Schema.Attribute.Component<'disorder.resources-tab', false>;
+    slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiEmergencyEmergency extends Struct.CollectionTypeSchema {
   collectionName: 'emergencies';
   info: {
@@ -542,6 +658,375 @@ export interface ApiGrowthChartGrowthChart extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiGrowthHormoneDeficiencyAdultGrowthHormoneDeficiencyAdult
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'growth_hormone_deficiency_adults';
+  info: {
+    description: 'Main content for Growth Hormone Deficiency in Adults page';
+    displayName: 'Growth Hormone Deficiency in Adults';
+    pluralName: 'growth-hormone-deficiency-adults';
+    singularName: 'growth-hormone-deficiency-adult';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    divisionLeadersTab: Schema.Attribute.Component<
+      'disorder.division-leaders-tab',
+      false
+    >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::growth-hormone-deficiency-adult.growth-hormone-deficiency-adult'
+    > &
+      Schema.Attribute.Private;
+    overviewTab: Schema.Attribute.Component<'disorder.overview-tab', false>;
+    personalStoriesTab: Schema.Attribute.Component<
+      'disorder.personal-stories-tab',
+      false
+    >;
+    publishedAt: Schema.Attribute.DateTime;
+    resourcesTab: Schema.Attribute.Component<'disorder.resources-tab', false>;
+    slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiGrowthHormoneDeficiencyChildGrowthHormoneDeficiencyChild
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'growth_hormone_deficiency_children';
+  info: {
+    description: 'Main content for Growth Hormone Deficiency in Children page';
+    displayName: 'Growth Hormone Deficiency in Children';
+    pluralName: 'growth-hormone-deficiency-children';
+    singularName: 'growth-hormone-deficiency-child';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    divisionLeadersTab: Schema.Attribute.Component<
+      'disorder.division-leaders-tab',
+      false
+    >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::growth-hormone-deficiency-child.growth-hormone-deficiency-child'
+    > &
+      Schema.Attribute.Private;
+    overviewTab: Schema.Attribute.Component<'disorder.overview-tab', false>;
+    personalStoriesTab: Schema.Attribute.Component<
+      'disorder.personal-stories-tab',
+      false
+    >;
+    publishedAt: Schema.Attribute.DateTime;
+    resourcesTab: Schema.Attribute.Component<'disorder.resources-tab', false>;
+    slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiIdiopathicShortStatureIdiopathicShortStature
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'idiopathic_short_statures';
+  info: {
+    description: 'Main content for Idiopathic Short Stature page';
+    displayName: 'Idiopathic Short Stature';
+    pluralName: 'idiopathic-short-statures';
+    singularName: 'idiopathic-short-stature';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    divisionLeadersTab: Schema.Attribute.Component<
+      'disorder.division-leaders-tab',
+      false
+    >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::idiopathic-short-stature.idiopathic-short-stature'
+    > &
+      Schema.Attribute.Private;
+    overviewTab: Schema.Attribute.Component<'disorder.overview-tab', false>;
+    personalStoriesTab: Schema.Attribute.Component<
+      'disorder.personal-stories-tab',
+      false
+    >;
+    publishedAt: Schema.Attribute.DateTime;
+    resourcesTab: Schema.Attribute.Component<'disorder.resources-tab', false>;
+    slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiInsulinLikeGrowthFactorDeficiencyInsulinLikeGrowthFactorDeficiency
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'insulin_like_growth_factor_deficiencies';
+  info: {
+    description: 'Main content for Insulin-like Growth Factor Deficiency page';
+    displayName: 'Insulin-like Growth Factor Deficiency';
+    pluralName: 'insulin-like-growth-factor-deficiencies';
+    singularName: 'insulin-like-growth-factor-deficiency';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    divisionLeadersTab: Schema.Attribute.Component<
+      'disorder.division-leaders-tab',
+      false
+    >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::insulin-like-growth-factor-deficiency.insulin-like-growth-factor-deficiency'
+    > &
+      Schema.Attribute.Private;
+    overviewTab: Schema.Attribute.Component<'disorder.overview-tab', false>;
+    personalStoriesTab: Schema.Attribute.Component<
+      'disorder.personal-stories-tab',
+      false
+    >;
+    publishedAt: Schema.Attribute.DateTime;
+    resourcesTab: Schema.Attribute.Component<'disorder.resources-tab', false>;
+    slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiIntrauterineGrowthRestrictionIntrauterineGrowthRestriction
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'intrauterine_growth_restrictions';
+  info: {
+    description: 'Main content for Intrauterine Growth Restriction page';
+    displayName: 'Intrauterine Growth Restriction';
+    pluralName: 'intrauterine-growth-restrictions';
+    singularName: 'intrauterine-growth-restriction';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    divisionLeadersTab: Schema.Attribute.Component<
+      'disorder.division-leaders-tab',
+      false
+    >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::intrauterine-growth-restriction.intrauterine-growth-restriction'
+    > &
+      Schema.Attribute.Private;
+    overviewTab: Schema.Attribute.Component<'disorder.overview-tab', false>;
+    personalStoriesTab: Schema.Attribute.Component<
+      'disorder.personal-stories-tab',
+      false
+    >;
+    publishedAt: Schema.Attribute.DateTime;
+    resourcesTab: Schema.Attribute.Component<'disorder.resources-tab', false>;
+    slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiMccuneAlbrightSyndromeMccuneAlbrightSyndrome
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'mccune_albright_syndromes';
+  info: {
+    description: 'Main content for McCune-Albright Syndrome/Fibrous Dysplasia page';
+    displayName: 'McCune-Albright Syndrome/Fibrous Dysplasia';
+    pluralName: 'mccune-albright-syndromes';
+    singularName: 'mccune-albright-syndrome';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    divisionLeadersTab: Schema.Attribute.Component<
+      'disorder.division-leaders-tab',
+      false
+    >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::mccune-albright-syndrome.mccune-albright-syndrome'
+    > &
+      Schema.Attribute.Private;
+    overviewTab: Schema.Attribute.Component<'disorder.overview-tab', false>;
+    personalStoriesTab: Schema.Attribute.Component<
+      'disorder.personal-stories-tab',
+      false
+    >;
+    publishedAt: Schema.Attribute.DateTime;
+    resourcesTab: Schema.Attribute.Component<'disorder.resources-tab', false>;
+    slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiOpticNerveHypoplasiaOpticNerveHypoplasia
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'optic_nerve_hypoplasias';
+  info: {
+    description: 'Main content for Optic Nerve Hypoplasia page';
+    displayName: 'Optic Nerve Hypoplasia';
+    pluralName: 'optic-nerve-hypoplasias';
+    singularName: 'optic-nerve-hypoplasia';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    divisionLeadersTab: Schema.Attribute.Component<
+      'disorder.division-leaders-tab',
+      false
+    >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::optic-nerve-hypoplasia.optic-nerve-hypoplasia'
+    > &
+      Schema.Attribute.Private;
+    overviewTab: Schema.Attribute.Component<'disorder.overview-tab', false>;
+    personalStoriesTab: Schema.Attribute.Component<
+      'disorder.personal-stories-tab',
+      false
+    >;
+    publishedAt: Schema.Attribute.DateTime;
+    resourcesTab: Schema.Attribute.Component<'disorder.resources-tab', false>;
+    slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiPanhypopituitarismTumorPanhypopituitarismTumor
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'panhypopituitarism_tumors';
+  info: {
+    description: 'Main content for Panhypopituitarism/Tumor page';
+    displayName: 'Panhypopituitarism/Tumor';
+    pluralName: 'panhypopituitarism-tumors';
+    singularName: 'panhypopituitarism-tumor';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    divisionLeadersTab: Schema.Attribute.Component<
+      'disorder.division-leaders-tab',
+      false
+    >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::panhypopituitarism-tumor.panhypopituitarism-tumor'
+    > &
+      Schema.Attribute.Private;
+    overviewTab: Schema.Attribute.Component<'disorder.overview-tab', false>;
+    personalStoriesTab: Schema.Attribute.Component<
+      'disorder.personal-stories-tab',
+      false
+    >;
+    publishedAt: Schema.Attribute.DateTime;
+    resourcesTab: Schema.Attribute.Component<'disorder.resources-tab', false>;
+    slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiPrecociousPubertyPrecociousPuberty
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'precocious_puberties';
+  info: {
+    description: 'Main content for Precocious Puberty page';
+    displayName: 'Precocious Puberty';
+    pluralName: 'precocious-puberties';
+    singularName: 'precocious-puberty';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    divisionLeadersTab: Schema.Attribute.Component<
+      'disorder.division-leaders-tab',
+      false
+    >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::precocious-puberty.precocious-puberty'
+    > &
+      Schema.Attribute.Private;
+    overviewTab: Schema.Attribute.Component<'disorder.overview-tab', false>;
+    personalStoriesTab: Schema.Attribute.Component<
+      'disorder.personal-stories-tab',
+      false
+    >;
+    publishedAt: Schema.Attribute.DateTime;
+    resourcesTab: Schema.Attribute.Component<'disorder.resources-tab', false>;
+    slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiRussellSilverSyndromeRussellSilverSyndrome
   extends Struct.CollectionTypeSchema {
   collectionName: 'russell_silver_syndromes';
@@ -575,6 +1060,47 @@ export interface ApiRussellSilverSyndromeRussellSilverSyndrome
     >;
     publishedAt: Schema.Attribute.DateTime;
     resourcesTab: Schema.Attribute.Component<'rss.resources-tab', false>;
+    slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiSeptoOpticDysplasiaSeptoOpticDysplasia
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'septo_optic_dysplasias';
+  info: {
+    description: 'Main content for Septo Optic Dysplasia page';
+    displayName: 'Septo Optic Dysplasia';
+    pluralName: 'septo-optic-dysplasias';
+    singularName: 'septo-optic-dysplasia';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    divisionLeadersTab: Schema.Attribute.Component<
+      'disorder.division-leaders-tab',
+      false
+    >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::septo-optic-dysplasia.septo-optic-dysplasia'
+    > &
+      Schema.Attribute.Private;
+    overviewTab: Schema.Attribute.Component<'disorder.overview-tab', false>;
+    personalStoriesTab: Schema.Attribute.Component<
+      'disorder.personal-stories-tab',
+      false
+    >;
+    publishedAt: Schema.Attribute.DateTime;
+    resourcesTab: Schema.Attribute.Component<'disorder.resources-tab', false>;
     slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
     title: Schema.Attribute.String & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
@@ -657,6 +1183,88 @@ export interface ApiTempleSyndromeTempleSyndrome
     >;
     publishedAt: Schema.Attribute.DateTime;
     resourcesTab: Schema.Attribute.Component<'temple.resources-tab', false>;
+    slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiThyroidDisorderThyroidDisorder
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'thyroid_disorders';
+  info: {
+    description: 'Main content for Thyroid Disorders page';
+    displayName: 'Thyroid Disorders';
+    pluralName: 'thyroid-disorders';
+    singularName: 'thyroid-disorder';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    divisionLeadersTab: Schema.Attribute.Component<
+      'disorder.division-leaders-tab',
+      false
+    >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::thyroid-disorder.thyroid-disorder'
+    > &
+      Schema.Attribute.Private;
+    overviewTab: Schema.Attribute.Component<'disorder.overview-tab', false>;
+    personalStoriesTab: Schema.Attribute.Component<
+      'disorder.personal-stories-tab',
+      false
+    >;
+    publishedAt: Schema.Attribute.DateTime;
+    resourcesTab: Schema.Attribute.Component<'disorder.resources-tab', false>;
+    slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiTurnerSyndromeTurnerSyndrome
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'turner_syndromes';
+  info: {
+    description: 'Main content for Turner Syndrome page';
+    displayName: 'Turner Syndrome';
+    pluralName: 'turner-syndromes';
+    singularName: 'turner-syndrome';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    divisionLeadersTab: Schema.Attribute.Component<
+      'disorder.division-leaders-tab',
+      false
+    >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::turner-syndrome.turner-syndrome'
+    > &
+      Schema.Attribute.Private;
+    overviewTab: Schema.Attribute.Component<'disorder.overview-tab', false>;
+    personalStoriesTab: Schema.Attribute.Component<
+      'disorder.personal-stories-tab',
+      false
+    >;
+    publishedAt: Schema.Attribute.DateTime;
+    resourcesTab: Schema.Attribute.Component<'disorder.resources-tab', false>;
     slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
     title: Schema.Attribute.String & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
@@ -1177,11 +1785,26 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
+      'api::about.about': ApiAboutAbout;
+      'api::congenital-adrenal-hyperplasia.congenital-adrenal-hyperplasia': ApiCongenitalAdrenalHyperplasiaCongenitalAdrenalHyperplasia;
+      'api::cushing-syndrome.cushing-syndrome': ApiCushingSyndromeCushingSyndrome;
       'api::emergency.emergency': ApiEmergencyEmergency;
       'api::growth-chart.growth-chart': ApiGrowthChartGrowthChart;
+      'api::growth-hormone-deficiency-adult.growth-hormone-deficiency-adult': ApiGrowthHormoneDeficiencyAdultGrowthHormoneDeficiencyAdult;
+      'api::growth-hormone-deficiency-child.growth-hormone-deficiency-child': ApiGrowthHormoneDeficiencyChildGrowthHormoneDeficiencyChild;
+      'api::idiopathic-short-stature.idiopathic-short-stature': ApiIdiopathicShortStatureIdiopathicShortStature;
+      'api::insulin-like-growth-factor-deficiency.insulin-like-growth-factor-deficiency': ApiInsulinLikeGrowthFactorDeficiencyInsulinLikeGrowthFactorDeficiency;
+      'api::intrauterine-growth-restriction.intrauterine-growth-restriction': ApiIntrauterineGrowthRestrictionIntrauterineGrowthRestriction;
+      'api::mccune-albright-syndrome.mccune-albright-syndrome': ApiMccuneAlbrightSyndromeMccuneAlbrightSyndrome;
+      'api::optic-nerve-hypoplasia.optic-nerve-hypoplasia': ApiOpticNerveHypoplasiaOpticNerveHypoplasia;
+      'api::panhypopituitarism-tumor.panhypopituitarism-tumor': ApiPanhypopituitarismTumorPanhypopituitarismTumor;
+      'api::precocious-puberty.precocious-puberty': ApiPrecociousPubertyPrecociousPuberty;
       'api::russell-silver-syndrome.russell-silver-syndrome': ApiRussellSilverSyndromeRussellSilverSyndrome;
+      'api::septo-optic-dysplasia.septo-optic-dysplasia': ApiSeptoOpticDysplasiaSeptoOpticDysplasia;
       'api::small-for-gestational-age.small-for-gestational-age': ApiSmallForGestationalAgeSmallForGestationalAge;
       'api::temple-syndrome.temple-syndrome': ApiTempleSyndromeTempleSyndrome;
+      'api::thyroid-disorder.thyroid-disorder': ApiThyroidDisorderThyroidDisorder;
+      'api::turner-syndrome.turner-syndrome': ApiTurnerSyndromeTurnerSyndrome;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;

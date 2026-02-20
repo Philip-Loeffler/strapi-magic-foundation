@@ -1,0 +1,1 @@
+{"collectionName":"components_disorder_content_subsections","info":{"displayName":"Disorder Content Subsection","description":"A subsection within a content section"},"options":{},"attributes":{"title":{"type":"string"},"content":{"type":"richtext"},"listItems":{"type":"component","repeatable":true,"component":"disorder.list-item"}}}

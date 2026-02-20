@@ -1,0 +1,24 @@
+{
+  "collectionName": "components_about_team_members",
+  "info": {
+    "displayName": "About Team Member",
+    "description": "A team member (board or staff)"
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"]
+    }
+  }
+}

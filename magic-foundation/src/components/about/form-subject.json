@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_about_form_subjects",
+  "info": {
+    "displayName": "About Form Subject",
+    "description": "A subject option for the contact form"
+  },
+  "options": {},
+  "attributes": {
+    "label": {
+      "type": "string",
+      "required": true
+    },
+    "value": {
+      "type": "string",
+      "required": true
+    }
+  }
+}

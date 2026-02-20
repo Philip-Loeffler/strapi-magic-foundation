@@ -1,5 +1,445 @@
 import type { Schema, Struct } from '@strapi/strapi';
 
+export interface AboutContactInfo extends Struct.ComponentSchema {
+  collectionName: 'components_about_contact_infos';
+  info: {
+    description: 'Contact information item';
+    displayName: 'About Contact Info';
+  };
+  attributes: {
+    label: Schema.Attribute.String;
+    value: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface AboutContactTab extends Struct.ComponentSchema {
+  collectionName: 'components_about_contact_tabs';
+  info: {
+    description: 'Content for the About Contact Us tab';
+    displayName: 'About Contact Tab';
+  };
+  attributes: {
+    address: Schema.Attribute.Text;
+    contactFormSubjects: Schema.Attribute.Component<'about.form-subject', true>;
+    email: Schema.Attribute.Email;
+    fax: Schema.Attribute.String;
+    mapEmbedUrl: Schema.Attribute.String;
+    phoneNumbers: Schema.Attribute.Component<'about.contact-info', true>;
+  };
+}
+
+export interface AboutDivisionConsultant extends Struct.ComponentSchema {
+  collectionName: 'components_about_division_consultants';
+  info: {
+    description: 'A division consultant';
+    displayName: 'About Division Consultant';
+  };
+  attributes: {
+    consultantName: Schema.Attribute.String & Schema.Attribute.Required;
+    disorder: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface AboutDivisionConsultantsSection
+  extends Struct.ComponentSchema {
+  collectionName: 'components_about_division_consultants_sections';
+  info: {
+    description: 'Section for division consultants';
+    displayName: 'About Division Consultants Section';
+  };
+  attributes: {
+    consultants: Schema.Attribute.Component<'about.division-consultant', true>;
+    description: Schema.Attribute.RichText;
+  };
+}
+
+export interface AboutFormSubject extends Struct.ComponentSchema {
+  collectionName: 'components_about_form_subjects';
+  info: {
+    description: 'A subject option for the contact form';
+    displayName: 'About Form Subject';
+  };
+  attributes: {
+    label: Schema.Attribute.String & Schema.Attribute.Required;
+    value: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface AboutFounder extends Struct.ComponentSchema {
+  collectionName: 'components_about_founders';
+  info: {
+    description: 'A founder with image and bio link';
+    displayName: 'About Founder';
+  };
+  attributes: {
+    bioUrl: Schema.Attribute.String;
+    image: Schema.Attribute.Media<'images'>;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface AboutGoalItem extends Struct.ComponentSchema {
+  collectionName: 'components_about_goal_items';
+  info: {
+    description: 'A single goal item';
+    displayName: 'About Goal Item';
+  };
+  attributes: {
+    text: Schema.Attribute.RichText;
+  };
+}
+
+export interface AboutGoalsSection extends Struct.ComponentSchema {
+  collectionName: 'components_about_goals_sections';
+  info: {
+    description: 'A goals section with title and list items';
+    displayName: 'About Goals Section';
+  };
+  attributes: {
+    goals: Schema.Attribute.Component<'about.goal-item', true>;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface AboutHistorySection extends Struct.ComponentSchema {
+  collectionName: 'components_about_history_sections';
+  info: {
+    description: 'A history section with title and content';
+    displayName: 'About History Section';
+  };
+  attributes: {
+    content: Schema.Attribute.RichText;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface AboutHistoryTab extends Struct.ComponentSchema {
+  collectionName: 'components_about_history_tabs';
+  info: {
+    description: 'Content for the About History tab';
+    displayName: 'About History Tab';
+  };
+  attributes: {
+    founders: Schema.Attribute.Component<'about.founder', true>;
+    historySections: Schema.Attribute.Component<'about.history-section', true>;
+  };
+}
+
+export interface AboutInstructionStep extends Struct.ComponentSchema {
+  collectionName: 'components_about_instruction_steps';
+  info: {
+    description: 'A single instruction step';
+    displayName: 'About Instruction Step';
+  };
+  attributes: {
+    stepNumber: Schema.Attribute.Integer;
+    text: Schema.Attribute.RichText;
+  };
+}
+
+export interface AboutInstructionsSection extends Struct.ComponentSchema {
+  collectionName: 'components_about_instructions_sections';
+  info: {
+    description: 'A section with instructions/steps';
+    displayName: 'About Instructions Section';
+  };
+  attributes: {
+    footerText: Schema.Attribute.Text;
+    instructions: Schema.Attribute.Component<'about.instruction-step', true>;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface AboutMedicalAdvisor extends Struct.ComponentSchema {
+  collectionName: 'components_about_medical_advisors';
+  info: {
+    description: 'A medical advisory board member';
+    displayName: 'About Medical Advisor';
+  };
+  attributes: {
+    image: Schema.Attribute.Media<'images'>;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    qualifications: Schema.Attribute.RichText;
+  };
+}
+
+export interface AboutOverviewTab extends Struct.ComponentSchema {
+  collectionName: 'components_about_overview_tabs';
+  info: {
+    description: 'Content for the About Overview tab';
+    displayName: 'About Overview Tab';
+  };
+  attributes: {
+    disclaimer: Schema.Attribute.Component<'about.text-block', false>;
+    goalsForAdults: Schema.Attribute.Component<'about.goals-section', false>;
+    goalsForChildren: Schema.Attribute.Component<'about.goals-section', false>;
+    heightMeasurementInstructions: Schema.Attribute.Component<
+      'about.instructions-section',
+      false
+    >;
+    introParagraphs: Schema.Attribute.Component<'about.text-block', true>;
+    testimonial: Schema.Attribute.Component<'about.testimonial', false>;
+  };
+}
+
+export interface AboutTeamMember extends Struct.ComponentSchema {
+  collectionName: 'components_about_team_members';
+  info: {
+    description: 'A team member (board or staff)';
+    displayName: 'About Team Member';
+  };
+  attributes: {
+    image: Schema.Attribute.Media<'images'>;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface AboutTeamStructureTab extends Struct.ComponentSchema {
+  collectionName: 'components_about_team_structure_tabs';
+  info: {
+    description: 'Content for the About Team Structure tab';
+    displayName: 'About Team Structure Tab';
+  };
+  attributes: {
+    boardMembers: Schema.Attribute.Component<'about.team-member', true>;
+    divisionConsultants: Schema.Attribute.Component<
+      'about.division-consultants-section',
+      false
+    >;
+    medicalAdvisoryBoard: Schema.Attribute.Component<
+      'about.medical-advisor',
+      true
+    >;
+    staffMembers: Schema.Attribute.Component<'about.team-member', true>;
+  };
+}
+
+export interface AboutTestimonial extends Struct.ComponentSchema {
+  collectionName: 'components_about_testimonials';
+  info: {
+    description: 'A testimonial quote';
+    displayName: 'About Testimonial';
+  };
+  attributes: {
+    author: Schema.Attribute.String;
+    location: Schema.Attribute.String;
+    quote: Schema.Attribute.RichText & Schema.Attribute.Required;
+  };
+}
+
+export interface AboutTextBlock extends Struct.ComponentSchema {
+  collectionName: 'components_about_text_blocks';
+  info: {
+    description: 'A simple text block with rich text content';
+    displayName: 'About Text Block';
+  };
+  attributes: {
+    content: Schema.Attribute.RichText;
+  };
+}
+
+export interface DisorderContentSection extends Struct.ComponentSchema {
+  collectionName: 'components_disorder_content_sections';
+  info: {
+    description: 'A content section with title and rich text content';
+    displayName: 'Disorder Content Section';
+  };
+  attributes: {
+    content: Schema.Attribute.RichText;
+    listItems: Schema.Attribute.Component<'disorder.list-item', true>;
+    subsections: Schema.Attribute.Component<
+      'disorder.content-subsection',
+      true
+    >;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface DisorderContentSubsection extends Struct.ComponentSchema {
+  collectionName: 'components_disorder_content_subsections';
+  info: {
+    description: 'A subsection within a content section';
+    displayName: 'Disorder Content Subsection';
+  };
+  attributes: {
+    content: Schema.Attribute.RichText;
+    listItems: Schema.Attribute.Component<'disorder.list-item', true>;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface DisorderDivisionLeader extends Struct.ComponentSchema {
+  collectionName: 'components_disorder_division_leaders';
+  info: {
+    description: 'A division leader or consultant';
+    displayName: 'Disorder Division Leader';
+  };
+  attributes: {
+    bio: Schema.Attribute.RichText;
+    email: Schema.Attribute.Email;
+    image: Schema.Attribute.Media<'images'>;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    phone: Schema.Attribute.String;
+    specializations: Schema.Attribute.Text;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface DisorderDivisionLeadersTab extends Struct.ComponentSchema {
+  collectionName: 'components_disorder_division_leaders_tabs';
+  info: {
+    description: 'Content for the Division Leaders tab';
+    displayName: 'Disorder Division Leaders Tab';
+  };
+  attributes: {
+    description: Schema.Attribute.RichText;
+    leaders: Schema.Attribute.Component<'disorder.division-leader', true>;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface DisorderFaqItem extends Struct.ComponentSchema {
+  collectionName: 'components_disorder_faq_items';
+  info: {
+    description: 'A single FAQ question and answer';
+    displayName: 'Disorder FAQ Item';
+  };
+  attributes: {
+    answer: Schema.Attribute.RichText & Schema.Attribute.Required;
+    question: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface DisorderFaqSection extends Struct.ComponentSchema {
+  collectionName: 'components_disorder_faq_sections';
+  info: {
+    description: 'FAQ section with questions and answers';
+    displayName: 'Disorder FAQ Section';
+  };
+  attributes: {
+    faqs: Schema.Attribute.Component<'disorder.faq-item', true>;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface DisorderHeroSection extends Struct.ComponentSchema {
+  collectionName: 'components_disorder_hero_sections';
+  info: {
+    description: 'Hero section with title and image';
+    displayName: 'Disorder Hero Section';
+  };
+  attributes: {
+    description: Schema.Attribute.RichText;
+    image: Schema.Attribute.Media<'images'>;
+    subtitle: Schema.Attribute.Text;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface DisorderListItem extends Struct.ComponentSchema {
+  collectionName: 'components_disorder_list_items';
+  info: {
+    description: 'A single list item';
+    displayName: 'Disorder List Item';
+  };
+  attributes: {
+    isHighlighted: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    text: Schema.Attribute.Text & Schema.Attribute.Required;
+  };
+}
+
+export interface DisorderOverviewTab extends Struct.ComponentSchema {
+  collectionName: 'components_disorder_overview_tabs';
+  info: {
+    description: 'Content for the disorder Overview tab';
+    displayName: 'Disorder Overview Tab';
+  };
+  attributes: {
+    contentSections: Schema.Attribute.Component<
+      'disorder.content-section',
+      true
+    >;
+    faqSection: Schema.Attribute.Component<'disorder.faq-section', false>;
+    heroSection: Schema.Attribute.Component<'disorder.hero-section', false>;
+  };
+}
+
+export interface DisorderPersonalStoriesTab extends Struct.ComponentSchema {
+  collectionName: 'components_disorder_personal_stories_tabs';
+  info: {
+    description: 'Content for the Personal Stories tab';
+    displayName: 'Disorder Personal Stories Tab';
+  };
+  attributes: {
+    description: Schema.Attribute.RichText;
+    stories: Schema.Attribute.Component<'disorder.personal-story', true>;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface DisorderPersonalStory extends Struct.ComponentSchema {
+  collectionName: 'components_disorder_personal_stories';
+  info: {
+    description: 'A personal story';
+    displayName: 'Disorder Personal Story';
+  };
+  attributes: {
+    author: Schema.Attribute.String;
+    content: Schema.Attribute.RichText & Schema.Attribute.Required;
+    date: Schema.Attribute.Date;
+    image: Schema.Attribute.Media<'images'>;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface DisorderResourceCategory extends Struct.ComponentSchema {
+  collectionName: 'components_disorder_resource_categories';
+  info: {
+    description: 'A category of resources';
+    displayName: 'Disorder Resource Category';
+  };
+  attributes: {
+    description: Schema.Attribute.Text;
+    resources: Schema.Attribute.Component<'disorder.resource-item', true>;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface DisorderResourceItem extends Struct.ComponentSchema {
+  collectionName: 'components_disorder_resource_items';
+  info: {
+    description: 'A single resource item';
+    displayName: 'Disorder Resource Item';
+  };
+  attributes: {
+    description: Schema.Attribute.Text;
+    file: Schema.Attribute.Media<'files' | 'images' | 'videos'>;
+    resourceType: Schema.Attribute.Enumeration<
+      ['link', 'document', 'video', 'other']
+    > &
+      Schema.Attribute.DefaultTo<'link'>;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    url: Schema.Attribute.String;
+  };
+}
+
+export interface DisorderResourcesTab extends Struct.ComponentSchema {
+  collectionName: 'components_disorder_resources_tabs';
+  info: {
+    description: 'Content for the Resources tab';
+    displayName: 'Disorder Resources Tab';
+  };
+  attributes: {
+    description: Schema.Attribute.RichText;
+    resourceCategories: Schema.Attribute.Component<
+      'disorder.resource-category',
+      true
+    >;
+    title: Schema.Attribute.String;
+  };
+}
+
 export interface EmergencyEmergencyAccordionItem
   extends Struct.ComponentSchema {
   collectionName: 'components_emergency_emergency_accordion_items';
@@ -774,6 +1214,38 @@ export interface TempleResourcesTab extends Struct.ComponentSchema {
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
+      'about.contact-info': AboutContactInfo;
+      'about.contact-tab': AboutContactTab;
+      'about.division-consultant': AboutDivisionConsultant;
+      'about.division-consultants-section': AboutDivisionConsultantsSection;
+      'about.form-subject': AboutFormSubject;
+      'about.founder': AboutFounder;
+      'about.goal-item': AboutGoalItem;
+      'about.goals-section': AboutGoalsSection;
+      'about.history-section': AboutHistorySection;
+      'about.history-tab': AboutHistoryTab;
+      'about.instruction-step': AboutInstructionStep;
+      'about.instructions-section': AboutInstructionsSection;
+      'about.medical-advisor': AboutMedicalAdvisor;
+      'about.overview-tab': AboutOverviewTab;
+      'about.team-member': AboutTeamMember;
+      'about.team-structure-tab': AboutTeamStructureTab;
+      'about.testimonial': AboutTestimonial;
+      'about.text-block': AboutTextBlock;
+      'disorder.content-section': DisorderContentSection;
+      'disorder.content-subsection': DisorderContentSubsection;
+      'disorder.division-leader': DisorderDivisionLeader;
+      'disorder.division-leaders-tab': DisorderDivisionLeadersTab;
+      'disorder.faq-item': DisorderFaqItem;
+      'disorder.faq-section': DisorderFaqSection;
+      'disorder.hero-section': DisorderHeroSection;
+      'disorder.list-item': DisorderListItem;
+      'disorder.overview-tab': DisorderOverviewTab;
+      'disorder.personal-stories-tab': DisorderPersonalStoriesTab;
+      'disorder.personal-story': DisorderPersonalStory;
+      'disorder.resource-category': DisorderResourceCategory;
+      'disorder.resource-item': DisorderResourceItem;
+      'disorder.resources-tab': DisorderResourcesTab;
       'emergency.emergency-accordion-item': EmergencyEmergencyAccordionItem;
       'emergency.genetic-disorder-response': EmergencyGeneticDisorderResponse;
       'growth-chart.chart-category': GrowthChartChartCategory;

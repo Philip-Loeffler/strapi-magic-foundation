@@ -1,0 +1,20 @@
+{
+  "collectionName": "components_about_history_tabs",
+  "info": {
+    "displayName": "About History Tab",
+    "description": "Content for the About History tab"
+  },
+  "options": {},
+  "attributes": {
+    "founders": {
+      "type": "component",
+      "repeatable": true,
+      "component": "about.founder"
+    },
+    "historySections": {
+      "type": "component",
+      "repeatable": true,
+      "component": "about.history-section"
+    }
+  }
+}

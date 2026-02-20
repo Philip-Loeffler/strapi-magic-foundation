@@ -1,0 +1,23 @@
+{
+  "collectionName": "components_about_medical_advisors",
+  "info": {
+    "displayName": "About Medical Advisor",
+    "description": "A medical advisory board member"
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"]
+    },
+    "qualifications": {
+      "type": "richtext"
+    }
+  }
+}

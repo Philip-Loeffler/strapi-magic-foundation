@@ -1,0 +1,1 @@
+{"collectionName":"components_disorder_list_items","info":{"displayName":"Disorder List Item","description":"A single list item"},"options":{},"attributes":{"text":{"type":"text","required":true},"isHighlighted":{"type":"boolean","default":false}}}

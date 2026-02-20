@@ -1,0 +1,1 @@
+{"collectionName":"components_disorder_faq_sections","info":{"displayName":"Disorder FAQ Section","description":"FAQ section with questions and answers"},"options":{},"attributes":{"title":{"type":"string"},"faqs":{"type":"component","repeatable":true,"component":"disorder.faq-item"}}}
