@@ -1,6 +1,9 @@
 const Page = async () => {
   // Static for deploy; restore API fetch when ready for dynamic data
-  const emergency = null;
+  type EmergencyData = {
+    overView: string;
+  };
+  const emergency = null as EmergencyData | null;
 
   return (
     <div className="flex justify-center w-full h-full pt-20">
