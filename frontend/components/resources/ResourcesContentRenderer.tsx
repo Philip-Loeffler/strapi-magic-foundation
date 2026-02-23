@@ -3,6 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { Play } from "lucide-react";
+import { JSX } from "react";
 
 function getImageUrl(image: any): string {
   if (!image) return "";
@@ -77,7 +78,9 @@ export function ResourcesContentRenderer({
                   key={index}
                   href={href}
                   target={href.startsWith("http") ? "_blank" : "_self"}
-                  rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
+                  rel={
+                    href.startsWith("http") ? "noopener noreferrer" : undefined
+                  }
                   className="group block"
                 >
                   <div className="relative aspect-video rounded-lg overflow-hidden bg-muted">
@@ -213,9 +216,7 @@ function ResourcesRichText({ content }: { content: unknown }) {
               );
             default:
               return (
-                <div key={index}>
-                  {renderRichChildren(node?.children)}
-                </div>
+                <div key={index}>{renderRichChildren(node?.children)}</div>
               );
           }
         })}

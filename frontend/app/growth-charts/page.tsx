@@ -12,8 +12,7 @@ function buildPopulateQuery(): string {
 
 async function getGenericGrowthChartData() {
   try {
-    const strapiUrl =
-      process.env.NEXT_PUBLIC_STRAPI_URL;
+    const strapiUrl = process.env.NEXT_PUBLIC_STRAPI_URL;
     const populateQuery = buildPopulateQuery();
     const res = await fetch(
       `${strapiUrl}/api/generic-growth-chart?${populateQuery}`,
@@ -37,17 +36,17 @@ export default async function GrowthChartsPage() {
   return (
     <div className="min-h-screen py-8 px-4">
       <div className="mx-auto max-w-4xl">
-        {attrs ? (
+        {/* {attrs ? (
           <GenericGrowthChartContentRenderer content={attrs} />
-        ) : (
-          <div className="text-center py-12">
-            <h1 className="text-4xl font-bold mb-4">Growth Charts</h1>
-            <p className="text-muted-foreground">
-              Content is managed in Strapi. Add a Generic Growth Charts entry to
-              see content here.
-            </p>
-          </div>
-        )}
+        ) : ( */}
+        <div className="text-center py-12">
+          <h1 className="text-4xl font-bold mb-4">Growth Charts</h1>
+          <p className="text-muted-foreground">
+            Content is managed in Strapi. Add a Generic Growth Charts entry to
+            see content here.
+          </p>
+        </div>
+        {/* )} */}
       </div>
     </div>
   );

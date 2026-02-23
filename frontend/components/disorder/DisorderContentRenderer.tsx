@@ -24,12 +24,15 @@ import {
   MorphingDialogClose,
   MorphingDialogContainer,
 } from "@/components/motion-primitives/morphing-dialog";
+import { JSX } from "react";
 
 interface DisorderContentRendererProps {
   content: any;
 }
 
-export function DisorderContentRenderer({ content }: DisorderContentRendererProps) {
+export function DisorderContentRenderer({
+  content,
+}: DisorderContentRendererProps) {
   if (!content) return null;
 
   // Handle Overview Tab (disorder uses contentSections array)
@@ -242,7 +245,9 @@ function ResourcesTabRenderer({ content }: { content: any }) {
                       <CardHeader>
                         <CardTitle>{resource.title}</CardTitle>
                         {resource.description && (
-                          <CardDescription>{resource.description}</CardDescription>
+                          <CardDescription>
+                            {resource.description}
+                          </CardDescription>
                         )}
                       </CardHeader>
                       <CardContent>
@@ -355,7 +360,10 @@ function DivisionLeadersTabRenderer({ content }: { content: any }) {
                             {leader.email && (
                               <p className="text-sm">
                                 <strong>Email:</strong>{" "}
-                                <a href={`mailto:${leader.email}`} className="text-primary hover:underline">
+                                <a
+                                  href={`mailto:${leader.email}`}
+                                  className="text-primary hover:underline"
+                                >
                                   {leader.email}
                                 </a>
                               </p>
@@ -363,7 +371,10 @@ function DivisionLeadersTabRenderer({ content }: { content: any }) {
                             {leader.phone && (
                               <p className="text-sm">
                                 <strong>Phone:</strong>{" "}
-                                <a href={`tel:${leader.phone}`} className="text-primary hover:underline">
+                                <a
+                                  href={`tel:${leader.phone}`}
+                                  className="text-primary hover:underline"
+                                >
                                   {leader.phone}
                                 </a>
                               </p>
@@ -463,7 +474,8 @@ function RichTextRenderer({ content }: { content: any }) {
                 </p>
               );
             case "heading": {
-              const HeadingTag = `h${node.level}` as keyof JSX.IntrinsicElements;
+              const HeadingTag =
+                `h${node.level}` as keyof JSX.IntrinsicElements;
               return (
                 <HeadingTag key={index} className="mb-4 font-bold">
                   {renderChildren(node.children)}
@@ -529,13 +541,11 @@ function getImageUrl(image: any): string {
   if (!image) return "";
   if (typeof image === "string") return image;
   if (image.url) {
-    const baseUrl =
-      process.env.NEXT_PUBLIC_STRAPI_URL;
+    const baseUrl = process.env.NEXT_PUBLIC_STRAPI_URL;
     return image.url.startsWith("http") ? image.url : `${baseUrl}${image.url}`;
   }
   if (image.data?.attributes?.url) {
-    const baseUrl =
-      process.env.NEXT_PUBLIC_STRAPI_URL;
+    const baseUrl = process.env.NEXT_PUBLIC_STRAPI_URL;
     return `${baseUrl}${image.data.attributes.url}`;
   }
   return "";

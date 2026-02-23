@@ -8,10 +8,16 @@ import {
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { JSX } from "react";
 
 interface InsuranceAppealsContentRendererProps {
   content: any;
-  tab: "overview" | "faq" | "appeal-process" | "follow-up-procedure" | "patient-assistance";
+  tab:
+    | "overview"
+    | "faq"
+    | "appeal-process"
+    | "follow-up-procedure"
+    | "patient-assistance";
 }
 
 export function InsuranceAppealsContentRenderer({
@@ -59,7 +65,9 @@ function OverviewTab({ content }: { content: any }) {
       )}
       {content.accordionSections && content.accordionSections.length > 0 && (
         <div className="mt-8">
-          <h2 className="text-xl font-semibold mb-4">External Appeal Process Information</h2>
+          <h2 className="text-xl font-semibold mb-4">
+            External Appeal Process Information
+          </h2>
           <Accordion type="single" collapsible className="w-full">
             {content.accordionSections.map((section: any, index: number) => (
               <AccordionItem key={index} value={`section-${index}`}>
@@ -83,9 +91,7 @@ function OverviewTab({ content }: { content: any }) {
 function FAQTab({ content }: { content: any }) {
   return (
     <div className="space-y-6">
-      {content.title && (
-        <h2 className="text-2xl font-bold">{content.title}</h2>
-      )}
+      {content.title && <h2 className="text-2xl font-bold">{content.title}</h2>}
       {content.faqItems && content.faqItems.length > 0 && (
         <div className="space-y-6">
           {content.faqItems.map((item: any, index: number) => (
@@ -127,7 +133,11 @@ function AppealProcessTab({ content }: { content: any }) {
       {content.buttonText && content.buttonUrl && (
         <div className="pt-4">
           <Button asChild className="bg-primary">
-            <Link href={content.buttonUrl} target="_blank" rel="noopener noreferrer">
+            <Link
+              href={content.buttonUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               {content.buttonText}
             </Link>
           </Button>
@@ -164,7 +174,11 @@ function FollowUpProcedureTab({ content }: { content: any }) {
       )}
       {hipaaUrl && (
         <div className="pt-2">
-          <Button asChild variant="outline" className="bg-primary/10 border-primary">
+          <Button
+            asChild
+            variant="outline"
+            className="bg-primary/10 border-primary"
+          >
             <Link href={hipaaUrl} target="_blank" rel="noopener noreferrer">
               Download MAGIC HIPAA Form
             </Link>
@@ -181,14 +195,20 @@ function FollowUpProcedureForm() {
     <form className="space-y-8 pt-6 border-t">
       {/* Section 1 */}
       <section className="space-y-4">
-        <h3 className="text-lg font-bold text-primary">1. External Appeal For Pediatric Patient</h3>
+        <h3 className="text-lg font-bold text-primary">
+          1. External Appeal For Pediatric Patient
+        </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-2">
-            <label className="text-sm font-medium">Applicant&apos;s Last Name</label>
+            <label className="text-sm font-medium">
+              Applicant&apos;s Last Name
+            </label>
             <input type="text" className="w-full border rounded-md px-3 py-2" />
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-medium">Applicant&apos;s First Name</label>
+            <label className="text-sm font-medium">
+              Applicant&apos;s First Name
+            </label>
             <input type="text" className="w-full border rounded-md px-3 py-2" />
           </div>
           <div className="md:col-span-2 space-y-2">
@@ -211,7 +231,10 @@ function FollowUpProcedureForm() {
           </div>
           <div className="space-y-2">
             <label className="text-sm font-medium">Email</label>
-            <input type="email" className="w-full border rounded-md px-3 py-2" />
+            <input
+              type="email"
+              className="w-full border rounded-md px-3 py-2"
+            />
           </div>
           <div className="space-y-2">
             <label className="text-sm font-medium">Daytime Phone</label>
@@ -222,14 +245,23 @@ function FollowUpProcedureForm() {
             <input type="text" className="w-full border rounded-md px-3 py-2" />
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-medium">Patient&apos;s Birthday</label>
+            <label className="text-sm font-medium">
+              Patient&apos;s Birthday
+            </label>
             <input type="date" className="w-full border rounded-md px-3 py-2" />
           </div>
         </div>
         <div className="space-y-2">
           <label className="text-sm font-medium block">Diagnoses</label>
           <div className="flex flex-col gap-2">
-            {["Growth Hormone Deficiency (GHD)", "Russell-Silver Syndrome (RSS)", "Small for Gestational Age (SGA)", "Turner Syndrome (TS)", "Idiopathic Short Stature", "Other"].map((opt) => (
+            {[
+              "Growth Hormone Deficiency (GHD)",
+              "Russell-Silver Syndrome (RSS)",
+              "Small for Gestational Age (SGA)",
+              "Turner Syndrome (TS)",
+              "Idiopathic Short Stature",
+              "Other",
+            ].map((opt) => (
               <label key={opt} className="flex items-center gap-2">
                 <input type="radio" name="diagnoses" value={opt} />
                 <span className="text-sm">{opt}</span>
@@ -240,7 +272,15 @@ function FollowUpProcedureForm() {
         <div className="space-y-2">
           <label className="text-sm font-medium block">Drug Name</label>
           <div className="flex flex-col gap-2">
-            {["Humatrope", "Norditropin", "Omnitrope", "Genotropin", "Saizen", "Zorbtive", "Other"].map((opt) => (
+            {[
+              "Humatrope",
+              "Norditropin",
+              "Omnitrope",
+              "Genotropin",
+              "Saizen",
+              "Zorbtive",
+              "Other",
+            ].map((opt) => (
               <label key={opt} className="flex items-center gap-2">
                 <input type="radio" name="drug" value={opt} />
                 <span className="text-sm">{opt}</span>
@@ -257,7 +297,9 @@ function FollowUpProcedureForm() {
             </label>
             <label className="flex items-center gap-2">
               <input type="radio" name="situation" value="discontinued" />
-              <span className="text-sm">Had therapy discontinued (drugs and how long)</span>
+              <span className="text-sm">
+                Had therapy discontinued (drugs and how long)
+              </span>
             </label>
             <label className="flex items-center gap-2">
               <input type="radio" name="situation" value="other" />
@@ -269,17 +311,27 @@ function FollowUpProcedureForm() {
 
       {/* Section 2 */}
       <section className="space-y-4 border-t pt-6">
-        <h3 className="text-lg font-bold text-primary">2. Denial Letter Information</h3>
+        <h3 className="text-lg font-bold text-primary">
+          2. Denial Letter Information
+        </h3>
         <div className="space-y-2">
           <label className="text-sm font-medium">Denial code / reference</label>
-          <input type="text" className="w-full border rounded-md px-3 py-2" placeholder="KMCGSHYW" />
+          <input
+            type="text"
+            className="w-full border rounded-md px-3 py-2"
+            placeholder="KMCGSHYW"
+          />
         </div>
         <div className="space-y-2">
-          <label className="text-sm font-medium">Add final determination denial letter</label>
+          <label className="text-sm font-medium">
+            Add final determination denial letter
+          </label>
           <input type="file" className="w-full border rounded-md px-3 py-2" />
         </div>
         <div className="space-y-2">
-          <label className="text-sm font-medium">Add copy of insurance card (front and back)</label>
+          <label className="text-sm font-medium">
+            Add copy of insurance card (front and back)
+          </label>
           <input type="file" className="w-full border rounded-md px-3 py-2" />
         </div>
       </section>
@@ -289,7 +341,9 @@ function FollowUpProcedureForm() {
         <h3 className="text-lg font-bold text-primary">3. Medical History</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-2">
-            <label className="text-sm font-medium">GH or IGF-1 highest number (albumin)</label>
+            <label className="text-sm font-medium">
+              GH or IGF-1 highest number (albumin)
+            </label>
             <input type="text" className="w-full border rounded-md px-3 py-2" />
           </div>
           <div className="space-y-2">
@@ -297,38 +351,58 @@ function FollowUpProcedureForm() {
             <input type="text" className="w-full border rounded-md px-3 py-2" />
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-medium">Date when growth hormone therapy did NOT manage to work</label>
+            <label className="text-sm font-medium">
+              Date when growth hormone therapy did NOT manage to work
+            </label>
             <input type="date" className="w-full border rounded-md px-3 py-2" />
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-medium">Most recent Height and Weight</label>
+            <label className="text-sm font-medium">
+              Most recent Height and Weight
+            </label>
             <input type="text" className="w-full border rounded-md px-3 py-2" />
           </div>
         </div>
         <div className="space-y-2">
           <label className="text-sm font-medium">Family history of GHD?</label>
           <div className="flex gap-4">
-            <label className="flex items-center gap-2"><input type="radio" name="familyHistory" value="yes" /> Yes</label>
-            <label className="flex items-center gap-2"><input type="radio" name="familyHistory" value="no" /> No</label>
+            <label className="flex items-center gap-2">
+              <input type="radio" name="familyHistory" value="yes" /> Yes
+            </label>
+            <label className="flex items-center gap-2">
+              <input type="radio" name="familyHistory" value="no" /> No
+            </label>
           </div>
         </div>
         <div className="space-y-2">
-          <label className="text-sm font-medium">Did your child ever have an MRI?</label>
+          <label className="text-sm font-medium">
+            Did your child ever have an MRI?
+          </label>
           <div className="flex gap-4">
-            <label className="flex items-center gap-2"><input type="radio" name="mri" value="yes" /> Yes</label>
-            <label className="flex items-center gap-2"><input type="radio" name="mri" value="no" /> No</label>
+            <label className="flex items-center gap-2">
+              <input type="radio" name="mri" value="yes" /> Yes
+            </label>
+            <label className="flex items-center gap-2">
+              <input type="radio" name="mri" value="no" /> No
+            </label>
           </div>
         </div>
         <div className="space-y-2">
-          <label className="text-sm font-medium">Upload IGFR-1 Report (if applicable)</label>
+          <label className="text-sm font-medium">
+            Upload IGFR-1 Report (if applicable)
+          </label>
           <input type="file" className="w-full border rounded-md px-3 py-2" />
         </div>
         <div className="space-y-2">
-          <label className="text-sm font-medium">Upload most recent Growth Chart</label>
+          <label className="text-sm font-medium">
+            Upload most recent Growth Chart
+          </label>
           <input type="file" className="w-full border rounded-md px-3 py-2" />
         </div>
         <div className="space-y-2">
-          <label className="text-sm font-medium">Upload signed HIPAA (within two weeks of submission)</label>
+          <label className="text-sm font-medium">
+            Upload signed HIPAA (within two weeks of submission)
+          </label>
           <input type="file" className="w-full border rounded-md px-3 py-2" />
         </div>
       </section>

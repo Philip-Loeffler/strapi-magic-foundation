@@ -24,6 +24,7 @@ import {
   MorphingDialogClose,
   MorphingDialogContainer,
 } from "@/components/motion-primitives/morphing-dialog";
+import { JSX } from "react";
 
 interface RSSContentRendererProps {
   content: any;
@@ -607,13 +608,11 @@ function getImageUrl(image: any): string {
   if (!image) return "";
   if (typeof image === "string") return image;
   if (image.url) {
-    const baseUrl =
-      process.env.NEXT_PUBLIC_STRAPI_URL;
+    const baseUrl = process.env.NEXT_PUBLIC_STRAPI_URL;
     return image.url.startsWith("http") ? image.url : `${baseUrl}${image.url}`;
   }
   if (image.data?.attributes?.url) {
-    const baseUrl =
-      process.env.NEXT_PUBLIC_STRAPI_URL;
+    const baseUrl = process.env.NEXT_PUBLIC_STRAPI_URL;
     return `${baseUrl}${image.data.attributes.url}`;
   }
   return "";

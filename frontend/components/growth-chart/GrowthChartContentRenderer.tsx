@@ -8,6 +8,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import Link from "next/link";
+import { JSX } from "react";
 
 interface GrowthChartContentRendererProps {
   content: any;
@@ -55,9 +56,7 @@ export function GrowthChartContentRenderer({
 function IntroSectionRenderer({ section }: { section: any }) {
   return (
     <div className="space-y-4">
-      {section.title && (
-        <h1 className="text-4xl font-bold">{section.title}</h1>
-      )}
+      {section.title && <h1 className="text-4xl font-bold">{section.title}</h1>}
       {section.description && (
         <div className="prose max-w-none">
           <RichTextRenderer content={section.description} />
@@ -111,7 +110,10 @@ function ChartItemRenderer({ chart }: { chart: any }) {
   };
 
   const chartUrl = getChartUrl();
-  const isExcel = chart.chartType === "excel" || chart.file?.mime?.includes("excel") || chart.file?.mime?.includes("spreadsheet");
+  const isExcel =
+    chart.chartType === "excel" ||
+    chart.file?.mime?.includes("excel") ||
+    chart.file?.mime?.includes("spreadsheet");
 
   return (
     <Card className="h-full flex flex-col">
@@ -155,11 +157,7 @@ function ChartItemRenderer({ chart }: { chart: any }) {
   );
 }
 
-function InstructionsSectionRenderer({
-  instructions,
-}: {
-  instructions: any;
-}) {
+function InstructionsSectionRenderer({ instructions }: { instructions: any }) {
   return (
     <div className="space-y-6">
       {instructions.title && (
@@ -283,13 +281,11 @@ function getImageUrl(image: any): string {
   if (!image) return "";
   if (typeof image === "string") return image;
   if (image.url) {
-    const baseUrl =
-      process.env.NEXT_PUBLIC_STRAPI_URL;
+    const baseUrl = process.env.NEXT_PUBLIC_STRAPI_URL;
     return image.url.startsWith("http") ? image.url : `${baseUrl}${image.url}`;
   }
   if (image.data?.attributes?.url) {
-    const baseUrl =
-      process.env.NEXT_PUBLIC_STRAPI_URL;
+    const baseUrl = process.env.NEXT_PUBLIC_STRAPI_URL;
     return `${baseUrl}${image.data.attributes.url}`;
   }
   return "";

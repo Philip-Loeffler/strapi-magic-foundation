@@ -7,8 +7,7 @@ import {
 
 async function getEmergencyData() {
   try {
-    const strapiUrl =
-      process.env.NEXT_PUBLIC_STRAPI_URL;
+    const strapiUrl = process.env.NEXT_PUBLIC_STRAPI_URL;
     const res = await fetch(
       `${strapiUrl}/api/emergencies?populate[0]=emergencyAccordion&populate[1]=emergencyAccordion.geneticDisorderResponse`,
       {
@@ -19,7 +18,11 @@ async function getEmergencyData() {
       },
     );
     if (!res.ok) {
-      console.error("Failed to fetch emergency data:", res.status, res.statusText);
+      console.error(
+        "Failed to fetch emergency data:",
+        res.status,
+        res.statusText,
+      );
       return null;
     }
     return res.json();
@@ -37,13 +40,13 @@ const Page = async () => {
     <div className="flex justify-center w-full h-full pt-20">
       <div className="flex flex-col w-full justify-center items-center gap-8 w-1/2">
         <div className="text-3xl font-bold">
-          Have <span className="text-primaryOrange">Emergency?</span> We are here to
-          help.
+          Have <span className="text-primaryOrange">Emergency?</span> We are
+          here to help.
         </div>
         {emergency?.overView && (
           <div className="text-center">{emergency.overView}</div>
         )}
-        {emergency?.emergencyAccordion &&
+        {/* {emergency?.emergencyAccordion &&
           emergency.emergencyAccordion.length > 0 && (
             <div className="flex self-start p-24 w-full">
               <Accordion className="w-full" type="single" collapsible>
@@ -68,7 +71,7 @@ const Page = async () => {
                 ))}
               </Accordion>
             </div>
-          )}
+          )} */}
       </div>
     </div>
   );

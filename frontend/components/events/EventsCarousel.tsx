@@ -3,6 +3,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { JSX } from "react";
 
 export type EventItem = {
   id: number;
@@ -117,10 +118,7 @@ export function EventsCarousel({ events }: { events: EventItem[] }) {
 
       {/* Read More modal */}
       {modalEvent && (
-        <EventModal
-          event={modalEvent}
-          onClose={() => setModalEvent(null)}
-        />
+        <EventModal event={modalEvent} onClose={() => setModalEvent(null)} />
       )}
     </div>
   );
@@ -229,9 +227,7 @@ function EventRichText({ content }: { content: unknown }) {
               );
             default:
               return (
-                <div key={index}>
-                  {renderRichChildren(node?.children)}
-                </div>
+                <div key={index}>{renderRichChildren(node?.children)}</div>
               );
           }
         })}
