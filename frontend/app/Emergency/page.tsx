@@ -1,40 +1,6 @@
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-
-async function getEmergencyData() {
-  try {
-    const strapiUrl = process.env.NEXT_PUBLIC_STRAPI_URL;
-    const res = await fetch(
-      `${strapiUrl}/api/emergencies?populate[0]=emergencyAccordion&populate[1]=emergencyAccordion.geneticDisorderResponse`,
-      {
-        cache: "no-store",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      },
-    );
-    if (!res.ok) {
-      console.error(
-        "Failed to fetch emergency data:",
-        res.status,
-        res.statusText,
-      );
-      return null;
-    }
-    return res.json();
-  } catch (error) {
-    console.error("Error fetching emergency data:", error);
-    return null;
-  }
-}
-
 const Page = async () => {
-  const data = await getEmergencyData();
-  const emergency = data?.data?.[0];
+  // Static for deploy; restore API fetch when ready for dynamic data
+  const emergency = null;
 
   return (
     <div className="flex justify-center w-full h-full pt-20">

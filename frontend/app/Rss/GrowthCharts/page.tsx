@@ -1,47 +1,8 @@
 import { GrowthChartContentRenderer } from "@/components/growth-chart/GrowthChartContentRenderer";
 
-function buildGrowthChartPopulateQuery(): string {
-  const populate: string[] = [
-    "introSection",
-    "chartCategories",
-    "chartCategories.charts",
-    "chartCategories.charts.file",
-    "instructionsSections",
-    "instructionsSections.steps",
-  ];
-
-  return populate.map((p, i) => `populate[${i}]=${p}`).join("&");
-}
-
-async function getGrowthChartData() {
-  try {
-    const strapiUrl =
-      process.env.NEXT_PUBLIC_STRAPI_URL;
-    const populateQuery = buildGrowthChartPopulateQuery();
-    const res = await fetch(`${strapiUrl}/api/growth-charts?${populateQuery}`, {
-      cache: "no-store",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    if (!res.ok) {
-      console.error(
-        "Failed to fetch growth chart data:",
-        res.status,
-        res.statusText,
-      );
-      return null;
-    }
-    return res.json();
-  } catch (error) {
-    console.error("Error fetching growth chart data:", error);
-    return null;
-  }
-}
-
 export default async function GrowthChartsPage() {
-  const data = await getGrowthChartData();
-  const growthChartData = data?.data?.[0];
+  // Static for deploy; restore API fetch when ready for dynamic data
+  const growthChartData = null;
 
   return (
     <div className="min-h-screen py-8 px-4">

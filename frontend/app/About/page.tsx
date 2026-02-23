@@ -1,67 +1,9 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { AboutContentRenderer } from "@/components/about/AboutContentRenderer";
 
-function buildAboutPopulateQuery(): string {
-  const populate: string[] = [
-    "overviewTab",
-    "overviewTab.introParagraphs",
-    "overviewTab.goalsForChildren",
-    "overviewTab.goalsForChildren.goals",
-    "overviewTab.goalsForAdults",
-    "overviewTab.goalsForAdults.goals",
-    "overviewTab.disclaimer",
-    "overviewTab.heightMeasurementInstructions",
-    "overviewTab.heightMeasurementInstructions.instructions",
-    "overviewTab.testimonial",
-    "historyTab",
-    "historyTab.founders",
-    "historyTab.founders.image",
-    "historyTab.historySections",
-    "teamStructureTab",
-    "teamStructureTab.boardMembers",
-    "teamStructureTab.boardMembers.image",
-    "teamStructureTab.divisionConsultants",
-    "teamStructureTab.divisionConsultants.consultants",
-    "teamStructureTab.staffMembers",
-    "teamStructureTab.staffMembers.image",
-    "teamStructureTab.medicalAdvisoryBoard",
-    "teamStructureTab.medicalAdvisoryBoard.image",
-    "contactTab",
-    "contactTab.phoneNumbers",
-    "contactTab.contactFormSubjects",
-  ];
-
-  return populate.map((p, i) => `populate[${i}]=${p}`).join("&");
-}
-
-async function getAboutData() {
-  try {
-    const strapiUrl =
-      process.env.NEXT_PUBLIC_STRAPI_URL;
-    const populateQuery = buildAboutPopulateQuery();
-    const res = await fetch(
-      `${strapiUrl}/api/abouts?${populateQuery}`,
-      {
-        cache: "no-store",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      },
-    );
-    if (!res.ok) {
-      console.error("Failed to fetch About data:", res.status, res.statusText);
-      return null;
-    }
-    return res.json();
-  } catch (error) {
-    console.error("Error fetching About data:", error);
-    return null;
-  }
-}
-
 export default async function AboutPage() {
-  const data = await getAboutData();
-  const aboutData = data?.data?.[0];
+  // Static for deploy; restore API fetch when ready for dynamic data
+  const aboutData = null;
 
   const tabs = [
     { slug: "overview", title: "Overview" },
