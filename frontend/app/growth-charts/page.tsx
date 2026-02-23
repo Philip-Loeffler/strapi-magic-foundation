@@ -13,7 +13,7 @@ function buildPopulateQuery(): string {
 async function getGenericGrowthChartData() {
   try {
     const strapiUrl =
-      process.env.NEXT_PUBLIC_STRAPI_URL || "http://localhost:1337";
+      process.env.NEXT_PUBLIC_STRAPI_URL;
     const populateQuery = buildPopulateQuery();
     const res = await fetch(
       `${strapiUrl}/api/generic-growth-chart?${populateQuery}`,

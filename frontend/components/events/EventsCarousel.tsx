@@ -16,7 +16,7 @@ export type EventItem = {
 function getImageUrl(image: EventItem["image"]): string {
   if (!image) return "";
   if (typeof image === "string") return image;
-  const baseUrl = process.env.NEXT_PUBLIC_STRAPI_URL || "http://localhost:1337";
+  const baseUrl = process.env.NEXT_PUBLIC_STRAPI_URL;
   if (image.url)
     return image.url.startsWith("http") ? image.url : `${baseUrl}${image.url}`;
   if (image.data?.attributes?.url)

@@ -16,7 +16,7 @@ function buildResourcesPopulateQuery(): string {
 async function getResourcesData() {
   try {
     const strapiUrl =
-      process.env.NEXT_PUBLIC_STRAPI_URL || "http://localhost:1337";
+      process.env.NEXT_PUBLIC_STRAPI_URL;
     const populateQuery = buildResourcesPopulateQuery();
     const res = await fetch(
       `${strapiUrl}/api/resources?${populateQuery}`,

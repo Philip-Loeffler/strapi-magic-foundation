@@ -284,12 +284,12 @@ function getImageUrl(image: any): string {
   if (typeof image === "string") return image;
   if (image.url) {
     const baseUrl =
-      process.env.NEXT_PUBLIC_STRAPI_URL || "http://localhost:1337";
+      process.env.NEXT_PUBLIC_STRAPI_URL;
     return image.url.startsWith("http") ? image.url : `${baseUrl}${image.url}`;
   }
   if (image.data?.attributes?.url) {
     const baseUrl =
-      process.env.NEXT_PUBLIC_STRAPI_URL || "http://localhost:1337";
+      process.env.NEXT_PUBLIC_STRAPI_URL;
     return `${baseUrl}${image.data.attributes.url}`;
   }
   return "";

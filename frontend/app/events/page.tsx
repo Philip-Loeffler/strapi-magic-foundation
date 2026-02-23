@@ -3,7 +3,7 @@ import { EventsCarousel, type EventItem } from "@/components/events/EventsCarous
 async function getEvents(): Promise<EventItem[]> {
   try {
     const strapiUrl =
-      process.env.NEXT_PUBLIC_STRAPI_URL || "http://localhost:1337";
+      process.env.NEXT_PUBLIC_STRAPI_URL;
     const res = await fetch(
       `${strapiUrl}/api/events?populate=image&sort=date:asc`,
       {

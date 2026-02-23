@@ -8,7 +8,7 @@ import {
 async function getEmergencyData() {
   try {
     const strapiUrl =
-      process.env.NEXT_PUBLIC_STRAPI_URL || "http://localhost:1337";
+      process.env.NEXT_PUBLIC_STRAPI_URL;
     const res = await fetch(
       `${strapiUrl}/api/emergencies?populate[0]=emergencyAccordion&populate[1]=emergencyAccordion.geneticDisorderResponse`,
       {

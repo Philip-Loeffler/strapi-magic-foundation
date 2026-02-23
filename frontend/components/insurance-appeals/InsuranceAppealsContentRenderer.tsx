@@ -146,7 +146,7 @@ function FollowUpProcedureTab({ content }: { content: any }) {
   const hipaaUrl = content
     ? content.hipaaFormUrl ||
       (content.hipaaFormFile?.url
-        ? `${process.env.NEXT_PUBLIC_STRAPI_URL || ""}${content.hipaaFormFile.url}`
+        ? `${process.env.NEXT_PUBLIC_STRAPI_URL}${content.hipaaFormFile.url}`
         : null)
     : null;
 
