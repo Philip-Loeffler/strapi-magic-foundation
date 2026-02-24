@@ -2,7 +2,7 @@
   "collectionName": "components_about_founders",
   "info": {
     "displayName": "About Founder",
-    "description": "A founder with image and bio link"
+    "description": "A founder with alternating content and image profile blocks"
   },
   "options": {},
   "attributes": {
@@ -10,14 +10,10 @@
       "type": "string",
       "required": true
     },
-    "image": {
-      "type": "media",
-      "multiple": false,
-      "required": false,
-      "allowedTypes": ["images"]
-    },
-    "bioUrl": {
-      "type": "string"
+    "profileBlocks": {
+      "type": "component",
+      "repeatable": true,
+      "component": "about.founder-profile-block"
     }
   }
 }

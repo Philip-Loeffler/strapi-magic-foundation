@@ -1,0 +1,24 @@
+{
+  "collectionName": "components_about_founder_profile_blocks",
+  "info": {
+    "displayName": "About Founder Profile Block",
+    "description": "A single block in a founder profile: either content (richtext) or image"
+  },
+  "options": {},
+  "attributes": {
+    "blockType": {
+      "type": "enumeration",
+      "enum": ["content", "image"],
+      "required": true
+    },
+    "content": {
+      "type": "richtext"
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"]
+    }
+  }
+}

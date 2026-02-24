@@ -96,33 +96,28 @@ const components: Component[] = [
     items: [
       {
         title: "Facebook",
-        href: "/docs/primitives/alert-dialog",
+        href: "https://www.facebook.com/TheMAGICFoundation",
         img: "/facebook.png",
         alt: "facebook",
       },
       {
         title: "twitter",
-        href: "/docs/primitives/alert-dialog",
+        href: "https://x.com/magicfoundation",
         img: "/twitter.png",
         alt: "twitter",
       },
       {
         title: "instagram",
-        href: "/docs/primitives/alert-dialog",
+        href: "https://www.instagram.com/magicfoundation/",
         img: "/instagram.png",
         alt: "instagram",
       },
-      {
-        title: "pinterest",
-        href: "/docs/primitives/alert-dialog",
-        img: "/pinterest.png",
-        alt: "pinterest",
-      },
+
       {
         title: "youtube",
-        href: "/docs/primitives/alert-dialog",
+        href: "https://www.youtube.com/user/TheMAGICFoundation",
         img: "/youtube.png",
-        alt: "pinterest",
+        alt: "youtube",
       },
     ],
   },

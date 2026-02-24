@@ -1,7 +1,6 @@
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import Link from "next/link";
 import {
   MorphingDialog,
   MorphingDialogTrigger,
@@ -110,7 +109,11 @@ function OverviewTabRenderer({ content }: { content: any }) {
 
       {/* Disclaimer */}
       {content.disclaimer && (
-        <div className="prose max-w-none">
+        <div className="space-y-4">
+          <h2 className="text-2xl font-bold">
+            {content.disclaimer.disclaimerTitle}
+          </h2>
+
           <RichTextRenderer content={content.disclaimer.content} />
         </div>
       )}
@@ -160,40 +163,132 @@ function OverviewTabRenderer({ content }: { content: any }) {
   );
 }
 
-function HistoryTabRenderer({ content }: { content: any }) {
-  const PLACEHOLDER_AVATAR =
-    "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2394a3b8'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E";
+const PLACEHOLDER_FOUNDER_IMAGE =
+  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2394a3b8'%3E%3Cpath d='M4 4h16v16H4V4zm2 2v12h12V6H6z'/%3E%3C/svg%3E";
 
+function getFounderFirstImageUrl(founder: any): string {
+  if (!founder?.profileBlocks?.length) return "";
+  const imageBlock = founder.profileBlocks.find(
+    (b: any) => b.blockType === "image" && b.image,
+  );
+  return imageBlock ? getImageUrl(imageBlock.image) : "";
+}
+
+/** Renders an image inside the founder profile modal; click opens motion primitive modal (same UX as personal stories). */
+function FounderProfileImageBlock({ image, alt }: { image: any; alt: string }) {
+  const imageUrl = getImageUrl(image);
+  if (!imageUrl) return null;
+  return (
+    <MorphingDialog
+      transition={{ type: "spring", stiffness: 200, damping: 24 }}
+    >
+      <MorphingDialogTrigger className="cursor-pointer block w-full">
+        <div className="flex justify-center">
+          <MorphingDialogImage
+            src={imageUrl}
+            alt={alt}
+            className="h-80 w-80 object-cover rounded-xl border-2 border-blue-900"
+          />
+        </div>
+      </MorphingDialogTrigger>
+      <MorphingDialogContainer>
+        <MorphingDialogContent
+          style={{ borderRadius: "12px" }}
+          className="relative h-auto max-h-[90vh] w-full max-w-[500px] border-2 border-blue-900 bg-white overflow-hidden"
+        >
+          <div className="flex justify-center p-6">
+            <MorphingDialogImage
+              src={imageUrl}
+              alt={alt}
+              className="max-h-[80vh] w-auto object-contain rounded-xl"
+            />
+          </div>
+          <MorphingDialogClose className="text-zinc-500" />
+        </MorphingDialogContent>
+      </MorphingDialogContainer>
+    </MorphingDialog>
+  );
+}
+
+function HistoryTabRenderer({ content }: { content: any }) {
   return (
     <div className="space-y-12">
-      {/* Meet the Founders */}
+      {/* Meet the Founders - same UX as Personal Stories: card grid + motion modal */}
       {content.founders && content.founders.length > 0 && (
         <div className="space-y-6">
           <h2 className="text-3xl font-bold text-center">Meet the Founders</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
             {content.founders.map((founder: any, index: number) => {
-              const imageUrl = founder.image
-                ? getImageUrl(founder.image)
-                : PLACEHOLDER_AVATAR;
+              const firstImageUrl =
+                getFounderFirstImageUrl(founder) || PLACEHOLDER_FOUNDER_IMAGE;
               return (
-                <div key={index} className="text-center">
-                  <div className="w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden bg-gray-200">
-                    <img
-                      src={imageUrl}
-                      alt={founder.name}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <h3 className="text-lg font-semibold">{founder.name}</h3>
-                  {founder.bioUrl && (
-                    <Link
-                      href={founder.bioUrl}
-                      className="text-primary hover:underline text-sm"
+                <MorphingDialog
+                  key={index}
+                  transition={{ type: "spring", stiffness: 200, damping: 24 }}
+                >
+                  <MorphingDialogTrigger className="cursor-pointer text-left w-[264px]">
+                    <div className="w-[264px] h-[200px] overflow-hidden bg-gray-200 border-2 border-blue-900 rounded">
+                      <MorphingDialogImage
+                        src={firstImageUrl}
+                        alt={founder.name}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div className="flex flex-col items-start text-left mt-2 space-y-0.5 w-[264px]">
+                      <MorphingDialogTitle className="text-base font-semibold text-black">
+                        {founder.name}
+                      </MorphingDialogTitle>
+                      <MorphingDialogSubtitle className="text-sm text-gray-600">
+                        Founder
+                      </MorphingDialogSubtitle>
+                    </div>
+                  </MorphingDialogTrigger>
+                  <MorphingDialogContainer>
+                    <MorphingDialogContent
+                      style={{ borderRadius: "12px" }}
+                      className="relative h-auto max-h-[90vh] w-full max-w-[500px] border-2 border-blue-900 bg-white overflow-hidden"
                     >
-                      View Bio
-                    </Link>
-                  )}
-                </div>
+                      <div className="overflow-y-auto max-h-[90vh]">
+                        <div className="relative p-6 space-y-6">
+                          <div className="space-y-2">
+                            <MorphingDialogTitle className="text-xl font-semibold text-black text-center">
+                              {founder.name}
+                            </MorphingDialogTitle>
+                            <MorphingDialogSubtitle className="font-light text-gray-500 text-center">
+                              Founder
+                            </MorphingDialogSubtitle>
+                          </div>
+                          {founder.profileBlocks &&
+                          founder.profileBlocks.length > 0 ? (
+                            founder.profileBlocks.map(
+                              (block: any, blockIndex: number) =>
+                                block.blockType === "content" ? (
+                                  <div
+                                    key={blockIndex}
+                                    className="prose prose-sm max-w-none text-gray-700"
+                                  >
+                                    <RichTextRenderer content={block.content} />
+                                  </div>
+                                ) : block.blockType === "image" &&
+                                  block.image ? (
+                                  <FounderProfileImageBlock
+                                    key={blockIndex}
+                                    image={block.image}
+                                    alt={`${founder.name} - photo ${blockIndex + 1}`}
+                                  />
+                                ) : null,
+                            )
+                          ) : (
+                            <p className="text-muted-foreground text-center text-sm">
+                              No profile content yet.
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                      <MorphingDialogClose className="text-zinc-500" />
+                    </MorphingDialogContent>
+                  </MorphingDialogContainer>
+                </MorphingDialog>
               );
             })}
           </div>

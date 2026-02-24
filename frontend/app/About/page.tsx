@@ -1,6 +1,64 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { AboutContentRenderer } from "@/components/about/AboutContentRenderer";
 
+function buildPopulateQuery(): string {
+  const populate = [
+    "overviewTab",
+    "overviewTab.introParagraphs",
+    "overviewTab.goalsForChildren",
+    "overviewTab.goalsForChildren.goals",
+    "overviewTab.goalsForAdults",
+    "overviewTab.goalsForAdults.goals",
+    "overviewTab.disclaimer",
+
+    "overviewTab.heightMeasurementInstructions",
+    "overviewTab.heightMeasurementInstructions.instructions",
+    "overviewTab.testimonial",
+    "historyTab",
+    "historyTab.founders",
+    "historyTab.founders.profileBlocks",
+    "historyTab.founders.profileBlocks.image",
+    "historyTab.historySections",
+    "teamStructureTab",
+    "teamStructureTab.boardMembers",
+    "teamStructureTab.boardMembers.image",
+    "teamStructureTab.divisionConsultants",
+    "teamStructureTab.divisionConsultants.consultants",
+    "teamStructureTab.staffMembers",
+    "teamStructureTab.staffMembers.image",
+    "teamStructureTab.medicalAdvisoryBoard",
+    "teamStructureTab.medicalAdvisoryBoard.image",
+    "contactTab",
+    "contactTab.phoneNumbers",
+    "contactTab.contactFormSubjects",
+  ];
+  return populate.map((p, i) => `populate[${i}]=${p}`).join("&");
+}
+
+async function getAboutData() {
+  try {
+    const strapiUrl = process.env.NEXT_PUBLIC_STRAPI_URL;
+    const populateQuery = buildPopulateQuery();
+    const res = await fetch(`${strapiUrl}/api/abouts?${populateQuery}`, {
+      cache: "no-store",
+      headers: { "Content-Type": "application/json" },
+    });
+    if (!res.ok) return null;
+    const data = await res.json();
+    const raw = data?.data ?? data;
+    // About is a collection type: use first entry or match by slug
+    const list = Array.isArray(raw) ? raw : [raw];
+    const about =
+      list.find(
+        (a: { attributes?: { slug?: string } }) =>
+          a?.attributes?.slug === "about",
+      ) ?? list[0];
+    return about?.attributes ?? about ?? null;
+  } catch {
+    return null;
+  }
+}
+
 export default async function AboutPage() {
   type AboutData = {
     overviewTab: any;
@@ -8,8 +66,7 @@ export default async function AboutPage() {
     teamStructureTab: any;
     contactTab: any;
   };
-  // Static for deploy; restore API fetch when ready for dynamic data
-  const aboutData = null as AboutData | null;
+  const aboutData = (await getAboutData()) as AboutData | null;
 
   const tabs = [
     { slug: "overview", title: "Overview" },

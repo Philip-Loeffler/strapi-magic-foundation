@@ -68,13 +68,29 @@ export interface AboutFormSubject extends Struct.ComponentSchema {
 export interface AboutFounder extends Struct.ComponentSchema {
   collectionName: 'components_about_founders';
   info: {
-    description: 'A founder with image and bio link';
+    description: 'A founder with alternating content and image profile blocks';
     displayName: 'About Founder';
   };
   attributes: {
-    bioUrl: Schema.Attribute.String;
-    image: Schema.Attribute.Media<'images'>;
     name: Schema.Attribute.String & Schema.Attribute.Required;
+    profileBlocks: Schema.Attribute.Component<
+      'about.founder-profile-block',
+      true
+    >;
+  };
+}
+
+export interface AboutFounderProfileBlock extends Struct.ComponentSchema {
+  collectionName: 'components_about_founder_profile_blocks';
+  info: {
+    description: 'A single block in a founder profile: either content (richtext) or image';
+    displayName: 'About Founder Profile Block';
+  };
+  attributes: {
+    blockType: Schema.Attribute.Enumeration<['content', 'image']> &
+      Schema.Attribute.Required;
+    content: Schema.Attribute.RichText;
+    image: Schema.Attribute.Media<'images'>;
   };
 }
 
@@ -236,6 +252,7 @@ export interface AboutTextBlock extends Struct.ComponentSchema {
   };
   attributes: {
     content: Schema.Attribute.RichText;
+    disclaimerTitle: Schema.Attribute.String;
   };
 }
 
@@ -1415,6 +1432,7 @@ declare module '@strapi/strapi' {
       'about.division-consultants-section': AboutDivisionConsultantsSection;
       'about.form-subject': AboutFormSubject;
       'about.founder': AboutFounder;
+      'about.founder-profile-block': AboutFounderProfileBlock;
       'about.goal-item': AboutGoalItem;
       'about.goals-section': AboutGoalsSection;
       'about.history-section': AboutHistorySection;

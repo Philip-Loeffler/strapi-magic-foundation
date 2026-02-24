@@ -6,6 +6,9 @@
   },
   "options": {},
   "attributes": {
+    "disclaimerTitle": {
+      "type": "string"
+    },
     "content": {
       "type": "richtext"
     }
