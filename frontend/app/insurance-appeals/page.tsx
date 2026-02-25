@@ -1,4 +1,5 @@
 import { InsuranceTabsClient } from "./InsuranceTabsClient";
+import { PageContainer } from "@/components/layout/PageContainer";
 
 function buildInsuranceAppealsPopulateQuery(): string {
   const populate = [
@@ -40,13 +41,9 @@ export default async function InsurancePage() {
   const data = await getInsuranceAppealsData();
 
   return (
-    <div className="min-h-screen py-8 px-4">
-      <div className="flex flex-col w-full items-center justify-center">
-        <div className="w-full max-w-4xl mb-8">
-          <h1 className="text-3xl font-bold">Insurance Appeals</h1>
-        </div>
-        <InsuranceTabsClient data={data} />
-      </div>
-    </div>
+    <PageContainer>
+      <h1 className="text-3xl font-bold text-left mb-8">Insurance Appeals</h1>
+      <InsuranceTabsClient data={data} />
+    </PageContainer>
   );
 }

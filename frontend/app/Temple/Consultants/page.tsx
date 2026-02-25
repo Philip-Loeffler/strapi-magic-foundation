@@ -1,22 +1,11 @@
-import Image from "next/image";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
+import { PageContainer } from "@/components/layout/PageContainer";
 
 const Page = () => {
-  const tabs = [
-    {
-      title: "OverView",
-    },
-  ];
   return (
-    <div className="flex flex-row w-full items-center justify-center">
-      consultants
-    </div>
+    <PageContainer>
+      <h1 className="text-3xl font-bold text-left mb-8">Consultants</h1>
+      <p className="text-muted-foreground">Content coming soon.</p>
+    </PageContainer>
   );
 };
 

@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { navigationMenuTriggerStyle } from "@/components/ui/navigation-menu";
+import { PageContainer } from "@/components/layout/PageContainer";
 
 type DisorderItem = {
   name: string;
@@ -69,21 +70,19 @@ const disorderList: DisorderColumn = {
 
 export default function Page() {
   return (
-    <div className="min-h-screen py-8 px-4">
-      <div className="flex flex-col w-full items-center justify-center">
-        <div className="flex flex-col w-full justify-center items-center gap-8 max-w-4xl">
-          <div className="text-3xl font-bold text-center">
-            Understanding{" "}
-            <span className="text-primary">Growth and Hormonal</span> Disorders
-          </div>
-          <div className="text-center text-muted-foreground">
-            Growth and hormonal disorders can significantly impact a
-            child&apos;s physical and emotional development. At The MAGIC
-            Foundation, we are committed to providing comprehensive information
-            and support to families navigating these challenges.
-          </div>
+    <PageContainer>
+      <h1 className="text-3xl font-bold text-left mb-4">
+        Understanding{" "}
+        <span className="text-primary">Growth and Hormonal</span> Disorders
+      </h1>
+      <p className="text-muted-foreground text-left mb-8">
+        Growth and hormonal disorders can significantly impact a
+        child&apos;s physical and emotional development. At The MAGIC
+        Foundation, we are committed to providing comprehensive information
+        and support to families navigating these challenges.
+      </p>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-x-10 gap-y-2 w-full">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-x-10 gap-y-2 w-full">
             {Object.keys(disorderList).map((colKey) => (
               <div key={colKey} className="flex flex-col space-y-4">
                 {disorderList[colKey].map((item) => {
@@ -105,9 +104,7 @@ export default function Page() {
                 })}
               </div>
             ))}
-          </div>
-        </div>
       </div>
-    </div>
+    </PageContainer>
   );
 }

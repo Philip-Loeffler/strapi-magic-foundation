@@ -1,3 +1,5 @@
+import { PageContainer } from "@/components/layout/PageContainer";
+
 function buildPopulateQuery(): string {
   const populate = [
     "growthChartExampleImage",
@@ -34,13 +36,9 @@ export default async function GrowthChartsPage() {
   const attrs = content?.attributes ?? content;
 
   return (
-    <div className="min-h-screen py-8 px-4">
-      <div className="flex flex-col w-full items-center justify-center">
-        <div className="w-full max-w-4xl mb-8">
-          <h1 className="text-3xl font-bold">Growth Charts</h1>
-        </div>
-        {/* <GenericGrowthChartContentRenderer content={attrs} /> */}
-      </div>
-    </div>
+    <PageContainer>
+      <h1 className="text-3xl font-bold text-left mb-8">Growth Charts</h1>
+      {/* <GenericGrowthChartContentRenderer content={attrs} /> */}
+    </PageContainer>
   );
 }

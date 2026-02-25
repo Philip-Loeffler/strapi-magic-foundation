@@ -1,4 +1,5 @@
 import { ResourcesTabsClient } from "./ResourcesTabsClient";
+import { PageContainer } from "@/components/layout/PageContainer";
 
 function buildResourcesPopulateQuery(): string {
   const populate = [
@@ -37,13 +38,9 @@ export default async function ResourcesPage() {
   const data = await getResourcesData();
 
   return (
-    <div className="min-h-screen py-8 px-4">
-      <div className="flex flex-col w-full items-center justify-center">
-        <div className="w-full max-w-4xl mb-8">
-          <h1 className="text-3xl font-bold">Resources</h1>
-        </div>
-        <ResourcesTabsClient data={data} />
-      </div>
-    </div>
+    <PageContainer>
+      <h1 className="text-3xl font-bold text-left mb-8">Resources</h1>
+      <ResourcesTabsClient data={data} />
+    </PageContainer>
   );
 }

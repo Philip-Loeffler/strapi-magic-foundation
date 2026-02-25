@@ -1,4 +1,5 @@
 import { GiveForm } from "./GiveForm";
+import { PageContainer } from "@/components/layout/PageContainer";
 
 const CAUSES = [
   "Growth Champion (Growth Awareness Week)",
@@ -12,10 +13,9 @@ const CAUSES = [
 
 export default function GivePage() {
   return (
-    <div className="min-h-screen bg-muted/30 py-12 px-4">
-      <div className="mx-auto max-w-2xl">
-        {/* Hero */}
-        <header className="text-center">
+    <PageContainer className="max-w-2xl">
+      {/* Hero */}
+      <header className="text-center">
           <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
             Make a Donation
           </h1>
@@ -77,7 +77,6 @@ export default function GivePage() {
           Donations must be received by The MAGIC Foundation on, or before,
           December 31st, to be deductible in that tax year.
         </p>
-      </div>
-    </div>
+    </PageContainer>
   );
 }

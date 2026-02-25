@@ -9,15 +9,16 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { PageContainer } from "@/components/layout/PageContainer";
 import Link from "next/link";
 import React from "react";
 
 const Page = () => {
   return (
-    <>
+    <PageContainer>
       <main className="h-full">
-        <div className="flex justify-center w-full pt-20">
-          <div className="flex flex-col justify-center items-center gap-8 w-1/2">
+        <div className="flex justify-center w-full pt-8">
+          <div className="flex flex-col justify-center items-center gap-8 max-w-2xl">
             <Button size="lg" className="bg-primaryBlue font-bold">
               JOIN THE MAGIC FOUNDATION TODAY
             </Button>
@@ -138,7 +139,7 @@ const Page = () => {
           </div>
         </div>
       </main>
-    </>
+    </PageContainer>
   );
 };
 

@@ -2,6 +2,7 @@ import {
   EventsCarousel,
   type EventItem,
 } from "@/components/events/EventsCarousel";
+import { PageContainer } from "@/components/layout/PageContainer";
 
 async function getEvents(): Promise<EventItem[]> {
   try {
@@ -37,13 +38,9 @@ export default async function EventsPage() {
   const events = await getEvents();
 
   return (
-    <div className="min-h-screen py-8 px-4">
-      <div className="flex flex-col w-full items-center justify-center">
-        <div className="w-full max-w-4xl mb-8">
-          <h1 className="text-3xl font-bold">Upcoming Events</h1>
-        </div>
-        <EventsCarousel events={events} />
-      </div>
-    </div>
+    <PageContainer>
+      <h1 className="text-3xl font-bold text-left mb-8">Upcoming Events</h1>
+      <EventsCarousel events={events} />
+    </PageContainer>
   );
 }

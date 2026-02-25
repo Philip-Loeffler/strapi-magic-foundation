@@ -89,7 +89,7 @@ export default function NavigationMenuDemo() {
           {components.map((component) => (
             <NavigationMenuItem key={component.title}>
               <Link
-                className=" px-[18px] py-[6px] gap-[10px] ="
+                className=" px-[16px] text-blue-900 text-xs"
                 href={component.href}
               >
                 {component.title}
@@ -97,7 +97,7 @@ export default function NavigationMenuDemo() {
             </NavigationMenuItem>
           ))}
         </NavigationMenuList>
-        <Button className="w-[143px] bg-red-500 h-[32px] p-[6px_12px] gap-[10px] rounded-[60px]">
+        <Button className=" text-xs w-[130px] bg-red-500 h-[32px] p-[6px_12px] gap-[10px] rounded-[60px]">
           <Link href={"/Emergency"}> Have Emergency?</Link>
         </Button>
       </NavigationMenu>

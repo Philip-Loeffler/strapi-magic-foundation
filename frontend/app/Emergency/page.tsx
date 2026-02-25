@@ -1,3 +1,5 @@
+import { PageContainer } from "@/components/layout/PageContainer";
+
 const Page = async () => {
   // Static for deploy; restore API fetch when ready for dynamic data
   type EmergencyData = {
@@ -6,14 +8,14 @@ const Page = async () => {
   const emergency = null as EmergencyData | null;
 
   return (
-    <div className="flex justify-center w-full h-full pt-20">
-      <div className="flex flex-col w-full justify-center items-center gap-8 w-1/2">
-        <div className="text-3xl font-bold">
+    <PageContainer>
+      <div className="flex flex-col w-full justify-center items-center gap-8">
+        <h1 className="text-3xl font-bold text-left">
           Have <span className="text-primaryOrange">Emergency?</span> We are
           here to help.
-        </div>
+        </h1>
         {emergency?.overView && (
-          <div className="text-center">{emergency.overView}</div>
+          <div className="text-left">{emergency.overView}</div>
         )}
         {/* {emergency?.emergencyAccordion &&
           emergency.emergencyAccordion.length > 0 && (
@@ -42,7 +44,7 @@ const Page = async () => {
             </div>
           )} */}
       </div>
-    </div>
+    </PageContainer>
   );
 };
 

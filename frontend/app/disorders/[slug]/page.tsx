@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { PageContainer } from "@/components/layout/PageContainer";
 import { DisorderContentRenderer } from "@/components/disorder/DisorderContentRenderer";
 import { RSSContentRenderer } from "@/components/rss/RSSContentRenderer";
 import { SGAContentRenderer } from "@/components/sga/SGAContentRenderer";
@@ -69,20 +70,19 @@ export default async function DisorderPage({
   ];
 
   return (
-    <div className="min-h-screen py-8 px-4">
-      <div className="flex flex-col w-full items-center justify-center">
-        <div className="w-full max-w-7xl mb-12">
-          <h1 className="text-3xl font-bold">{config.title}</h1>
-          {config.type === "temple" && (
-            <p className="text-muted-foreground mt-2">
-              A rare imprinting disorder involving chromosome 14 that affects
-              growth, development, and puberty.
-            </p>
-          )}
-        </div>
-        <Tabs defaultValue="overview" className="w-full max-w-7xl flex flex-col">
-          <div className="flex justify-center mb-8">
-            <TabsList className="grid w-full max-w-4xl grid-cols-4 gap-2">
+    <PageContainer>
+      <h1 className="text-3xl font-bold text-left mb-4">{config.title}</h1>
+      {config.type === "temple" ? (
+        <p className="text-muted-foreground mt-2 text-left mb-8">
+          A rare imprinting disorder involving chromosome 14 that affects
+          growth, development, and puberty.
+        </p>
+      ) : (
+        <div className="mb-8" />
+      )}
+      <Tabs defaultValue="overview" className="w-full flex flex-col">
+        <div className="flex justify-center mb-8">
+          <TabsList className="grid w-full max-w-2xl grid-cols-4 gap-2">
               {tabs.map((tab) => (
                 <TabsTrigger
                   key={tab.slug}
@@ -159,8 +159,7 @@ export default async function DisorderPage({
               </div>
             )}
           </TabsContent>
-        </Tabs>
-      </div>
-    </div>
+      </Tabs>
+    </PageContainer>
   );
 }
