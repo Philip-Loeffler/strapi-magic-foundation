@@ -35,18 +35,11 @@ export default async function GrowthChartsPage() {
 
   return (
     <div className="min-h-screen py-8 px-4">
-      <div className="mx-auto max-w-4xl">
-        {/* {attrs ? (
-          <GenericGrowthChartContentRenderer content={attrs} />
-        ) : ( */}
-        <div className="text-center py-12">
-          <h1 className="text-4xl font-bold mb-4">Growth Charts</h1>
-          <p className="text-muted-foreground">
-            Content is managed in Strapi. Add a Generic Growth Charts entry to
-            see content here.
-          </p>
+      <div className="flex flex-col w-full items-center justify-center">
+        <div className="w-full max-w-4xl mb-8">
+          <h1 className="text-3xl font-bold">Growth Charts</h1>
         </div>
-        {/* )} */}
+        {/* <GenericGrowthChartContentRenderer content={attrs} /> */}
       </div>
     </div>
   );

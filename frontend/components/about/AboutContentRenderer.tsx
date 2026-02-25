@@ -68,7 +68,7 @@ function OverviewTabRenderer({ content }: { content: any }) {
       {/* Goals for Children */}
       {content.goalsForChildren && (
         <div className="space-y-4">
-          <h2 className="text-2xl font-bold">
+          <h2 className="text-lg font-bold">
             {content.goalsForChildren.title || "For affected children"}
           </h2>
           {content.goalsForChildren.goals &&
@@ -110,7 +110,7 @@ function OverviewTabRenderer({ content }: { content: any }) {
       {/* Disclaimer */}
       {content.disclaimer && (
         <div className="space-y-4">
-          <h2 className="text-2xl font-bold">
+          <h2 className="text-lg font-bold">
             {content.disclaimer.disclaimerTitle}
           </h2>
 
@@ -229,7 +229,7 @@ function HistoryTabRenderer({ content }: { content: any }) {
       {/* Meet the Founders - same UX as Personal Stories: card grid + motion modal */}
       {content.founders && content.founders.length > 0 && (
         <div className="space-y-6">
-          <h2 className="text-3xl font-bold text-center">Meet the Founders</h2>
+          <h2 className="text-lg font-bold text-left">Meet the Founders</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
             {content.founders.map((founder: any, index: number) => {
               const cardImageUrl =
@@ -241,7 +241,7 @@ function HistoryTabRenderer({ content }: { content: any }) {
                   transition={{ type: "spring", stiffness: 200, damping: 24 }}
                 >
                   <MorphingDialogTrigger className="cursor-pointer text-left w-[264px]">
-                    <div className="w-[264px] h-[200px] overflow-hidden bg-gray-200 border-2 border-blue-900 rounded">
+                    <div className="w-[264px] h-[200px] overflow-hidden bg-gray-200 rounded">
                       <MorphingDialogImage
                         src={cardImageUrl}
                         alt={founder.name}
@@ -328,7 +328,7 @@ function HistoryTabRenderer({ content }: { content: any }) {
           {content.historySections.map((section: any, index: number) => (
             <div key={index} className="space-y-4">
               {section.title && (
-                <h2 className="text-2xl font-bold">{section.title}</h2>
+                <h2 className="text-lg font-bold">{section.title}</h2>
               )}
               {section.content && (
                 <div className="prose max-w-none">
@@ -357,14 +357,14 @@ function TeamStructureTabRenderer({ content }: { content: any }) {
               MAGIC'S BOARD
             </h2>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 w-full">
             {content.boardMembers.map((member: any, index: number) => {
               const imageUrl = member.image
                 ? getImageUrl(member.image)
                 : PLACEHOLDER_AVATAR;
               return (
-                <div key={index} className="text-center">
-                  <div className="w-48 h-48 mx-auto mb-4 overflow-hidden bg-gray-200 border-2 border-blue-900 rounded">
+                <div key={index} className="text-left w-full min-w-0">
+                  <div className="w-[264px] h-[200px] mb-4 overflow-hidden bg-gray-200 rounded">
                     <img
                       src={imageUrl}
                       alt={member.name}
@@ -419,14 +419,14 @@ function TeamStructureTabRenderer({ content }: { content: any }) {
           <div className="h-[50px] bg-[#B0C3FF] p-[12px_24px] gap-[10px] rounded-[12px] font-bold">
             <h2 className="text-xl font-semibold text-slate-800">STAFF</h2>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 w-full">
             {content.staffMembers.map((member: any, index: number) => {
               const imageUrl = member.image
                 ? getImageUrl(member.image)
                 : PLACEHOLDER_AVATAR;
               return (
-                <div key={index} className="text-center">
-                  <div className="w-48 h-48 mx-auto mb-4 overflow-hidden bg-gray-200 border-2 border-blue-900 rounded">
+                <div key={index} className="text-left w-full min-w-0">
+                  <div className="w-[264px] h-[200px] mb-4 overflow-hidden bg-gray-200 rounded">
                     <img
                       src={imageUrl}
                       alt={member.name}
@@ -453,15 +453,15 @@ function TeamStructureTabRenderer({ content }: { content: any }) {
                 MEDICAL ADVISORY BOARD
               </h2>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 w-full">
               {content.medicalAdvisoryBoard.map(
                 (advisor: any, index: number) => {
                   const imageUrl = advisor.image
                     ? getImageUrl(advisor.image)
                     : PLACEHOLDER_AVATAR;
                   return (
-                    <div key={index} className="text-center">
-                      <div className="w-48 h-48 mx-auto mb-4 overflow-hidden bg-gray-200 border-2 border-blue-900 rounded">
+                    <div key={index} className="text-left w-full min-w-0">
+                      <div className="w-[264px] h-[200px] mb-4 overflow-hidden bg-gray-200 rounded">
                         <img
                           src={imageUrl}
                           alt={advisor.name}
@@ -470,7 +470,7 @@ function TeamStructureTabRenderer({ content }: { content: any }) {
                       </div>
                       <h3 className="text-lg font-semibold">{advisor.name}</h3>
                       {advisor.qualifications && (
-                        <div className="text-sm text-muted-foreground mt-2">
+                        <div className="text-sm text-muted-foreground mt-2 text-left">
                           <RichTextRenderer content={advisor.qualifications} />
                         </div>
                       )}
@@ -511,63 +511,66 @@ function ContactTabRenderer({ content }: { content: any }) {
           )}
         </div>
 
-        {/* Contact Information */}
-        <div className="space-y-4">
-          <h3 className="text-xl font-bold">Contact</h3>
-          {content.address && (
-            <div>
-              <p className="text-sm text-muted-foreground">Address:</p>
-              <p className="text-sm">{content.address}</p>
-            </div>
-          )}
-          {content.phoneNumbers && content.phoneNumbers.length > 0 && (
-            <div className="space-y-2">
-              {content.phoneNumbers.map((phone: any, index: number) => (
-                <div key={index}>
-                  {phone.label && (
-                    <span className="text-sm text-muted-foreground">
-                      {phone.label}:{" "}
-                    </span>
-                  )}
-                  <a
-                    href={`tel:${phone.value}`}
-                    className="text-sm hover:underline"
-                  >
-                    {phone.value}
-                  </a>
-                </div>
-              ))}
-            </div>
-          )}
-          {content.fax && (
-            <div>
-              <p className="text-sm text-muted-foreground">Fax:</p>
-              <p className="text-sm">{content.fax}</p>
-            </div>
-          )}
-          {content.email && (
-            <div>
-              <p className="text-sm text-muted-foreground">Email:</p>
-              <a
-                href={`mailto:${content.email}`}
-                className="text-sm hover:underline"
-              >
-                {content.email}
-              </a>
-            </div>
-          )}
-        </div>
+        {/* Contact Information - in a card */}
+        <Card className=" shadow-sm bg-gray-50">
+          <CardHeader>
+            <CardTitle className="text-xl">Contact</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            {content.address && (
+              <div>
+                <p className="text-sm">{content.address}</p>
+              </div>
+            )}
+            {content.phoneNumbers && content.phoneNumbers.length > 0 && (
+              <div className="space-y-2">
+                {content.phoneNumbers.map((phone: any, index: number) => (
+                  <div key={index}>
+                    <a
+                      href={`tel:${phone.value?.replace?.(/\D/g, "") || phone.value}`}
+                      className="text-sm text-blue-900 underline font-medium"
+                    >
+                      {phone.value}
+                    </a>
+                  </div>
+                ))}
+              </div>
+            )}
+            {content.fax && (
+              <div>
+                <p className="text-sm text-muted-foreground">Fax:</p>
+                <a
+                  href={`tel:${content.fax?.replace?.(/\D/g, "") || content.fax}`}
+                  className="text-sm text-blue-900 hover:underline font-medium"
+                >
+                  {content.fax}
+                </a>
+              </div>
+            )}
+            {content.email && (
+              <div>
+                {/* <p className="text-sm text-muted-foreground">Email:</p> */}
+                <a
+                  href={`mailto:${content.email}`}
+                  className="text-sm text-blue-900 underline font-medium break-all"
+                >
+                  {content.email}
+                </a>
+              </div>
+            )}
+          </CardContent>
+        </Card>
       </div>
 
       {/* Contact Form */}
       <div className="space-y-6">
-        <h2 className="text-2xl font-bold">Send us a Message</h2>
+        <h2 className="text-lg font-bold">Send us a Message</h2>
         <form className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label
                 htmlFor="fullName"
-                className="block text-sm font-medium mb-2"
+                className="block text-sm font-bold mb-2"
               >
                 Full Name
               </label>
@@ -576,11 +579,11 @@ function ContactTabRenderer({ content }: { content: any }) {
                 id="fullName"
                 name="fullName"
                 placeholder="Full Name Here"
-                className="w-full px-4 py-2 border rounded-md"
+                className="w-full px-4 py-2 border border-slate-200 rounded-md bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-primary"
               />
             </div>
             <div>
-              <label htmlFor="phone" className="block text-sm font-medium mb-2">
+              <label htmlFor="phone" className="block text-sm font-bold mb-2">
                 Phone Number
               </label>
               <input
@@ -588,13 +591,13 @@ function ContactTabRenderer({ content }: { content: any }) {
                 id="phone"
                 name="phone"
                 placeholder="000-000-0000"
-                className="w-full px-4 py-2 border rounded-md"
+                className="w-full px-4 py-2 border border-slate-200 rounded-md bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-primary"
               />
             </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label htmlFor="email" className="block text-sm font-medium mb-2">
+              <label htmlFor="email" className="block text-sm font-bold mb-2">
                 Email Address
               </label>
               <input
@@ -603,20 +606,17 @@ function ContactTabRenderer({ content }: { content: any }) {
                 id="email"
                 name="email"
                 placeholder="Your Email Address Here"
-                className="w-full px-4 py-2 border rounded-md"
+                className="w-full px-4 py-2 border border-slate-200 rounded-md bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-primary"
               />
             </div>
             <div>
-              <label
-                htmlFor="subject"
-                className="block text-sm font-medium mb-2"
-              >
+              <label htmlFor="subject" className="block text-sm font-bold mb-2">
                 Subject
               </label>
               <select
                 id="subject"
                 name="subject"
-                className="w-full px-4 py-2 border rounded-md"
+                className="w-full px-4 py-2 border border-slate-200 rounded-md bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-primary"
               >
                 {content.contactFormSubjects &&
                 content.contactFormSubjects.length > 0 ? (
@@ -634,7 +634,7 @@ function ContactTabRenderer({ content }: { content: any }) {
             </div>
           </div>
           <div>
-            <label htmlFor="message" className="block text-sm font-medium mb-2">
+            <label htmlFor="message" className="block text-sm font-bold mb-2">
               Message
             </label>
             <textarea
@@ -642,13 +642,13 @@ function ContactTabRenderer({ content }: { content: any }) {
               id="message"
               name="message"
               rows={6}
-              className="w-full px-4 py-2 border rounded-md"
+              className="w-full px-4 py-2 border border-slate-200 rounded-md bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-primary"
               placeholder="Your message here..."
             />
           </div>
           <button
             type="submit"
-            className="px-6 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700"
+            className="px-6 py-2 bg-blue-900 text-white rounded-md "
           >
             SEND MESSAGE
           </button>

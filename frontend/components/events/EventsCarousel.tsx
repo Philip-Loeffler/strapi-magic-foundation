@@ -50,8 +50,6 @@ export function EventsCarousel({ events }: { events: EventItem[] }) {
 
   return (
     <div className="w-full max-w-4xl mx-auto">
-      <h2 className="text-2xl font-bold mb-6">Upcoming Events</h2>
-
       <div className="relative flex items-stretch gap-6 rounded-xl border bg-card p-6 shadow-sm">
         {/* Left arrow */}
         <button

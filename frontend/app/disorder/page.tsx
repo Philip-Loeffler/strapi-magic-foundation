@@ -15,12 +15,17 @@ type DisorderColumn = {
 const DISORDER_ROUTES: Record<string, string> = {
   "Congenital Adrenal Hyperplasia": "/disorders/congenital-adrenal-hyperplasia",
   "Cushing Syndrome": "/disorders/cushing-syndrome",
-  "Growth Hormone Deficiency in Children": "/disorders/growth-hormone-deficiency-children",
-  "Growth Hormone Deficiency in Adults": "/disorders/growth-hormone-deficiency-adults",
+  "Growth Hormone Deficiency in Children":
+    "/disorders/growth-hormone-deficiency-children",
+  "Growth Hormone Deficiency in Adults":
+    "/disorders/growth-hormone-deficiency-adults",
   "Idiopathic Short Stature": "/disorders/idiopathic-short-stature",
-  "Insulin-like Growth Factor Deficiency": "/disorders/insulin-like-growth-factor-deficiency",
-  "Intrauterine Growth Restriction": "/disorders/intrauterine-growth-restriction",
-  "McCune-Albright Syndrome/Fibrous Dysplasia": "/disorders/mccune-albright-syndrome",
+  "Insulin-like Growth Factor Deficiency":
+    "/disorders/insulin-like-growth-factor-deficiency",
+  "Intrauterine Growth Restriction":
+    "/disorders/intrauterine-growth-restriction",
+  "McCune-Albright Syndrome/Fibrous Dysplasia":
+    "/disorders/mccune-albright-syndrome",
   "Optic Nerve Hypoplasia": "/disorders/optic-nerve-hypoplasia",
   "Septo Optic Dysplasia": "/disorders/septo-optic-dysplasia",
   "Panhypopituitarism/Tumor": "/disorders/panhypopituitarism-tumor",
@@ -64,19 +69,18 @@ const disorderList: DisorderColumn = {
 
 export default function Page() {
   return (
-    <div className="px-6 py-4">
-      <div className="flex justify-center w-full h-full pt-20">
+    <div className="min-h-screen py-8 px-4">
+      <div className="flex flex-col w-full items-center justify-center">
         <div className="flex flex-col w-full justify-center items-center gap-8 max-w-4xl">
           <div className="text-3xl font-bold text-center">
             Understanding{" "}
-            <span className="text-primary">Growth and Hormonal</span>{" "}
-            Disorders
+            <span className="text-primary">Growth and Hormonal</span> Disorders
           </div>
           <div className="text-center text-muted-foreground">
-            Growth and hormonal disorders can significantly impact a child&apos;s
-            physical and emotional development. At The MAGIC Foundation, we are
-            committed to providing comprehensive information and support to
-            families navigating these challenges.
+            Growth and hormonal disorders can significantly impact a
+            child&apos;s physical and emotional development. At The MAGIC
+            Foundation, we are committed to providing comprehensive information
+            and support to families navigating these challenges.
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-x-10 gap-y-2 w-full">

@@ -79,8 +79,8 @@ export default async function AboutPage() {
   return (
     <div className="min-h-screen py-8 px-4">
       <div className="flex flex-col w-full items-center justify-center">
-        <div className="w-full max-w-7xl mb-12">
-          <h1 className="text-3xl font-bold text-center">
+        <div className="w-full max-w-4xl mb-8">
+          <h1 className="text-3xl font-bold text-left">
             About MAGIC Foundation
           </h1>
         </div>

@@ -1,9 +1,11 @@
-import { EventsCarousel, type EventItem } from "@/components/events/EventsCarousel";
+import {
+  EventsCarousel,
+  type EventItem,
+} from "@/components/events/EventsCarousel";
 
 async function getEvents(): Promise<EventItem[]> {
   try {
-    const strapiUrl =
-      process.env.NEXT_PUBLIC_STRAPI_URL;
+    const strapiUrl = process.env.NEXT_PUBLIC_STRAPI_URL;
     const res = await fetch(
       `${strapiUrl}/api/events?populate=image&sort=date:asc`,
       {
@@ -38,7 +40,7 @@ export default async function EventsPage() {
     <div className="min-h-screen py-8 px-4">
       <div className="flex flex-col w-full items-center justify-center">
         <div className="w-full max-w-4xl mb-8">
-          <h1 className="text-3xl font-bold">Events</h1>
+          <h1 className="text-3xl font-bold">Upcoming Events</h1>
         </div>
         <EventsCarousel events={events} />
       </div>
