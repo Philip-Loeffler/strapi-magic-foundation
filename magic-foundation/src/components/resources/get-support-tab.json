@@ -1,0 +1,14 @@
+{
+  "collectionName": "components_resources_get_support_tabs",
+  "info": {
+    "displayName": "Get Support Tab",
+    "description": "Content for the Get Support tab"
+  },
+  "options": {},
+  "attributes": {
+    "content": {
+      "type": "richtext",
+      "required": false
+    }
+  }
+}

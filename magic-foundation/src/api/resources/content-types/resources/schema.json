@@ -5,7 +5,7 @@
     "singularName": "resources",
     "pluralName": "resources-pages",
     "displayName": "Resources",
-    "description": "Resources page with Overview, Informational Videos, and Social Media tabs"
+    "description": "Resources page with Overview, Informational Videos, Get Support, and Spread the Word tabs"
   },
   "options": {},
   "pluginOptions": {},
@@ -23,6 +23,16 @@
     "socialMediaTab": {
       "type": "component",
       "component": "resources.social-media-tab",
+      "repeatable": false
+    },
+    "getSupportTab": {
+      "type": "component",
+      "component": "resources.get-support-tab",
+      "repeatable": false
+    },
+    "spreadTheWordTab": {
+      "type": "component",
+      "component": "resources.spread-the-word-tab",
       "repeatable": false
     }
   }

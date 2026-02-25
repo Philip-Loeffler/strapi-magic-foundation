@@ -1,0 +1,14 @@
+{
+  "collectionName": "components_resources_spread_the_word_tabs",
+  "info": {
+    "displayName": "Spread the Word Tab",
+    "description": "Content for the Spread the Word tab"
+  },
+  "options": {},
+  "attributes": {
+    "content": {
+      "type": "richtext",
+      "required": false
+    }
+  }
+}

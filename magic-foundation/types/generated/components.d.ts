@@ -68,10 +68,11 @@ export interface AboutFormSubject extends Struct.ComponentSchema {
 export interface AboutFounder extends Struct.ComponentSchema {
   collectionName: 'components_about_founders';
   info: {
-    description: 'A founder with alternating content and image profile blocks';
+    description: 'A founder with card image, name, and profile blocks (content/images) \u2014 same pattern as Personal Stories';
     displayName: 'About Founder';
   };
   attributes: {
+    image: Schema.Attribute.Media<'images'>;
     name: Schema.Attribute.String & Schema.Attribute.Required;
     profileBlocks: Schema.Attribute.Component<
       'about.founder-profile-block',
@@ -688,6 +689,17 @@ export interface InsuranceAppealsTestimonialItem
   };
 }
 
+export interface ResourcesGetSupportTab extends Struct.ComponentSchema {
+  collectionName: 'components_resources_get_support_tabs';
+  info: {
+    description: 'Content for the Get Support tab';
+    displayName: 'Get Support Tab';
+  };
+  attributes: {
+    content: Schema.Attribute.RichText;
+  };
+}
+
 export interface ResourcesInformationalVideosTab
   extends Struct.ComponentSchema {
   collectionName: 'components_resources_informational_videos_tabs';
@@ -738,6 +750,17 @@ export interface ResourcesSocialMediaTab extends Struct.ComponentSchema {
     parentsGroups: Schema.Attribute.Component<'resources.social-link', true>;
     parentsSectionTitle: Schema.Attribute.String &
       Schema.Attribute.DefaultTo<'PARENTS of affected children, connect to our closed division specific FB groups through the links below:'>;
+  };
+}
+
+export interface ResourcesSpreadTheWordTab extends Struct.ComponentSchema {
+  collectionName: 'components_resources_spread_the_word_tabs';
+  info: {
+    description: 'Content for the Spread the Word tab';
+    displayName: 'Spread the Word Tab';
+  };
+  attributes: {
+    content: Schema.Attribute.RichText;
   };
 }
 
@@ -1475,10 +1498,12 @@ declare module '@strapi/strapi' {
       'insurance-appeals.overview-tab': InsuranceAppealsOverviewTab;
       'insurance-appeals.patient-assistance-tab': InsuranceAppealsPatientAssistanceTab;
       'insurance-appeals.testimonial-item': InsuranceAppealsTestimonialItem;
+      'resources.get-support-tab': ResourcesGetSupportTab;
       'resources.informational-videos-tab': ResourcesInformationalVideosTab;
       'resources.overview-tab': ResourcesOverviewTab;
       'resources.social-link': ResourcesSocialLink;
       'resources.social-media-tab': ResourcesSocialMediaTab;
+      'resources.spread-the-word-tab': ResourcesSpreadTheWordTab;
       'resources.video-item': ResourcesVideoItem;
       'rss.content-section': RssContentSection;
       'rss.content-subsection': RssContentSubsection;

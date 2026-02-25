@@ -2,13 +2,19 @@
   "collectionName": "components_about_founders",
   "info": {
     "displayName": "About Founder",
-    "description": "A founder with alternating content and image profile blocks"
+    "description": "A founder with card image, name, and profile blocks (content/images) — same pattern as Personal Stories"
   },
   "options": {},
   "attributes": {
     "name": {
       "type": "string",
       "required": true
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"]
     },
     "profileBlocks": {
       "type": "component",

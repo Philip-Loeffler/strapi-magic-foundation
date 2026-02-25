@@ -33,6 +33,10 @@
     "fullDescription": {
       "type": "richtext",
       "required": false
+    },
+    "videoUrl": {
+      "type": "string",
+      "required": false
     }
   }
 }

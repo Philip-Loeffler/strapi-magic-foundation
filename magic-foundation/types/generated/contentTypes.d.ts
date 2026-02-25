@@ -643,6 +643,7 @@ export interface ApiEventEvent extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    videoUrl: Schema.Attribute.String;
   };
 }
 
@@ -1106,7 +1107,7 @@ export interface ApiPrecociousPubertyPrecociousPuberty
 export interface ApiResourcesResources extends Struct.SingleTypeSchema {
   collectionName: 'resources_pages';
   info: {
-    description: 'Resources page with Overview, Informational Videos, and Social Media tabs';
+    description: 'Resources page with Overview, Informational Videos, Get Support, and Spread the Word tabs';
     displayName: 'Resources';
     pluralName: 'resources-pages';
     singularName: 'resources';
