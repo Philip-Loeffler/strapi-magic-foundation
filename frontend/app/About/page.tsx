@@ -16,6 +16,7 @@ function buildPopulateQuery(): string {
     "overviewTab.testimonial",
     "historyTab",
     "historyTab.founders",
+    "historyTab.founders.image",
     "historyTab.founders.profileBlocks",
     "historyTab.founders.profileBlocks.image",
     "historyTab.historySections",

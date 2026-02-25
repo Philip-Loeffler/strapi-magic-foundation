@@ -166,7 +166,20 @@ function OverviewTabRenderer({ content }: { content: any }) {
 const PLACEHOLDER_FOUNDER_IMAGE =
   "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2394a3b8'%3E%3Cpath d='M4 4h16v16H4V4zm2 2v12h12V6H6z'/%3E%3C/svg%3E";
 
+/** Card image: founder.image (like personal story image) or first image from profileBlocks. */
+function getFounderCardImageUrl(founder: any): string {
+  if (founder?.image) return getImageUrl(founder.image);
+  if (!founder?.profileBlocks?.length) return "";
+  const imageBlock = founder.profileBlocks.find(
+    (b: any) => b.blockType === "image" && b.image,
+  );
+  return imageBlock ? getImageUrl(imageBlock.image) : "";
+}
+
+/** First image in founder profile (for modal hero): founder.image or first image block. */
 function getFounderFirstImageUrl(founder: any): string {
+  const fromCard = founder?.image ? getImageUrl(founder.image) : "";
+  if (fromCard) return fromCard;
   if (!founder?.profileBlocks?.length) return "";
   const imageBlock = founder.profileBlocks.find(
     (b: any) => b.blockType === "image" && b.image,
@@ -219,8 +232,9 @@ function HistoryTabRenderer({ content }: { content: any }) {
           <h2 className="text-3xl font-bold text-center">Meet the Founders</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
             {content.founders.map((founder: any, index: number) => {
-              const firstImageUrl =
-                getFounderFirstImageUrl(founder) || PLACEHOLDER_FOUNDER_IMAGE;
+              const cardImageUrl =
+                getFounderCardImageUrl(founder) || PLACEHOLDER_FOUNDER_IMAGE;
+              const modalHeroImageUrl = getFounderFirstImageUrl(founder);
               return (
                 <MorphingDialog
                   key={index}
@@ -229,7 +243,7 @@ function HistoryTabRenderer({ content }: { content: any }) {
                   <MorphingDialogTrigger className="cursor-pointer text-left w-[264px]">
                     <div className="w-[264px] h-[200px] overflow-hidden bg-gray-200 border-2 border-blue-900 rounded">
                       <MorphingDialogImage
-                        src={firstImageUrl}
+                        src={cardImageUrl}
                         alt={founder.name}
                         className="w-full h-full object-cover"
                       />
@@ -250,6 +264,15 @@ function HistoryTabRenderer({ content }: { content: any }) {
                     >
                       <div className="overflow-y-auto max-h-[90vh]">
                         <div className="relative p-6 space-y-6">
+                          {modalHeroImageUrl ? (
+                            <div className="flex justify-center">
+                              <MorphingDialogImage
+                                src={modalHeroImageUrl}
+                                alt={founder.name}
+                                className="h-80 w-80 object-cover rounded-xl border-2 border-blue-900"
+                              />
+                            </div>
+                          ) : null}
                           <div className="space-y-2">
                             <MorphingDialogTitle className="text-xl font-semibold text-black text-center">
                               {founder.name}
@@ -260,24 +283,28 @@ function HistoryTabRenderer({ content }: { content: any }) {
                           </div>
                           {founder.profileBlocks &&
                           founder.profileBlocks.length > 0 ? (
-                            founder.profileBlocks.map(
-                              (block: any, blockIndex: number) =>
-                                block.blockType === "content" ? (
-                                  <div
-                                    key={blockIndex}
-                                    className="prose prose-sm max-w-none text-gray-700"
-                                  >
-                                    <RichTextRenderer content={block.content} />
-                                  </div>
-                                ) : block.blockType === "image" &&
-                                  block.image ? (
-                                  <FounderProfileImageBlock
-                                    key={blockIndex}
-                                    image={block.image}
-                                    alt={`${founder.name} - photo ${blockIndex + 1}`}
-                                  />
-                                ) : null,
-                            )
+                            <div className="space-y-6">
+                              {founder.profileBlocks.map(
+                                (block: any, blockIndex: number) =>
+                                  block.blockType === "content" ? (
+                                    <div
+                                      key={blockIndex}
+                                      className="prose prose-sm max-w-none text-gray-700"
+                                    >
+                                      <RichTextRenderer
+                                        content={block.content}
+                                      />
+                                    </div>
+                                  ) : block.blockType === "image" &&
+                                    block.image ? (
+                                    <FounderProfileImageBlock
+                                      key={blockIndex}
+                                      image={block.image}
+                                      alt={`${founder.name} - photo ${blockIndex + 1}`}
+                                    />
+                                  ) : null,
+                              )}
+                            </div>
                           ) : (
                             <p className="text-muted-foreground text-center text-sm">
                               No profile content yet.
@@ -571,6 +598,7 @@ function ContactTabRenderer({ content }: { content: any }) {
                 Email Address
               </label>
               <input
+                required
                 type="email"
                 id="email"
                 name="email"
@@ -610,6 +638,7 @@ function ContactTabRenderer({ content }: { content: any }) {
               Message
             </label>
             <textarea
+              required
               id="message"
               name="message"
               rows={6}
