@@ -98,51 +98,51 @@ export default async function AboutPage() {
         </div>
 
         <TabsContent value="overview" className="w-full mt-8">
-            {aboutData?.overviewTab ? (
-              <AboutContentRenderer content={aboutData.overviewTab} />
-            ) : (
-              <div className="text-center py-12">
-                <p className="text-muted-foreground">Content coming soon...</p>
-              </div>
-            )}
-          </TabsContent>
+          {aboutData?.overviewTab ? (
+            <AboutContentRenderer content={aboutData.overviewTab} />
+          ) : (
+            <div className="text-center py-12">
+              <p className="text-muted-foreground">Content coming soon...</p>
+            </div>
+          )}
+        </TabsContent>
 
-          <TabsContent value="history" className="w-full mt-8">
-            {aboutData?.historyTab ? (
-              <AboutContentRenderer content={aboutData.historyTab} />
-            ) : (
-              <div className="text-center py-12">
-                <p className="text-muted-foreground">
-                  History content coming soon...
-                </p>
-              </div>
-            )}
-          </TabsContent>
+        <TabsContent value="history" className="w-full mt-8">
+          {aboutData?.historyTab ? (
+            <AboutContentRenderer content={aboutData.historyTab} />
+          ) : (
+            <div className="text-center py-12">
+              <p className="text-muted-foreground">
+                History content coming soon...
+              </p>
+            </div>
+          )}
+        </TabsContent>
 
-          <TabsContent value="team-structure" className="w-full mt-8">
-            {aboutData?.teamStructureTab ? (
-              <AboutContentRenderer content={aboutData.teamStructureTab} />
-            ) : (
-              <div className="text-center py-12">
-                <p className="text-muted-foreground">
-                  Team structure content coming soon...
-                </p>
-              </div>
-            )}
-          </TabsContent>
+        <TabsContent value="team-structure" className="w-full mt-8">
+          {aboutData?.teamStructureTab ? (
+            <AboutContentRenderer content={aboutData.teamStructureTab} />
+          ) : (
+            <div className="text-center py-12">
+              <p className="text-muted-foreground">
+                Team structure content coming soon...
+              </p>
+            </div>
+          )}
+        </TabsContent>
 
-          <TabsContent value="contact-us" className="w-full mt-8">
-            {aboutData?.contactTab ? (
-              <AboutContentRenderer content={aboutData.contactTab} />
-            ) : (
-              <div className="text-center py-12">
-                <p className="text-muted-foreground">
-                  Contact information coming soon...
-                </p>
-              </div>
-            )}
-          </TabsContent>
-        </Tabs>
+        <TabsContent value="contact-us" className="w-full mt-8">
+          {aboutData?.contactTab ? (
+            <AboutContentRenderer content={aboutData.contactTab} />
+          ) : (
+            <div className="text-center py-12">
+              <p className="text-muted-foreground">
+                Contact information coming soon...
+              </p>
+            </div>
+          )}
+        </TabsContent>
+      </Tabs>
     </PageContainer>
   );
 }

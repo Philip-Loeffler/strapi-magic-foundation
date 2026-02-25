@@ -25,6 +25,7 @@ async function getEvents(): Promise<EventItem[]> {
         title: attrs?.title ?? "",
         date: attrs?.date ?? "",
         image: attrs?.image ?? null,
+        videoUrl: attrs?.videoUrl ?? null,
         shortDescription: attrs?.shortDescription ?? "",
         fullDescription: attrs?.fullDescription ?? null,
       };

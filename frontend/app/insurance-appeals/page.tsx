@@ -19,8 +19,7 @@ function buildInsuranceAppealsPopulateQuery(): string {
 
 async function getInsuranceAppealsData() {
   try {
-    const strapiUrl =
-      process.env.NEXT_PUBLIC_STRAPI_URL;
+    const strapiUrl = process.env.NEXT_PUBLIC_STRAPI_URL;
     const populateQuery = buildInsuranceAppealsPopulateQuery();
     const res = await fetch(
       `${strapiUrl}/api/insurance-appeals?${populateQuery}`,

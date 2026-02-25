@@ -10,6 +10,8 @@ function buildResourcesPopulateQuery(): string {
     "socialMediaTab",
     "socialMediaTab.parentsGroups",
     "socialMediaTab.adultsGroups",
+    "getSupportTab",
+    "spreadTheWordTab",
   ];
   return populate.map((p, i) => `populate[${i}]=${p}`).join("&");
 }

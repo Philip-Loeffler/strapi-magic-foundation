@@ -19,22 +19,58 @@ function getImageUrl(image: any): string {
 export function ResourcesContentRenderer({
   content,
   tab,
+  socialMediaContent,
 }: {
   content: any;
-  tab: "overview" | "informational-videos" | "social-media";
+  tab: "overview" | "informational-videos" | "social-media" | "get-support" | "spread-the-word";
+  socialMediaContent?: any;
 }) {
-  if (!content) {
+  if (tab === "overview") {
+    const hasOverview = content?.content;
+    const hasSocial = socialMediaContent && (
+      (socialMediaContent.parentsGroups?.length > 0) ||
+      (socialMediaContent.adultsGroups?.length > 0)
+    );
+    if (!hasOverview && !hasSocial) {
+      return (
+        <div className="text-center py-12 text-muted-foreground">
+          Content coming soon...
+        </div>
+      );
+    }
     return (
-      <div className="text-center py-12 text-muted-foreground">
-        Content coming soon...
+      <div className="space-y-10">
+        {hasOverview && (
+          <div className="prose prose-sm max-w-none">
+            <ResourcesRichText content={content.content} />
+          </div>
+        )}
+        {hasSocial && (
+          <SocialMediaSection content={socialMediaContent} />
+        )}
       </div>
     );
   }
 
-  if (tab === "overview") {
+  if (tab === "get-support" || tab === "spread-the-word") {
+    if (!content?.content) {
+      return (
+        <div className="text-center py-12 text-muted-foreground">
+          Content coming soon...
+        </div>
+      );
+    }
     return (
       <div className="prose prose-sm max-w-none">
         <ResourcesRichText content={content.content} />
+      </div>
+    );
+  }
+
+  if (!content) {
+    return (
+      <div className="text-center py-12 text-muted-foreground">
+        Content coming soon...
       </div>
     );
   }
@@ -112,62 +148,67 @@ export function ResourcesContentRenderer({
   }
 
   if (tab === "social-media") {
-    const parentsTitle = content.parentsSectionTitle;
-    const parentsGroups = content.parentsGroups ?? [];
-    const adultsTitle = content.adultsSectionTitle;
-    const adultsGroups = content.adultsGroups ?? [];
-    return (
-      <div className="space-y-8">
-        {parentsGroups.length > 0 && (
-          <section>
-            {parentsTitle && (
-              <p className="text-sm font-medium mb-3">{parentsTitle}</p>
-            )}
-            <ul className="list-disc pl-6 space-y-1">
-              {parentsGroups.map((item: any, i: number) => (
-                <li key={i}>
-                  <a
-                    href={item.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-primary underline"
-                  >
-                    {item.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </section>
-        )}
-        {adultsGroups.length > 0 && (
-          <section>
-            {adultsTitle && (
-              <p className="text-sm font-medium mb-3">{adultsTitle}</p>
-            )}
-            <ul className="list-disc pl-6 space-y-1">
-              {adultsGroups.map((item: any, i: number) => (
-                <li key={i}>
-                  <a
-                    href={item.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-primary underline"
-                  >
-                    {item.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </section>
-        )}
-        {parentsGroups.length === 0 && adultsGroups.length === 0 && (
-          <p className="text-muted-foreground">No links added yet.</p>
-        )}
-      </div>
-    );
+    return <SocialMediaSection content={content} />;
   }
 
   return null;
+}
+
+function SocialMediaSection({ content }: { content: any }) {
+  if (!content) return null;
+  const parentsTitle = content.parentsSectionTitle;
+  const parentsGroups = content.parentsGroups ?? [];
+  const adultsTitle = content.adultsSectionTitle;
+  const adultsGroups = content.adultsGroups ?? [];
+  if (parentsGroups.length === 0 && adultsGroups.length === 0) {
+    return <p className="text-muted-foreground">No links added yet.</p>;
+  }
+  return (
+    <div className="space-y-8">
+      {parentsGroups.length > 0 && (
+        <section>
+          {parentsTitle && (
+            <p className="text-sm font-medium mb-3">{parentsTitle}</p>
+          )}
+          <ul className="list-disc pl-6 space-y-1">
+            {parentsGroups.map((item: any, i: number) => (
+              <li key={i}>
+                <a
+                  href={item.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-primary underline"
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+      {adultsGroups.length > 0 && (
+        <section>
+          {adultsTitle && (
+            <p className="text-sm font-medium mb-3">{adultsTitle}</p>
+          )}
+          <ul className="list-disc pl-6 space-y-1">
+            {adultsGroups.map((item: any, i: number) => (
+              <li key={i}>
+                <a
+                  href={item.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-primary underline"
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+    </div>
+  );
 }
 
 function ResourcesRichText({ content }: { content: unknown }) {

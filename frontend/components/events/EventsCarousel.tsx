@@ -10,6 +10,7 @@ export type EventItem = {
   title: string;
   date: string;
   image?: { url?: string; data?: { attributes?: { url?: string } } } | null;
+  videoUrl?: string | null;
   shortDescription: string;
   fullDescription?: unknown;
 };
@@ -23,6 +24,17 @@ function getImageUrl(image: EventItem["image"]): string {
   if (image.data?.attributes?.url)
     return `${baseUrl}${image.data.attributes.url}`;
   return "";
+}
+
+/** Convert YouTube watch URL to embed URL for iframe, or return as-is if already embed. */
+function getVideoEmbedUrl(url: string): string {
+  const u = url.trim();
+  const watchMatch = u.match(
+    /(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)/,
+  );
+  if (watchMatch) return `https://www.youtube.com/embed/${watchMatch[1]}`;
+  if (u.includes("/embed/")) return u;
+  return u;
 }
 
 export function EventsCarousel({ events }: { events: EventItem[] }) {
@@ -129,6 +141,10 @@ function EventModal({
   event: EventItem;
   onClose: () => void;
 }) {
+  const imageUrl = modalEvent.image ? getImageUrl(modalEvent.image) : null;
+  const hasVideo = Boolean(modalEvent.videoUrl?.trim());
+  const hasImage = Boolean(imageUrl);
+
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
@@ -139,40 +155,77 @@ function EventModal({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4 overflow-y-auto"
       role="dialog"
       aria-modal="true"
       aria-labelledby="event-modal-title"
       onClick={onClose}
     >
       <div
-        className="bg-background rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-hidden flex flex-col"
+        className="relative w-full max-w-6xl max-h-[90vh] rounded-2xl bg-white shadow-2xl flex flex-col overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex items-center justify-between p-4 border-b">
-          <h2 id="event-modal-title" className="text-xl font-semibold">
-            {modalEvent.title}
-          </h2>
+        {/* Header */}
+        <div className="flex items-start gap-4 px-6 py-5 border-b bg-white shrink-0">
+          <div className="flex-1 min-w-0">
+            <h2
+              id="event-modal-title"
+              className="text-xl sm:text-2xl font-semibold text-slate-900 truncate"
+            >
+              {modalEvent.title}
+            </h2>
+            <p className="text-sm text-slate-500 mt-1">{modalEvent.date}</p>
+          </div>
+
           <Button
             variant="ghost"
             size="icon"
             onClick={onClose}
             aria-label="Close"
+            className="rounded-full border border-slate-200 hover:bg-slate-100 shrink-0"
           >
             <X className="h-5 w-5" />
           </Button>
         </div>
-        <div className="p-4 overflow-y-auto flex-1">
-          <p className="text-sm text-muted-foreground mb-4">
-            {modalEvent.date}
-          </p>
-          {modalEvent.fullDescription ? (
-            <div className="prose prose-sm max-w-none">
-              <EventRichText content={modalEvent.fullDescription} />
+
+        {/* Body — scrollable */}
+        <div className="flex-1 min-h-0 overflow-y-auto bg-white">
+          <div className="grid grid-cols-1 lg:grid-cols-2">
+            {/* LEFT — video + content */}
+            <div className="flex flex-col px-6 py-6">
+              {hasVideo && (
+                <div className="mb-6">
+                  <div className="relative w-full aspect-video overflow-hidden rounded-xl border bg-slate-100">
+                    <iframe
+                      src={getVideoEmbedUrl(modalEvent.videoUrl!)}
+                      title={`${modalEvent.title} video`}
+                      className="absolute inset-0 w-full h-full"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    />
+                  </div>
+                </div>
+              )}
+
+              {/* Main content */}
+              {modalEvent.fullDescription ? (
+                <div className="prose prose-slate prose-sm sm:prose-base max-w-none">
+                  <EventRichText content={modalEvent.fullDescription} />
+                </div>
+              ) : (
+                <p className="text-slate-700 leading-relaxed">
+                  {modalEvent.shortDescription}
+                </p>
+              )}
             </div>
-          ) : (
-            <p className="text-sm">{modalEvent.shortDescription}</p>
-          )}
+
+            {/* RIGHT — image only, full width + height */}
+            <div className="relative hidden lg:block h-full  ">
+              {hasImage && (
+                <img src={imageUrl!} alt={modalEvent.title} className=" " />
+              )}
+            </div>
+          </div>
         </div>
       </div>
     </div>

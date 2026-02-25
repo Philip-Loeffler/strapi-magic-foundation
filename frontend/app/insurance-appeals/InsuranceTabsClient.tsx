@@ -21,21 +21,22 @@ export function InsuranceTabsClient({ data }: { data: any }) {
 
   if (!mounted) {
     return (
-      <div className="w-full max-w-4xl flex flex-col">
-        <div className="grid grid-cols-5 gap-1 h-auto p-1 bg-muted rounded-lg mb-8">
-          {TABS.map((tab) => (
-            <div
-              key={tab.slug}
-              className={`rounded-md py-2 text-sm text-center ${
-                tab.slug === "overview"
-                  ? "bg-primary text-primary-foreground"
-                  : "text-muted-foreground"
-              }`}
-            >
-              {tab.title}
-            </div>
-          ))}
-        </div>
+      <div className="w-full flex flex-col">
+        <Tabs defaultValue="overview" className="w-full flex flex-col">
+          <div className="flex justify-center mb-8">
+            <TabsList className="grid w-full max-w-3xl grid-cols-5 gap-1 h-auto p-1 bg-muted rounded-lg">
+              {TABS.map((tab) => (
+                <TabsTrigger
+                  key={tab.slug}
+                  value={tab.slug}
+                  className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-md py-2 text-sm"
+                >
+                  {tab.title}
+                </TabsTrigger>
+              ))}
+            </TabsList>
+          </div>
+        </Tabs>
         <div className="w-full min-h-[200px]">
           {data?.overviewTab ? (
             <InsuranceAppealsContentRenderer
@@ -53,18 +54,20 @@ export function InsuranceTabsClient({ data }: { data: any }) {
   }
 
   return (
-    <Tabs defaultValue="overview" className="w-full max-w-4xl flex flex-col">
-      <TabsList className="grid w-full grid-cols-5 gap-1 h-auto p-1 bg-muted rounded-lg mb-8">
-        {TABS.map((tab) => (
-          <TabsTrigger
-            key={tab.slug}
-            value={tab.slug}
-            className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-md py-2 text-sm"
-          >
-            {tab.title}
-          </TabsTrigger>
-        ))}
-      </TabsList>
+    <Tabs defaultValue="overview" className="w-full flex flex-col">
+      <div className="flex justify-center mb-8">
+        <TabsList className="grid w-full max-w-3xl grid-cols-5 gap-1 h-auto p-1 bg-muted rounded-lg">
+          {TABS.map((tab) => (
+            <TabsTrigger
+              key={tab.slug}
+              value={tab.slug}
+              className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-md py-2 text-sm"
+            >
+              {tab.title}
+            </TabsTrigger>
+          ))}
+        </TabsList>
+      </div>
 
       <TabsContent value="overview" className="w-full mt-0">
         {data?.overviewTab ? (
