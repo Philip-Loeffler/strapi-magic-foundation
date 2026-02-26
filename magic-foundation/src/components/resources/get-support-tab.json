@@ -2,11 +2,43 @@
   "collectionName": "components_resources_get_support_tabs",
   "info": {
     "displayName": "Get Support Tab",
-    "description": "Content for the Get Support tab"
+    "description": "Three sections: College Scholarships, Find a Specialist, Refer a Specialist"
   },
   "options": {},
   "attributes": {
-    "content": {
+    "collegeScholarshipsTitle": {
+      "type": "string",
+      "required": false,
+      "default": "College Scholarships"
+    },
+    "collegeScholarshipsContent": {
+      "type": "richtext",
+      "required": false
+    },
+    "findASpecialistTitle": {
+      "type": "string",
+      "required": false,
+      "default": "Find a Specialist"
+    },
+    "findASpecialistContent": {
+      "type": "richtext",
+      "required": false
+    },
+    "referSpecialistLinkUrl": {
+      "type": "string",
+      "required": false
+    },
+    "referSpecialistLinkText": {
+      "type": "string",
+      "required": false,
+      "default": "If you have a specialist you would like to refer to MAGIC, please click here."
+    },
+    "referASpecialistTitle": {
+      "type": "string",
+      "required": false,
+      "default": "Refer a Specialist"
+    },
+    "referASpecialistContent": {
       "type": "richtext",
       "required": false
     }

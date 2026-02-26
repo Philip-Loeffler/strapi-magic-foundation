@@ -4,6 +4,14 @@ import React from "react";
 import Link from "next/link";
 import { Play } from "lucide-react";
 import { JSX } from "react";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 function getImageUrl(image: any): string {
   if (!image) return "";
@@ -19,19 +27,32 @@ function getImageUrl(image: any): string {
 export function ResourcesContentRenderer({
   content,
   tab,
-  socialMediaContent,
 }: {
   content: any;
   tab: "overview" | "informational-videos" | "social-media" | "get-support" | "spread-the-word";
-  socialMediaContent?: any;
 }) {
   if (tab === "overview") {
     const hasOverview = content?.content;
-    const hasSocial = socialMediaContent && (
-      (socialMediaContent.parentsGroups?.length > 0) ||
-      (socialMediaContent.adultsGroups?.length > 0)
-    );
-    if (!hasOverview && !hasSocial) {
+    const hasBrochureSection =
+      content?.brochureSectionTitle ||
+      content?.brochureSectionDescription ||
+      content?.brochureSectionBody;
+    const hasBrochureAccordion =
+      (content?.brochureAccordionItems?.length > 0) ||
+      (content?.adultBrochuresAccordionItems?.length > 0) ||
+      (content?.additionalInfoAccordionItems?.length > 0);
+    const hasInfoSections =
+      content?.overviewInfoSections && content.overviewInfoSections.length > 0;
+    const hasSocial =
+      (content?.parentsGroups?.length > 0) ||
+      (content?.adultsGroups?.length > 0);
+    const hasAny =
+      hasOverview ||
+      hasBrochureSection ||
+      hasBrochureAccordion ||
+      hasInfoSections ||
+      hasSocial;
+    if (!hasAny) {
       return (
         <div className="text-center py-12 text-muted-foreground">
           Content coming soon...
@@ -39,20 +60,35 @@ export function ResourcesContentRenderer({
       );
     }
     return (
-      <div className="space-y-10">
+      <div className="space-y-8">
         {hasOverview && (
-          <div className="prose prose-sm max-w-none">
-            <ResourcesRichText content={content.content} />
+          <div className="space-y-4">
+            <div className="prose prose-sm max-w-none">
+              <ResourcesRichText content={content.content} />
+            </div>
           </div>
         )}
+        {hasBrochureSection && (
+          <BrochureSectionBlock content={content} />
+        )}
+        {hasBrochureAccordion && (
+          <BrochureAccordionsSection content={content} />
+        )}
+        {hasInfoSections && (
+          <OverviewInfoSections sections={content.overviewInfoSections} />
+        )}
         {hasSocial && (
-          <SocialMediaSection content={socialMediaContent} />
+          <SocialMediaAccordions content={content} />
         )}
       </div>
     );
   }
 
-  if (tab === "get-support" || tab === "spread-the-word") {
+  if (tab === "get-support") {
+    return <GetSupportTab content={content} />;
+  }
+
+  if (tab === "spread-the-word") {
     if (!content?.content) {
       return (
         <div className="text-center py-12 text-muted-foreground">
@@ -76,21 +112,39 @@ export function ResourcesContentRenderer({
   }
 
   if (tab === "informational-videos") {
-    const intro = content.intro;
-    const youtubeUrl = content.youtubeChannelUrl;
-    const videos = content.videos ?? [];
+    const intro = content?.intro;
+    const secondDescription = content?.secondDescription;
+    const youtubeUrl = content?.youtubeChannelUrl;
+    const videos = content?.videos ?? [];
+    const hasIntro = intro || secondDescription || youtubeUrl;
+    if (!hasIntro && videos.length === 0) {
+      return (
+        <div className="text-center py-12 text-muted-foreground">
+          Content coming soon...
+        </div>
+      );
+    }
     return (
       <div className="space-y-6">
-        {intro && (
-          <div className="prose prose-sm max-w-none mb-6">
-            <ResourcesRichText content={intro} />
+        {hasIntro && (
+          <div className="space-y-4 mb-6">
+            {intro && (
+              <div className="prose prose-sm max-w-none">
+                <ResourcesRichText content={intro} />
+              </div>
+            )}
+            {secondDescription && (
+              <div className="prose prose-sm max-w-none">
+                <ResourcesRichText content={secondDescription} />
+              </div>
+            )}
             {youtubeUrl && (
-              <p className="mt-2">
+              <p className="text-sm">
                 <a
                   href={youtubeUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-primary underline"
+                  className="text-primary underline font-medium"
                 >
                   The MAGIC Foundation - YouTube
                 </a>
@@ -152,6 +206,714 @@ export function ResourcesContentRenderer({
   }
 
   return null;
+}
+
+/** Brochure section: title, description, and body (One Free Complimentary / Multiple Copies text). */
+function BrochureSectionBlock({ content }: { content: any }) {
+  const title = content?.brochureSectionTitle;
+  const description = content?.brochureSectionDescription;
+  const body = content?.brochureSectionBody;
+  if (!title && !description && !body) return null;
+  return (
+    <div className="space-y-4">
+      {title && <h2 className="text-lg font-bold">{title}</h2>}
+      {description && (
+        <div className="prose prose-sm max-w-none">
+          <ResourcesRichText content={description} />
+        </div>
+      )}
+      {body && (
+        <div className="prose prose-sm max-w-none">
+          <ResourcesRichText content={body} />
+        </div>
+      )}
+    </div>
+  );
+}
+
+/** Three accordions: Brochures, Adult Brochures, Additional Info (each: title + list of label/PDF link). */
+function BrochureAccordionsSection({ content }: { content: any }) {
+  const items: { title: string; links: any[] }[] = [];
+  if (content?.brochureAccordionTitle || content?.brochureAccordionItems?.length) {
+    items.push({
+      title: content.brochureAccordionTitle || "Brochures",
+      links: content.brochureAccordionItems ?? [],
+    });
+  }
+  if (content?.adultBrochuresAccordionTitle || content?.adultBrochuresAccordionItems?.length) {
+    items.push({
+      title: content.adultBrochuresAccordionTitle || "Adult Brochures",
+      links: content.adultBrochuresAccordionItems ?? [],
+    });
+  }
+  if (content?.additionalInfoAccordionTitle || content?.additionalInfoAccordionItems?.length) {
+    items.push({
+      title: content.additionalInfoAccordionTitle || "Additional Info",
+      links: content.additionalInfoAccordionItems ?? [],
+    });
+  }
+  if (items.length === 0) return null;
+  return (
+    <Accordion type="single" collapsible className="w-full">
+      {items.map((item, index) => (
+        <AccordionItem key={index} value={`accordion-${index}`}>
+          <AccordionTrigger className="text-left">
+            {item.title}
+          </AccordionTrigger>
+          <AccordionContent className="pl-4">
+            {item.links.length > 0 ? (
+              <ul className="list-disc pl-6 space-y-2">
+                {item.links.map((link: any, i: number) => (
+                  <li key={i}>
+                    <a
+                      href={link.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-primary underline"
+                    >
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="text-muted-foreground text-sm">No links yet.</p>
+            )}
+          </AccordionContent>
+        </AccordionItem>
+      ))}
+    </Accordion>
+  );
+}
+
+/** Repeatable info sections (MedAngel, TSA, Southwest, GINA, etc.): title, description, links. */
+function OverviewInfoSections({ sections }: { sections: any[] }) {
+  if (!sections?.length) return null;
+  return (
+    <div className="space-y-6">
+      {sections.map((section: any, index: number) => (
+        <section key={index} className="space-y-2">
+          {section.title && (
+            <h3 className="text-base font-semibold">{section.title}</h3>
+          )}
+          {section.description && (
+            <div className="prose prose-sm max-w-none">
+              <ResourcesRichText content={section.description} />
+            </div>
+          )}
+          {section.links?.length > 0 && (
+            <ul className="list-disc pl-6 space-y-1">
+              {section.links.map((link: any, i: number) => (
+                <li key={i}>
+                  <a
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary underline"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
+      ))}
+    </div>
+  );
+}
+
+/** Accordion trigger styling for Get Support: blue banner + visible chevron on the right. */
+const getSupportTriggerClassName =
+  "bg-primary text-primary-foreground px-4 py-3 font-semibold text-lg rounded-t-lg w-full hover:no-underline hover:bg-primary/95 [&>svg]:text-primary-foreground [&>svg]:size-5 [&>svg]:shrink-0 [&>svg]:ml-auto";
+
+const inputClassName =
+  "flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm";
+const textareaClassName =
+  "flex min-h-[80px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm";
+const fileClassName =
+  "flex w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium";
+
+function CollegeScholarshipForm() {
+  const [agreed, setAgreed] = React.useState(false);
+  return (
+    <form
+      className="space-y-6 pt-6 border-t border-border"
+      onSubmit={(e) => {
+        e.preventDefault();
+        // TODO: wire to API / server action
+      }}
+    >
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="space-y-2">
+          <label className="text-sm font-medium">
+            Applicant&apos;s First Name <span className="text-destructive">*</span>
+          </label>
+          <Input name="scholarshipApplicantFirstName" required className={inputClassName} />
+        </div>
+        <div className="space-y-2">
+          <label className="text-sm font-medium">
+            Applicant&apos;s Last Name <span className="text-destructive">*</span>
+          </label>
+          <Input name="scholarshipApplicantLastName" required className={inputClassName} />
+        </div>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="space-y-2">
+          <label className="text-sm font-medium">
+            Disorder/Diagnosis <span className="text-destructive">*</span>
+          </label>
+          <Input name="scholarshipDisorder" required className={inputClassName} />
+        </div>
+        <div className="space-y-2">
+          <label className="text-sm font-medium">
+            Date of Birth <span className="text-destructive">*</span>
+          </label>
+          <Input name="scholarshipDob" type="date" required className={inputClassName} />
+        </div>
+      </div>
+      <div className="space-y-2">
+        <label className="text-sm font-medium">
+          Street Address <span className="text-destructive">*</span>
+        </label>
+        <Input name="scholarshipStreetAddress" required className={inputClassName} />
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="space-y-2">
+          <label className="text-sm font-medium">
+            City <span className="text-destructive">*</span>
+          </label>
+          <Input name="scholarshipCity" required className={inputClassName} />
+        </div>
+        <div className="space-y-2">
+          <label className="text-sm font-medium">
+            State <span className="text-destructive">*</span>
+          </label>
+          <Input name="scholarshipState" required className={inputClassName} />
+        </div>
+        <div className="space-y-2">
+          <label className="text-sm font-medium">
+            Zip Code <span className="text-destructive">*</span>
+          </label>
+          <Input name="scholarshipZipCode" required className={inputClassName} />
+        </div>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="space-y-2">
+          <label className="text-sm font-medium">
+            Phone Number <span className="text-destructive">*</span>
+          </label>
+          <Input name="scholarshipPhone" type="tel" required className={inputClassName} />
+        </div>
+        <div className="space-y-2">
+          <label className="text-sm font-medium">
+            Applicant&apos;s Email Address <span className="text-destructive">*</span>
+          </label>
+          <Input name="scholarshipApplicantEmail" type="email" required className={inputClassName} />
+        </div>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="space-y-2">
+          <label className="text-sm font-medium">
+            Parent/Guardian Name <span className="text-destructive">*</span>
+          </label>
+          <Input name="scholarshipParentGuardianName" required className={inputClassName} />
+        </div>
+        <div className="space-y-2">
+          <label className="text-sm font-medium">
+            Parent/Guardian Email Address <span className="text-destructive">*</span>
+          </label>
+          <Input name="scholarshipParentGuardianEmail" type="email" required className={inputClassName} />
+        </div>
+      </div>
+      <div className="space-y-2">
+        <label className="text-sm font-medium">Name of Current High School</label>
+        <Input name="scholarshipHighSchool" className={inputClassName} />
+      </div>
+      <div className="space-y-2">
+        <label className="text-sm font-medium">
+          List of Extracurricular Activities and/or Club Associations{" "}
+          <span className="text-destructive">*</span>
+        </label>
+        <textarea
+          name="scholarshipExtracurriculars"
+          rows={3}
+          required
+          className={textareaClassName}
+        />
+      </div>
+      <div className="space-y-2">
+        <label className="text-sm font-medium">
+          What are your career goals? <span className="text-destructive">*</span>
+        </label>
+        <textarea
+          name="scholarshipCareerGoals"
+          rows={3}
+          required
+          className={textareaClassName}
+        />
+      </div>
+      <div className="space-y-2">
+        <label className="text-sm font-medium">
+          Other Awards/Scholarships Received (include names and amounts){" "}
+          <span className="text-destructive">*</span>
+        </label>
+        <textarea
+          name="scholarshipOtherAwards"
+          rows={3}
+          required
+          className={textareaClassName}
+        />
+      </div>
+      <div className="space-y-2">
+        <label className="text-sm font-medium">
+          How did you hear about this scholarship?{" "}
+          <span className="text-destructive">*</span>
+        </label>
+        <Input name="scholarshipHowDidYouHear" required className={inputClassName} />
+      </div>
+      <div className="space-y-2">
+        <label className="text-sm font-medium">
+          What school do you plan to attend? <span className="text-destructive">*</span>
+        </label>
+        <Input name="scholarshipPlannedSchool" required className={inputClassName} />
+      </div>
+      <div className="space-y-2">
+        <label className="text-sm font-medium">
+          Please upload documentation of an endocrine disorder{" "}
+          <span className="text-destructive">*</span>
+        </label>
+        <input
+          type="file"
+          name="scholarshipDisorderDocumentation"
+          required
+          className={fileClassName}
+        />
+      </div>
+      <div className="space-y-2">
+        <label className="text-sm font-medium">
+          Please upload proof of college acceptance{" "}
+          <span className="text-destructive">*</span>
+        </label>
+        <input
+          type="file"
+          name="scholarshipCollegeAcceptance"
+          required
+          className={fileClassName}
+        />
+      </div>
+      <div className="space-y-2">
+        <label className="text-sm font-medium">
+          Please upload your personal reference <span className="text-destructive">*</span>
+        </label>
+        <input
+          type="file"
+          name="scholarshipPersonalReference"
+          required
+          className={fileClassName}
+        />
+      </div>
+      <div className="space-y-2">
+        <label className="text-sm font-medium">
+          Please upload your essay <span className="text-destructive">*</span>
+        </label>
+        <input type="file" name="scholarshipEssay" required className={fileClassName} />
+      </div>
+      <div className="space-y-2">
+        <label className="text-sm font-medium">
+          Please upload a recent photo of you <span className="text-destructive">*</span>
+        </label>
+        <input type="file" name="scholarshipPhoto" required className={fileClassName} />
+      </div>
+      <label className="flex items-start gap-2 cursor-pointer">
+        <input
+          type="checkbox"
+          name="scholarshipAgreement"
+          required
+          checked={agreed}
+          onChange={(e) => setAgreed(e.target.checked)}
+          className="mt-1 rounded border-input"
+        />
+        <span className="text-sm">
+          By submitting this application you agree to and acknowledge that all
+          information provided with the application is accurate and true.
+        </span>
+      </label>
+      <div className="pt-2">
+        <Button type="submit" className="bg-primary" disabled={!agreed}>
+          Submit
+        </Button>
+      </div>
+    </form>
+  );
+}
+
+/** Get Support tab: three sections (College Scholarships, Find a Specialist, Refer a Specialist) with blue banners. */
+function GetSupportTab({ content }: { content: any }) {
+  const hasCollege =
+    content?.collegeScholarshipsTitle ||
+    content?.collegeScholarshipsContent ||
+    true; // always show College Scholarships section (form + optional CMS content)
+  const hasFind =
+    content?.findASpecialistTitle ||
+    content?.findASpecialistContent ||
+    true; // always show Find a Specialist section (form + optional CMS content)
+  const hasRefer =
+    content?.referASpecialistTitle || content?.referASpecialistContent;
+  if (!hasCollege && !hasFind && !hasRefer) {
+    return (
+      <div className="text-center py-12 text-muted-foreground">
+        Content coming soon...
+      </div>
+    );
+  }
+  return (
+    <Accordion type="single" collapsible className="w-full space-y-2">
+      {hasCollege && (
+        <AccordionItem value="college-scholarships" className="rounded-lg border border-border overflow-hidden">
+          <AccordionTrigger className={getSupportTriggerClassName}>
+            {content.collegeScholarshipsTitle || "College Scholarships"}
+          </AccordionTrigger>
+          <AccordionContent className="p-4 pt-0 bg-card">
+            <div className="prose prose-sm max-w-none space-y-4">
+              {content.collegeScholarshipsContent ? (
+                <ResourcesRichText content={content.collegeScholarshipsContent} />
+              ) : null}
+              <CollegeScholarshipForm />
+            </div>
+          </AccordionContent>
+        </AccordionItem>
+      )}
+      {hasFind && (
+        <AccordionItem value="find-a-specialist" className="rounded-lg border border-border overflow-hidden">
+          <AccordionTrigger className={getSupportTriggerClassName}>
+            {content.findASpecialistTitle || "Find a Specialist"}
+          </AccordionTrigger>
+          <AccordionContent className="p-4 pt-0 bg-card">
+            <div className="prose prose-sm max-w-none space-y-4">
+              {content.findASpecialistContent && (
+                <ResourcesRichText content={content.findASpecialistContent} />
+              )}
+              {content.referSpecialistLinkUrl && (
+                <p>
+                  <Link
+                    href={content.referSpecialistLinkUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary underline font-medium"
+                  >
+                    {content.referSpecialistLinkText ||
+                      "If you have a specialist you would like to refer to MAGIC, please click here."}
+                  </Link>
+                </p>
+              )}
+              <FindASpecialistForm />
+            </div>
+          </AccordionContent>
+        </AccordionItem>
+      )}
+      {hasRefer && (
+        <AccordionItem value="refer-a-specialist" className="rounded-lg border border-border overflow-hidden">
+          <AccordionTrigger className={getSupportTriggerClassName}>
+            {content.referASpecialistTitle || "Refer a Specialist"}
+          </AccordionTrigger>
+          <AccordionContent className="p-4 pt-0 bg-card">
+            <div className="prose prose-sm max-w-none space-y-4">
+              {content.referASpecialistContent ? (
+                <ResourcesRichText content={content.referASpecialistContent} />
+              ) : null}
+              <ReferASpecialistForm />
+            </div>
+          </AccordionContent>
+        </AccordionItem>
+      )}
+    </Accordion>
+  );
+}
+
+const FIND_A_SPECIALIST_DISORDERS = [
+  "Adult Growth Hormone Deficiency",
+  "Congenital Adrenal Hyperplasia",
+  "Cushing Syndrome",
+  "Growth Hormone Deficiency",
+  "Idiopathic Short Stature",
+  "Insulin-like Growth Factor Deficiency",
+  "Intrauterine Growth Restriction",
+  "McCune-Albright Syndrome/Fibrous Dysplasia",
+  "Optic Nerve Hypoplasia/Septo Optic Dysplasia",
+  "Panhypopituitarism/Tumor",
+  "Precocious Puberty",
+  "Russell-Silver Syndrome",
+  "Small for Gestational Age",
+  "Temple Syndrome",
+  "Thyroid Disorder",
+  "Other (please list)",
+] as const;
+
+function FindASpecialistForm() {
+  const [otherDisorder, setOtherDisorder] = React.useState("");
+  return (
+    <form
+      className="space-y-6 pt-6 border-t border-border"
+      onSubmit={(e) => {
+        e.preventDefault();
+        // TODO: wire to API / server action
+      }}
+    >
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="space-y-2">
+          <label className="text-sm font-medium">First name</label>
+          <Input name="firstName" required />
+        </div>
+        <div className="space-y-2">
+          <label className="text-sm font-medium">Last name</label>
+          <Input name="lastName" required />
+        </div>
+      </div>
+      <div className="space-y-2">
+        <label className="text-sm font-medium">Street address</label>
+        <Input name="streetAddress" required />
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="space-y-2">
+          <label className="text-sm font-medium">City</label>
+          <Input name="city" required />
+        </div>
+        <div className="space-y-2">
+          <label className="text-sm font-medium">State</label>
+          <Input name="state" required />
+        </div>
+        <div className="space-y-2">
+          <label className="text-sm font-medium">Zip code</label>
+          <Input name="zipCode" required />
+        </div>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="space-y-2">
+          <label className="text-sm font-medium">Phone number</label>
+          <Input name="phone" type="tel" required />
+        </div>
+        <div className="space-y-2">
+          <label className="text-sm font-medium">Email</label>
+          <Input name="email" type="email" required />
+        </div>
+      </div>
+      <div className="space-y-2">
+        <label className="text-sm font-medium">
+          Are you looking for a pediatric or adult endocrinologist?
+        </label>
+        <select
+          name="endocrinologistType"
+          className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm"
+          required
+        >
+          <option value="">Select...</option>
+          <option value="pediatric">Pediatric</option>
+          <option value="adult">Adult</option>
+        </select>
+      </div>
+      <div className="space-y-2">
+        <label className="text-sm font-medium">
+          What major cities are you willing to travel to?
+        </label>
+        <textarea
+          name="citiesWillingToTravel"
+          rows={2}
+          className="flex min-h-[60px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm"
+        />
+      </div>
+      <div className="space-y-2">
+        <label className="text-sm font-medium">
+          Please list the disorder you or your child is seeking an endocrinologist
+          to treat/evaluate
+        </label>
+        <textarea
+          name="disorderDescription"
+          rows={3}
+          className="flex min-h-[80px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm"
+        />
+      </div>
+      <div className="space-y-3">
+        <span className="text-sm font-medium block">
+          Disorder (select one)
+        </span>
+        <div className="space-y-2">
+          {FIND_A_SPECIALIST_DISORDERS.map((value) => (
+            <label
+              key={value}
+              className="flex items-center gap-2 cursor-pointer"
+            >
+              <input
+                type="radio"
+                name="disorder"
+                value={value}
+                className="rounded-full border-input"
+              />
+              <span className="text-sm">{value}</span>
+            </label>
+          ))}
+          <div className="pl-6 pt-1">
+            <Input
+              placeholder="If Other, please list"
+              className="max-w-md"
+              value={otherDisorder}
+              onChange={(e) => setOtherDisorder(e.target.value)}
+              name="disorderOther"
+            />
+          </div>
+        </div>
+      </div>
+      <div className="pt-2">
+        <Button type="submit" className="bg-primary">
+          Submit
+        </Button>
+      </div>
+    </form>
+  );
+}
+
+function ReferASpecialistForm() {
+  const [otherDisorder, setOtherDisorder] = React.useState("");
+  return (
+    <form
+      className="space-y-6 pt-6 border-t border-border"
+      onSubmit={(e) => {
+        e.preventDefault();
+        // TODO: wire to API / server action
+      }}
+    >
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="space-y-2">
+          <label className="text-sm font-medium">First name</label>
+          <Input name="referFirstName" required />
+        </div>
+        <div className="space-y-2">
+          <label className="text-sm font-medium">Last name</label>
+          <Input name="referLastName" required />
+        </div>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="space-y-2">
+          <label className="text-sm font-medium">Email address</label>
+          <Input name="referEmail" type="email" required />
+        </div>
+        <div className="space-y-2">
+          <label className="text-sm font-medium">Phone number</label>
+          <Input name="referPhone" type="tel" required />
+        </div>
+      </div>
+      <div className="space-y-2">
+        <label className="text-sm font-medium">
+          Please list the disorder you or your child is seeking an endocrinologist
+          to treat/evaluate
+        </label>
+        <textarea
+          name="referDisorderDescription"
+          rows={3}
+          className="flex min-h-[80px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm"
+        />
+      </div>
+      <div className="space-y-3">
+        <span className="text-sm font-medium block">Disorder (select one)</span>
+        <div className="space-y-2">
+          {FIND_A_SPECIALIST_DISORDERS.map((value) => (
+            <label
+              key={value}
+              className="flex items-center gap-2 cursor-pointer"
+            >
+              <input
+                type="radio"
+                name="referDisorder"
+                value={value}
+                className="rounded-full border-input"
+              />
+              <span className="text-sm">{value}</span>
+            </label>
+          ))}
+          <div className="pl-6 pt-1">
+            <Input
+              placeholder="If Other, please list"
+              className="max-w-md"
+              value={otherDisorder}
+              onChange={(e) => setOtherDisorder(e.target.value)}
+              name="referDisorderOther"
+            />
+          </div>
+        </div>
+      </div>
+      <div className="pt-2">
+        <Button type="submit" className="bg-primary">
+          Submit
+        </Button>
+      </div>
+    </form>
+  );
+}
+
+/** Two accordion sections for parents and adults FB groups (Overview tab). */
+function SocialMediaAccordions({ content }: { content: any }) {
+  if (!content) return null;
+  const parentsTitle =
+    content.parentsSectionTitle ||
+    "PARENTS of affected children, connect to our closed division specific FB groups through the links below:";
+  const parentsGroups = content.parentsGroups ?? [];
+  const adultsTitle =
+    content.adultsSectionTitle ||
+    "Affected Adults - connect to our closed division specific FB groups through the links below:";
+  const adultsGroups = content.adultsGroups ?? [];
+  if (parentsGroups.length === 0 && adultsGroups.length === 0) {
+    return <p className="text-muted-foreground">No links added yet.</p>;
+  }
+  return (
+    <Accordion type="single" collapsible className="w-full">
+      {parentsGroups.length > 0 && (
+        <AccordionItem value="parents">
+          <AccordionTrigger className="text-left">
+            {parentsTitle}
+          </AccordionTrigger>
+          <AccordionContent className="pl-4">
+            <ul className="list-disc pl-6 space-y-2">
+              {parentsGroups.map((item: any, i: number) => (
+                <li key={i}>
+                  <a
+                    href={item.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary underline"
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </AccordionContent>
+        </AccordionItem>
+      )}
+      {adultsGroups.length > 0 && (
+        <AccordionItem value="adults">
+          <AccordionTrigger className="text-left">
+            {adultsTitle}
+          </AccordionTrigger>
+          <AccordionContent className="pl-4">
+            <ul className="list-disc pl-6 space-y-2">
+              {adultsGroups.map((item: any, i: number) => (
+                <li key={i}>
+                  <a
+                    href={item.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary underline"
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </AccordionContent>
+        </AccordionItem>
+      )}
+    </Accordion>
+  );
 }
 
 function SocialMediaSection({ content }: { content: any }) {

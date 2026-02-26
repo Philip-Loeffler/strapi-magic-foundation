@@ -1104,21 +1104,25 @@ export interface ApiPrecociousPubertyPrecociousPuberty
   };
 }
 
-export interface ApiResourcesResources extends Struct.SingleTypeSchema {
-  collectionName: 'resources_pages';
+export interface ApiResourcesResources extends Struct.CollectionTypeSchema {
+  collectionName: 'resources';
   info: {
-    description: 'Resources page with Overview, Informational Videos, Get Support, and Spread the Word tabs';
+    description: 'Resources collection with Overview, Informational Videos, Get Support, and Spread the Word tabs';
     displayName: 'Resources';
     pluralName: 'resources-pages';
     singularName: 'resources';
   };
   options: {
-    draftAndPublish: false;
+    draftAndPublish: true;
   };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    getSupportTab: Schema.Attribute.Component<
+      'resources.get-support-tab',
+      false
+    >;
     informationalVideosTab: Schema.Attribute.Component<
       'resources.informational-videos-tab',
       false
@@ -1131,10 +1135,12 @@ export interface ApiResourcesResources extends Struct.SingleTypeSchema {
       Schema.Attribute.Private;
     overviewTab: Schema.Attribute.Component<'resources.overview-tab', false>;
     publishedAt: Schema.Attribute.DateTime;
-    socialMediaTab: Schema.Attribute.Component<
-      'resources.social-media-tab',
+    slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
+    spreadTheWordTab: Schema.Attribute.Component<
+      'resources.spread-the-word-tab',
       false
     >;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

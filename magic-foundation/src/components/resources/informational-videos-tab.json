@@ -2,11 +2,15 @@
   "collectionName": "components_resources_informational_videos_tabs",
   "info": {
     "displayName": "Informational Videos Tab",
-    "description": "Intro text and video grid"
+    "description": "Two intro descriptions and video grid (rows of three)"
   },
   "options": {},
   "attributes": {
     "intro": {
+      "type": "richtext",
+      "required": false
+    },
+    "secondDescription": {
       "type": "richtext",
       "required": false
     },

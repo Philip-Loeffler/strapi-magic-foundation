@@ -1,0 +1,23 @@
+{
+  "collectionName": "components_resources_overview_info_sections",
+  "info": {
+    "displayName": "Overview Info Section",
+    "description": "Title, description, and links (e.g. MedAngel, TSA, Southwest, GINA)"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": false
+    },
+    "description": {
+      "type": "richtext",
+      "required": false
+    },
+    "links": {
+      "type": "component",
+      "repeatable": true,
+      "component": "resources.social-link"
+    }
+  }
+}

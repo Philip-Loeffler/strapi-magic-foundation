@@ -41,7 +41,6 @@ export function ResourcesTabsClient({ data }: { data: any }) {
           <ResourcesContentRenderer
             content={data?.overviewTab}
             tab="overview"
-            socialMediaContent={data?.socialMediaTab}
           />
         </div>
       </div>
@@ -65,11 +64,7 @@ export function ResourcesTabsClient({ data }: { data: any }) {
       </div>
 
       <TabsContent value="overview" className="w-full mt-0">
-        <ResourcesContentRenderer
-          content={data?.overviewTab}
-          tab="overview"
-          socialMediaContent={data?.socialMediaTab}
-        />
+        <ResourcesContentRenderer content={data?.overviewTab} tab="overview" />
       </TabsContent>
 
       <TabsContent value="informational-videos" className="w-full mt-0">

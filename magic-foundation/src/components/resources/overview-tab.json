@@ -2,13 +2,77 @@
   "collectionName": "components_resources_overview_tabs",
   "info": {
     "displayName": "Resources Overview Tab",
-    "description": "Overview tab content (brochures, links, etc.)"
+    "description": "Overview tab: intro, brochure section, accordions (brochures, adult, additional info), info sections, FB groups"
   },
   "options": {},
   "attributes": {
     "content": {
       "type": "richtext",
       "required": false
+    },
+    "brochureSectionTitle": {
+      "type": "string",
+      "required": false
+    },
+    "brochureSectionDescription": {
+      "type": "richtext",
+      "required": false
+    },
+    "brochureSectionBody": {
+      "type": "richtext",
+      "required": false
+    },
+    "brochureAccordionTitle": {
+      "type": "string",
+      "required": false
+    },
+    "brochureAccordionItems": {
+      "type": "component",
+      "repeatable": true,
+      "component": "resources.social-link"
+    },
+    "adultBrochuresAccordionTitle": {
+      "type": "string",
+      "required": false
+    },
+    "adultBrochuresAccordionItems": {
+      "type": "component",
+      "repeatable": true,
+      "component": "resources.social-link"
+    },
+    "additionalInfoAccordionTitle": {
+      "type": "string",
+      "required": false
+    },
+    "additionalInfoAccordionItems": {
+      "type": "component",
+      "repeatable": true,
+      "component": "resources.social-link"
+    },
+    "overviewInfoSections": {
+      "type": "component",
+      "repeatable": true,
+      "component": "resources.overview-info-section"
+    },
+    "parentsSectionTitle": {
+      "type": "string",
+      "required": false,
+      "default": "PARENTS of affected children, connect to our closed division specific FB groups through the links below:"
+    },
+    "parentsGroups": {
+      "type": "component",
+      "repeatable": true,
+      "component": "resources.social-link"
+    },
+    "adultsSectionTitle": {
+      "type": "string",
+      "required": false,
+      "default": "Affected Adults - connect to our closed division specific FB groups through the links below:"
+    },
+    "adultsGroups": {
+      "type": "component",
+      "repeatable": true,
+      "component": "resources.social-link"
     }
   }
 }

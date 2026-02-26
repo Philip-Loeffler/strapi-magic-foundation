@@ -692,11 +692,22 @@ export interface InsuranceAppealsTestimonialItem
 export interface ResourcesGetSupportTab extends Struct.ComponentSchema {
   collectionName: 'components_resources_get_support_tabs';
   info: {
-    description: 'Content for the Get Support tab';
+    description: 'Three sections: College Scholarships, Find a Specialist, Refer a Specialist';
     displayName: 'Get Support Tab';
   };
   attributes: {
-    content: Schema.Attribute.RichText;
+    collegeScholarshipsContent: Schema.Attribute.RichText;
+    collegeScholarshipsTitle: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'College Scholarships'>;
+    findASpecialistContent: Schema.Attribute.RichText;
+    findASpecialistTitle: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Find a Specialist'>;
+    referASpecialistContent: Schema.Attribute.RichText;
+    referASpecialistTitle: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Refer a Specialist'>;
+    referSpecialistLinkText: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'If you have a specialist you would like to refer to MAGIC, please click here.'>;
+    referSpecialistLinkUrl: Schema.Attribute.String;
   };
 }
 
@@ -704,24 +715,66 @@ export interface ResourcesInformationalVideosTab
   extends Struct.ComponentSchema {
   collectionName: 'components_resources_informational_videos_tabs';
   info: {
-    description: 'Intro text and video grid';
+    description: 'Two intro descriptions and video grid (rows of three)';
     displayName: 'Informational Videos Tab';
   };
   attributes: {
     intro: Schema.Attribute.RichText;
+    secondDescription: Schema.Attribute.RichText;
     videos: Schema.Attribute.Component<'resources.video-item', true>;
     youtubeChannelUrl: Schema.Attribute.String;
+  };
+}
+
+export interface ResourcesOverviewInfoSection extends Struct.ComponentSchema {
+  collectionName: 'components_resources_overview_info_sections';
+  info: {
+    description: 'Title, description, and links (e.g. MedAngel, TSA, Southwest, GINA)';
+    displayName: 'Overview Info Section';
+  };
+  attributes: {
+    description: Schema.Attribute.RichText;
+    links: Schema.Attribute.Component<'resources.social-link', true>;
+    title: Schema.Attribute.String;
   };
 }
 
 export interface ResourcesOverviewTab extends Struct.ComponentSchema {
   collectionName: 'components_resources_overview_tabs';
   info: {
-    description: 'Overview tab content (brochures, links, etc.)';
+    description: 'Overview tab: intro, brochure section, accordions (brochures, adult, additional info), info sections, FB groups';
     displayName: 'Resources Overview Tab';
   };
   attributes: {
+    additionalInfoAccordionItems: Schema.Attribute.Component<
+      'resources.social-link',
+      true
+    >;
+    additionalInfoAccordionTitle: Schema.Attribute.String;
+    adultBrochuresAccordionItems: Schema.Attribute.Component<
+      'resources.social-link',
+      true
+    >;
+    adultBrochuresAccordionTitle: Schema.Attribute.String;
+    adultsGroups: Schema.Attribute.Component<'resources.social-link', true>;
+    adultsSectionTitle: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Affected Adults - connect to our closed division specific FB groups through the links below:'>;
+    brochureAccordionItems: Schema.Attribute.Component<
+      'resources.social-link',
+      true
+    >;
+    brochureAccordionTitle: Schema.Attribute.String;
+    brochureSectionBody: Schema.Attribute.RichText;
+    brochureSectionDescription: Schema.Attribute.RichText;
+    brochureSectionTitle: Schema.Attribute.String;
     content: Schema.Attribute.RichText;
+    overviewInfoSections: Schema.Attribute.Component<
+      'resources.overview-info-section',
+      true
+    >;
+    parentsGroups: Schema.Attribute.Component<'resources.social-link', true>;
+    parentsSectionTitle: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'PARENTS of affected children, connect to our closed division specific FB groups through the links below:'>;
   };
 }
 
@@ -1500,6 +1553,7 @@ declare module '@strapi/strapi' {
       'insurance-appeals.testimonial-item': InsuranceAppealsTestimonialItem;
       'resources.get-support-tab': ResourcesGetSupportTab;
       'resources.informational-videos-tab': ResourcesInformationalVideosTab;
+      'resources.overview-info-section': ResourcesOverviewInfoSection;
       'resources.overview-tab': ResourcesOverviewTab;
       'resources.social-link': ResourcesSocialLink;
       'resources.social-media-tab': ResourcesSocialMediaTab;

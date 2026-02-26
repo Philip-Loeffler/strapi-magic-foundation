@@ -4,12 +4,16 @@ import { PageContainer } from "@/components/layout/PageContainer";
 function buildResourcesPopulateQuery(): string {
   const populate = [
     "overviewTab",
+    "overviewTab.brochureAccordionItems",
+    "overviewTab.adultBrochuresAccordionItems",
+    "overviewTab.additionalInfoAccordionItems",
+    "overviewTab.overviewInfoSections",
+    "overviewTab.overviewInfoSections.links",
+    "overviewTab.parentsGroups",
+    "overviewTab.adultsGroups",
     "informationalVideosTab",
     "informationalVideosTab.videos",
     "informationalVideosTab.videos.thumbnail",
-    "socialMediaTab",
-    "socialMediaTab.parentsGroups",
-    "socialMediaTab.adultsGroups",
     "getSupportTab",
     "spreadTheWordTab",
   ];
@@ -18,11 +22,10 @@ function buildResourcesPopulateQuery(): string {
 
 async function getResourcesData() {
   try {
-    const strapiUrl =
-      process.env.NEXT_PUBLIC_STRAPI_URL;
+    const strapiUrl = process.env.NEXT_PUBLIC_STRAPI_URL;
     const populateQuery = buildResourcesPopulateQuery();
     const res = await fetch(
-      `${strapiUrl}/api/resources?${populateQuery}`,
+      `${strapiUrl}/api/resources-pages?${populateQuery}&filters[slug][$eq]=main`,
       {
         cache: "no-store",
         headers: { "Content-Type": "application/json" },
@@ -30,7 +33,16 @@ async function getResourcesData() {
     );
     if (!res.ok) return null;
     const data = await res.json();
-    return data?.data ?? data;
+    const raw = data?.data ?? data;
+    const list = Array.isArray(raw) ? raw : [raw];
+    // Strapi 5: flattened (r.slug); Strapi 4: r.attributes.slug
+    const resource =
+      list.find(
+        (r: { slug?: string; attributes?: { slug?: string } }) =>
+          r?.slug === "main" || r?.attributes?.slug === "main",
+      ) ?? list[0];
+    // Strapi 5 returns flat object; Strapi 4 wraps in attributes
+    return resource ? (resource.attributes ?? resource) : null;
   } catch {
     return null;
   }

@@ -1,15 +1,26 @@
 {
-  "kind": "singleType",
-  "collectionName": "resources_pages",
+  "kind": "collectionType",
+  "collectionName": "resources",
   "info": {
     "singularName": "resources",
     "pluralName": "resources-pages",
     "displayName": "Resources",
-    "description": "Resources page with Overview, Informational Videos, Get Support, and Spread the Word tabs"
+    "description": "Resources collection with Overview, Informational Videos, Get Support, and Spread the Word tabs"
   },
-  "options": {},
+  "options": {
+    "draftAndPublish": true
+  },
   "pluginOptions": {},
   "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title",
+      "required": true
+    },
     "overviewTab": {
       "type": "component",
       "component": "resources.overview-tab",
@@ -18,11 +29,6 @@
     "informationalVideosTab": {
       "type": "component",
       "component": "resources.informational-videos-tab",
-      "repeatable": false
-    },
-    "socialMediaTab": {
-      "type": "component",
-      "component": "resources.social-media-tab",
       "repeatable": false
     },
     "getSupportTab": {
