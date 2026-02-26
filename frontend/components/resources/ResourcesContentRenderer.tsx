@@ -29,7 +29,12 @@ export function ResourcesContentRenderer({
   tab,
 }: {
   content: any;
-  tab: "overview" | "informational-videos" | "social-media" | "get-support" | "spread-the-word";
+  tab:
+    | "overview"
+    | "informational-videos"
+    | "social-media"
+    | "get-support"
+    | "spread-the-word";
 }) {
   if (tab === "overview") {
     const hasOverview = content?.content;
@@ -38,14 +43,13 @@ export function ResourcesContentRenderer({
       content?.brochureSectionDescription ||
       content?.brochureSectionBody;
     const hasBrochureAccordion =
-      (content?.brochureAccordionItems?.length > 0) ||
-      (content?.adultBrochuresAccordionItems?.length > 0) ||
-      (content?.additionalInfoAccordionItems?.length > 0);
+      content?.brochureAccordionItems?.length > 0 ||
+      content?.adultBrochuresAccordionItems?.length > 0 ||
+      content?.additionalInfoAccordionItems?.length > 0;
     const hasInfoSections =
       content?.overviewInfoSections && content.overviewInfoSections.length > 0;
     const hasSocial =
-      (content?.parentsGroups?.length > 0) ||
-      (content?.adultsGroups?.length > 0);
+      content?.parentsGroups?.length > 0 || content?.adultsGroups?.length > 0;
     const hasAny =
       hasOverview ||
       hasBrochureSection ||
@@ -68,18 +72,14 @@ export function ResourcesContentRenderer({
             </div>
           </div>
         )}
-        {hasBrochureSection && (
-          <BrochureSectionBlock content={content} />
-        )}
+        {hasBrochureSection && <BrochureSectionBlock content={content} />}
         {hasBrochureAccordion && (
           <BrochureAccordionsSection content={content} />
         )}
         {hasInfoSections && (
           <OverviewInfoSections sections={content.overviewInfoSections} />
         )}
-        {hasSocial && (
-          <SocialMediaAccordions content={content} />
-        )}
+        {hasSocial && <SocialMediaAccordions content={content} />}
       </div>
     );
   }
@@ -89,18 +89,7 @@ export function ResourcesContentRenderer({
   }
 
   if (tab === "spread-the-word") {
-    if (!content?.content) {
-      return (
-        <div className="text-center py-12 text-muted-foreground">
-          Content coming soon...
-        </div>
-      );
-    }
-    return (
-      <div className="prose prose-sm max-w-none">
-        <ResourcesRichText content={content.content} />
-      </div>
-    );
+    return <SpreadTheWordTab content={content} />;
   }
 
   if (!content) {
@@ -234,19 +223,28 @@ function BrochureSectionBlock({ content }: { content: any }) {
 /** Three accordions: Brochures, Adult Brochures, Additional Info (each: title + list of label/PDF link). */
 function BrochureAccordionsSection({ content }: { content: any }) {
   const items: { title: string; links: any[] }[] = [];
-  if (content?.brochureAccordionTitle || content?.brochureAccordionItems?.length) {
+  if (
+    content?.brochureAccordionTitle ||
+    content?.brochureAccordionItems?.length
+  ) {
     items.push({
       title: content.brochureAccordionTitle || "Brochures",
       links: content.brochureAccordionItems ?? [],
     });
   }
-  if (content?.adultBrochuresAccordionTitle || content?.adultBrochuresAccordionItems?.length) {
+  if (
+    content?.adultBrochuresAccordionTitle ||
+    content?.adultBrochuresAccordionItems?.length
+  ) {
     items.push({
       title: content.adultBrochuresAccordionTitle || "Adult Brochures",
       links: content.adultBrochuresAccordionItems ?? [],
     });
   }
-  if (content?.additionalInfoAccordionTitle || content?.additionalInfoAccordionItems?.length) {
+  if (
+    content?.additionalInfoAccordionTitle ||
+    content?.additionalInfoAccordionItems?.length
+  ) {
     items.push({
       title: content.additionalInfoAccordionTitle || "Additional Info",
       links: content.additionalInfoAccordionItems ?? [],
@@ -337,214 +335,222 @@ const fileClassName =
 function CollegeScholarshipForm() {
   const [agreed, setAgreed] = React.useState(false);
   return (
-    <form
-      className="space-y-6 pt-6 border-t border-border"
-      onSubmit={(e) => {
-        e.preventDefault();
-        // TODO: wire to API / server action
-      }}
+    // <form
+    //   className="space-y-6 pt-6 border-t border-border"
+    //   onSubmit={(e) => {
+    //     e.preventDefault();
+    //     // TODO: wire to API / server action
+    //   }}
+    // >
+    //   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+    //     <div className="space-y-2">
+    //       <label className="text-sm font-medium">
+    //         Applicant&apos;s First Name <span className="text-destructive">*</span>
+    //       </label>
+    //       <Input name="scholarshipApplicantFirstName" required className={inputClassName} />
+    //     </div>
+    //     <div className="space-y-2">
+    //       <label className="text-sm font-medium">
+    //         Applicant&apos;s Last Name <span className="text-destructive">*</span>
+    //       </label>
+    //       <Input name="scholarshipApplicantLastName" required className={inputClassName} />
+    //     </div>
+    //   </div>
+    //   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+    //     <div className="space-y-2">
+    //       <label className="text-sm font-medium">
+    //         Disorder/Diagnosis <span className="text-destructive">*</span>
+    //       </label>
+    //       <Input name="scholarshipDisorder" required className={inputClassName} />
+    //     </div>
+    //     <div className="space-y-2">
+    //       <label className="text-sm font-medium">
+    //         Date of Birth <span className="text-destructive">*</span>
+    //       </label>
+    //       <Input name="scholarshipDob" type="date" required className={inputClassName} />
+    //     </div>
+    //   </div>
+    //   <div className="space-y-2">
+    //     <label className="text-sm font-medium">
+    //       Street Address <span className="text-destructive">*</span>
+    //     </label>
+    //     <Input name="scholarshipStreetAddress" required className={inputClassName} />
+    //   </div>
+    //   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+    //     <div className="space-y-2">
+    //       <label className="text-sm font-medium">
+    //         City <span className="text-destructive">*</span>
+    //       </label>
+    //       <Input name="scholarshipCity" required className={inputClassName} />
+    //     </div>
+    //     <div className="space-y-2">
+    //       <label className="text-sm font-medium">
+    //         State <span className="text-destructive">*</span>
+    //       </label>
+    //       <Input name="scholarshipState" required className={inputClassName} />
+    //     </div>
+    //     <div className="space-y-2">
+    //       <label className="text-sm font-medium">
+    //         Zip Code <span className="text-destructive">*</span>
+    //       </label>
+    //       <Input name="scholarshipZipCode" required className={inputClassName} />
+    //     </div>
+    //   </div>
+    //   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+    //     <div className="space-y-2">
+    //       <label className="text-sm font-medium">
+    //         Phone Number <span className="text-destructive">*</span>
+    //       </label>
+    //       <Input name="scholarshipPhone" type="tel" required className={inputClassName} />
+    //     </div>
+    //     <div className="space-y-2">
+    //       <label className="text-sm font-medium">
+    //         Applicant&apos;s Email Address <span className="text-destructive">*</span>
+    //       </label>
+    //       <Input name="scholarshipApplicantEmail" type="email" required className={inputClassName} />
+    //     </div>
+    //   </div>
+    //   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+    //     <div className="space-y-2">
+    //       <label className="text-sm font-medium">
+    //         Parent/Guardian Name <span className="text-destructive">*</span>
+    //       </label>
+    //       <Input name="scholarshipParentGuardianName" required className={inputClassName} />
+    //     </div>
+    //     <div className="space-y-2">
+    //       <label className="text-sm font-medium">
+    //         Parent/Guardian Email Address <span className="text-destructive">*</span>
+    //       </label>
+    //       <Input name="scholarshipParentGuardianEmail" type="email" required className={inputClassName} />
+    //     </div>
+    //   </div>
+    //   <div className="space-y-2">
+    //     <label className="text-sm font-medium">Name of Current High School</label>
+    //     <Input name="scholarshipHighSchool" className={inputClassName} />
+    //   </div>
+    //   <div className="space-y-2">
+    //     <label className="text-sm font-medium">
+    //       List of Extracurricular Activities and/or Club Associations{" "}
+    //       <span className="text-destructive">*</span>
+    //     </label>
+    //     <textarea
+    //       name="scholarshipExtracurriculars"
+    //       rows={3}
+    //       required
+    //       className={textareaClassName}
+    //     />
+    //   </div>
+    //   <div className="space-y-2">
+    //     <label className="text-sm font-medium">
+    //       What are your career goals? <span className="text-destructive">*</span>
+    //     </label>
+    //     <textarea
+    //       name="scholarshipCareerGoals"
+    //       rows={3}
+    //       required
+    //       className={textareaClassName}
+    //     />
+    //   </div>
+    //   <div className="space-y-2">
+    //     <label className="text-sm font-medium">
+    //       Other Awards/Scholarships Received (include names and amounts){" "}
+    //       <span className="text-destructive">*</span>
+    //     </label>
+    //     <textarea
+    //       name="scholarshipOtherAwards"
+    //       rows={3}
+    //       required
+    //       className={textareaClassName}
+    //     />
+    //   </div>
+    //   <div className="space-y-2">
+    //     <label className="text-sm font-medium">
+    //       How did you hear about this scholarship?{" "}
+    //       <span className="text-destructive">*</span>
+    //     </label>
+    //     <Input name="scholarshipHowDidYouHear" required className={inputClassName} />
+    //   </div>
+    //   <div className="space-y-2">
+    //     <label className="text-sm font-medium">
+    //       What school do you plan to attend? <span className="text-destructive">*</span>
+    //     </label>
+    //     <Input name="scholarshipPlannedSchool" required className={inputClassName} />
+    //   </div>
+    //   <div className="space-y-2">
+    //     <label className="text-sm font-medium">
+    //       Please upload documentation of an endocrine disorder{" "}
+    //       <span className="text-destructive">*</span>
+    //     </label>
+    //     <input
+    //       type="file"
+    //       name="scholarshipDisorderDocumentation"
+    //       required
+    //       className={fileClassName}
+    //     />
+    //   </div>
+    //   <div className="space-y-2">
+    //     <label className="text-sm font-medium">
+    //       Please upload proof of college acceptance{" "}
+    //       <span className="text-destructive">*</span>
+    //     </label>
+    //     <input
+    //       type="file"
+    //       name="scholarshipCollegeAcceptance"
+    //       required
+    //       className={fileClassName}
+    //     />
+    //   </div>
+    //   <div className="space-y-2">
+    //     <label className="text-sm font-medium">
+    //       Please upload your personal reference <span className="text-destructive">*</span>
+    //     </label>
+    //     <input
+    //       type="file"
+    //       name="scholarshipPersonalReference"
+    //       required
+    //       className={fileClassName}
+    //     />
+    //   </div>
+    //   <div className="space-y-2">
+    //     <label className="text-sm font-medium">
+    //       Please upload your essay <span className="text-destructive">*</span>
+    //     </label>
+    //     <input type="file" name="scholarshipEssay" required className={fileClassName} />
+    //   </div>
+    //   <div className="space-y-2">
+    //     <label className="text-sm font-medium">
+    //       Please upload a recent photo of you <span className="text-destructive">*</span>
+    //     </label>
+    //     <input type="file" name="scholarshipPhoto" required className={fileClassName} />
+    //   </div>
+    //   <label className="flex items-start gap-2 cursor-pointer">
+    //     <input
+    //       type="checkbox"
+    //       name="scholarshipAgreement"
+    //       required
+    //       checked={agreed}
+    //       onChange={(e) => setAgreed(e.target.checked)}
+    //       className="mt-1 rounded border-input"
+    //     />
+    //     <span className="text-sm">
+    //       By submitting this application you agree to and acknowledge that all
+    //       information provided with the application is accurate and true.
+    //     </span>
+    //   </label>
+    //   <div className="pt-2">
+    //     <Button type="submit" className="bg-primary" disabled={!agreed}>
+    //       Submit
+    //     </Button>
+    //   </div>
+    // </form>
+    <a
+      href="https://fs3.formsite.com/denoandrews/jwehgexapm/index
+"
+      target="_blank"
+      rel="noopener noreferrer"
     >
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="space-y-2">
-          <label className="text-sm font-medium">
-            Applicant&apos;s First Name <span className="text-destructive">*</span>
-          </label>
-          <Input name="scholarshipApplicantFirstName" required className={inputClassName} />
-        </div>
-        <div className="space-y-2">
-          <label className="text-sm font-medium">
-            Applicant&apos;s Last Name <span className="text-destructive">*</span>
-          </label>
-          <Input name="scholarshipApplicantLastName" required className={inputClassName} />
-        </div>
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="space-y-2">
-          <label className="text-sm font-medium">
-            Disorder/Diagnosis <span className="text-destructive">*</span>
-          </label>
-          <Input name="scholarshipDisorder" required className={inputClassName} />
-        </div>
-        <div className="space-y-2">
-          <label className="text-sm font-medium">
-            Date of Birth <span className="text-destructive">*</span>
-          </label>
-          <Input name="scholarshipDob" type="date" required className={inputClassName} />
-        </div>
-      </div>
-      <div className="space-y-2">
-        <label className="text-sm font-medium">
-          Street Address <span className="text-destructive">*</span>
-        </label>
-        <Input name="scholarshipStreetAddress" required className={inputClassName} />
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="space-y-2">
-          <label className="text-sm font-medium">
-            City <span className="text-destructive">*</span>
-          </label>
-          <Input name="scholarshipCity" required className={inputClassName} />
-        </div>
-        <div className="space-y-2">
-          <label className="text-sm font-medium">
-            State <span className="text-destructive">*</span>
-          </label>
-          <Input name="scholarshipState" required className={inputClassName} />
-        </div>
-        <div className="space-y-2">
-          <label className="text-sm font-medium">
-            Zip Code <span className="text-destructive">*</span>
-          </label>
-          <Input name="scholarshipZipCode" required className={inputClassName} />
-        </div>
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="space-y-2">
-          <label className="text-sm font-medium">
-            Phone Number <span className="text-destructive">*</span>
-          </label>
-          <Input name="scholarshipPhone" type="tel" required className={inputClassName} />
-        </div>
-        <div className="space-y-2">
-          <label className="text-sm font-medium">
-            Applicant&apos;s Email Address <span className="text-destructive">*</span>
-          </label>
-          <Input name="scholarshipApplicantEmail" type="email" required className={inputClassName} />
-        </div>
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="space-y-2">
-          <label className="text-sm font-medium">
-            Parent/Guardian Name <span className="text-destructive">*</span>
-          </label>
-          <Input name="scholarshipParentGuardianName" required className={inputClassName} />
-        </div>
-        <div className="space-y-2">
-          <label className="text-sm font-medium">
-            Parent/Guardian Email Address <span className="text-destructive">*</span>
-          </label>
-          <Input name="scholarshipParentGuardianEmail" type="email" required className={inputClassName} />
-        </div>
-      </div>
-      <div className="space-y-2">
-        <label className="text-sm font-medium">Name of Current High School</label>
-        <Input name="scholarshipHighSchool" className={inputClassName} />
-      </div>
-      <div className="space-y-2">
-        <label className="text-sm font-medium">
-          List of Extracurricular Activities and/or Club Associations{" "}
-          <span className="text-destructive">*</span>
-        </label>
-        <textarea
-          name="scholarshipExtracurriculars"
-          rows={3}
-          required
-          className={textareaClassName}
-        />
-      </div>
-      <div className="space-y-2">
-        <label className="text-sm font-medium">
-          What are your career goals? <span className="text-destructive">*</span>
-        </label>
-        <textarea
-          name="scholarshipCareerGoals"
-          rows={3}
-          required
-          className={textareaClassName}
-        />
-      </div>
-      <div className="space-y-2">
-        <label className="text-sm font-medium">
-          Other Awards/Scholarships Received (include names and amounts){" "}
-          <span className="text-destructive">*</span>
-        </label>
-        <textarea
-          name="scholarshipOtherAwards"
-          rows={3}
-          required
-          className={textareaClassName}
-        />
-      </div>
-      <div className="space-y-2">
-        <label className="text-sm font-medium">
-          How did you hear about this scholarship?{" "}
-          <span className="text-destructive">*</span>
-        </label>
-        <Input name="scholarshipHowDidYouHear" required className={inputClassName} />
-      </div>
-      <div className="space-y-2">
-        <label className="text-sm font-medium">
-          What school do you plan to attend? <span className="text-destructive">*</span>
-        </label>
-        <Input name="scholarshipPlannedSchool" required className={inputClassName} />
-      </div>
-      <div className="space-y-2">
-        <label className="text-sm font-medium">
-          Please upload documentation of an endocrine disorder{" "}
-          <span className="text-destructive">*</span>
-        </label>
-        <input
-          type="file"
-          name="scholarshipDisorderDocumentation"
-          required
-          className={fileClassName}
-        />
-      </div>
-      <div className="space-y-2">
-        <label className="text-sm font-medium">
-          Please upload proof of college acceptance{" "}
-          <span className="text-destructive">*</span>
-        </label>
-        <input
-          type="file"
-          name="scholarshipCollegeAcceptance"
-          required
-          className={fileClassName}
-        />
-      </div>
-      <div className="space-y-2">
-        <label className="text-sm font-medium">
-          Please upload your personal reference <span className="text-destructive">*</span>
-        </label>
-        <input
-          type="file"
-          name="scholarshipPersonalReference"
-          required
-          className={fileClassName}
-        />
-      </div>
-      <div className="space-y-2">
-        <label className="text-sm font-medium">
-          Please upload your essay <span className="text-destructive">*</span>
-        </label>
-        <input type="file" name="scholarshipEssay" required className={fileClassName} />
-      </div>
-      <div className="space-y-2">
-        <label className="text-sm font-medium">
-          Please upload a recent photo of you <span className="text-destructive">*</span>
-        </label>
-        <input type="file" name="scholarshipPhoto" required className={fileClassName} />
-      </div>
-      <label className="flex items-start gap-2 cursor-pointer">
-        <input
-          type="checkbox"
-          name="scholarshipAgreement"
-          required
-          checked={agreed}
-          onChange={(e) => setAgreed(e.target.checked)}
-          className="mt-1 rounded border-input"
-        />
-        <span className="text-sm">
-          By submitting this application you agree to and acknowledge that all
-          information provided with the application is accurate and true.
-        </span>
-      </label>
-      <div className="pt-2">
-        <Button type="submit" className="bg-primary" disabled={!agreed}>
-          Submit
-        </Button>
-      </div>
-    </form>
+      Fill Out Our Refer a Specialist Form
+    </a>
   );
 }
 
@@ -555,9 +561,7 @@ function GetSupportTab({ content }: { content: any }) {
     content?.collegeScholarshipsContent ||
     true; // always show College Scholarships section (form + optional CMS content)
   const hasFind =
-    content?.findASpecialistTitle ||
-    content?.findASpecialistContent ||
-    true; // always show Find a Specialist section (form + optional CMS content)
+    content?.findASpecialistTitle || content?.findASpecialistContent || true; // always show Find a Specialist section (form + optional CMS content)
   const hasRefer =
     content?.referASpecialistTitle || content?.referASpecialistContent;
   if (!hasCollege && !hasFind && !hasRefer) {
@@ -570,14 +574,19 @@ function GetSupportTab({ content }: { content: any }) {
   return (
     <Accordion type="single" collapsible className="w-full space-y-2">
       {hasCollege && (
-        <AccordionItem value="college-scholarships" className="rounded-lg border border-border overflow-hidden">
+        <AccordionItem
+          value="college-scholarships"
+          className="rounded-lg border border-border overflow-hidden"
+        >
           <AccordionTrigger className={getSupportTriggerClassName}>
             {content.collegeScholarshipsTitle || "College Scholarships"}
           </AccordionTrigger>
           <AccordionContent className="p-4 pt-0 bg-card">
             <div className="prose prose-sm max-w-none space-y-4">
               {content.collegeScholarshipsContent ? (
-                <ResourcesRichText content={content.collegeScholarshipsContent} />
+                <ResourcesRichText
+                  content={content.collegeScholarshipsContent}
+                />
               ) : null}
               <CollegeScholarshipForm />
             </div>
@@ -585,7 +594,10 @@ function GetSupportTab({ content }: { content: any }) {
         </AccordionItem>
       )}
       {hasFind && (
-        <AccordionItem value="find-a-specialist" className="rounded-lg border border-border overflow-hidden">
+        <AccordionItem
+          value="find-a-specialist"
+          className="rounded-lg border border-border overflow-hidden"
+        >
           <AccordionTrigger className={getSupportTriggerClassName}>
             {content.findASpecialistTitle || "Find a Specialist"}
           </AccordionTrigger>
@@ -613,7 +625,10 @@ function GetSupportTab({ content }: { content: any }) {
         </AccordionItem>
       )}
       {hasRefer && (
-        <AccordionItem value="refer-a-specialist" className="rounded-lg border border-border overflow-hidden">
+        <AccordionItem
+          value="refer-a-specialist"
+          className="rounded-lg border border-border overflow-hidden"
+        >
           <AccordionTrigger className={getSupportTriggerClassName}>
             {content.referASpecialistTitle || "Refer a Specialist"}
           </AccordionTrigger>
@@ -628,6 +643,53 @@ function GetSupportTab({ content }: { content: any }) {
         </AccordionItem>
       )}
     </Accordion>
+  );
+}
+
+/** Spread the Word tab: description (two paragraphs) + image + title grid (same as team structure board members). */
+function SpreadTheWordTab({ content }: { content: any }) {
+  const description = content?.description;
+  const items = content?.items ?? [];
+  const hasDescription = !!description;
+  const hasItems = items.length > 0;
+  if (!hasDescription && !hasItems) {
+    return (
+      <div className="text-center py-12 text-muted-foreground">
+        Content coming soon...
+      </div>
+    );
+  }
+  const placeholderImage =
+    "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2394a3b8'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E";
+  return (
+    <div className="space-y-8">
+      {hasDescription && (
+        <div className="prose prose-sm max-w-none">
+          <ResourcesRichText content={description} />
+        </div>
+      )}
+      {hasItems && (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 w-full">
+          {items.map((item: any, index: number) => {
+            const imageUrl = item.image
+              ? getImageUrl(item.image)
+              : placeholderImage;
+            return (
+              <div key={index} className="text-left w-full min-w-0">
+                <div className="w-[264px] h-[200px] mb-4 overflow-hidden bg-gray-200 rounded">
+                  <img
+                    src={imageUrl}
+                    alt={item.title}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <h3 className="text-lg font-semibold">{item.title}</h3>
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </div>
   );
 }
 
@@ -653,200 +715,212 @@ const FIND_A_SPECIALIST_DISORDERS = [
 function FindASpecialistForm() {
   const [otherDisorder, setOtherDisorder] = React.useState("");
   return (
-    <form
-      className="space-y-6 pt-6 border-t border-border"
-      onSubmit={(e) => {
-        e.preventDefault();
-        // TODO: wire to API / server action
-      }}
+    // <form
+    //   className="space-y-6 pt-6 border-t border-border"
+    //   onSubmit={(e) => {
+    //     e.preventDefault();
+    //     // TODO: wire to API / server action
+    //   }}
+    // >
+    //   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+    //     <div className="space-y-2">
+    //       <label className="text-sm font-medium">First name</label>
+    //       <Input name="firstName" required />
+    //     </div>
+    //     <div className="space-y-2">
+    //       <label className="text-sm font-medium">Last name</label>
+    //       <Input name="lastName" required />
+    //     </div>
+    //   </div>
+    //   <div className="space-y-2">
+    //     <label className="text-sm font-medium">Street address</label>
+    //     <Input name="streetAddress" required />
+    //   </div>
+    //   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+    //     <div className="space-y-2">
+    //       <label className="text-sm font-medium">City</label>
+    //       <Input name="city" required />
+    //     </div>
+    //     <div className="space-y-2">
+    //       <label className="text-sm font-medium">State</label>
+    //       <Input name="state" required />
+    //     </div>
+    //     <div className="space-y-2">
+    //       <label className="text-sm font-medium">Zip code</label>
+    //       <Input name="zipCode" required />
+    //     </div>
+    //   </div>
+    //   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+    //     <div className="space-y-2">
+    //       <label className="text-sm font-medium">Phone number</label>
+    //       <Input name="phone" type="tel" required />
+    //     </div>
+    //     <div className="space-y-2">
+    //       <label className="text-sm font-medium">Email</label>
+    //       <Input name="email" type="email" required />
+    //     </div>
+    //   </div>
+    //   <div className="space-y-2">
+    //     <label className="text-sm font-medium">
+    //       Are you looking for a pediatric or adult endocrinologist?
+    //     </label>
+    //     <select
+    //       name="endocrinologistType"
+    //       className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm"
+    //       required
+    //     >
+    //       <option value="">Select...</option>
+    //       <option value="pediatric">Pediatric</option>
+    //       <option value="adult">Adult</option>
+    //     </select>
+    //   </div>
+    //   <div className="space-y-2">
+    //     <label className="text-sm font-medium">
+    //       What major cities are you willing to travel to?
+    //     </label>
+    //     <textarea
+    //       name="citiesWillingToTravel"
+    //       rows={2}
+    //       className="flex min-h-[60px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm"
+    //     />
+    //   </div>
+    //   <div className="space-y-2">
+    //     <label className="text-sm font-medium">
+    //       Please list the disorder you or your child is seeking an
+    //       endocrinologist to treat/evaluate
+    //     </label>
+    //     <textarea
+    //       name="disorderDescription"
+    //       rows={3}
+    //       className="flex min-h-[80px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm"
+    //     />
+    //   </div>
+    //   <div className="space-y-3">
+    //     <span className="text-sm font-medium block">Disorder (select one)</span>
+    //     <div className="space-y-2">
+    //       {FIND_A_SPECIALIST_DISORDERS.map((value) => (
+    //         <label
+    //           key={value}
+    //           className="flex items-center gap-2 cursor-pointer"
+    //         >
+    //           <input
+    //             type="radio"
+    //             name="disorder"
+    //             value={value}
+    //             className="rounded-full border-input"
+    //           />
+    //           <span className="text-sm">{value}</span>
+    //         </label>
+    //       ))}
+    //       <div className="pl-6 pt-1">
+    //         <Input
+    //           placeholder="If Other, please list"
+    //           className="max-w-md"
+    //           value={otherDisorder}
+    //           onChange={(e) => setOtherDisorder(e.target.value)}
+    //           name="disorderOther"
+    //         />
+    //       </div>
+    //     </div>
+    //   </div>
+    //   <div className="pt-2">
+    //     <Button type="submit" className="bg-primary">
+    //       Submit
+    //     </Button>
+    //   </div>
+    // </form>
+    <a
+      href="https://fs3.formsite.com/denoandrews/c5e1grlrgc/index"
+      target="_blank"
+      rel="noopener noreferrer"
     >
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="space-y-2">
-          <label className="text-sm font-medium">First name</label>
-          <Input name="firstName" required />
-        </div>
-        <div className="space-y-2">
-          <label className="text-sm font-medium">Last name</label>
-          <Input name="lastName" required />
-        </div>
-      </div>
-      <div className="space-y-2">
-        <label className="text-sm font-medium">Street address</label>
-        <Input name="streetAddress" required />
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="space-y-2">
-          <label className="text-sm font-medium">City</label>
-          <Input name="city" required />
-        </div>
-        <div className="space-y-2">
-          <label className="text-sm font-medium">State</label>
-          <Input name="state" required />
-        </div>
-        <div className="space-y-2">
-          <label className="text-sm font-medium">Zip code</label>
-          <Input name="zipCode" required />
-        </div>
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="space-y-2">
-          <label className="text-sm font-medium">Phone number</label>
-          <Input name="phone" type="tel" required />
-        </div>
-        <div className="space-y-2">
-          <label className="text-sm font-medium">Email</label>
-          <Input name="email" type="email" required />
-        </div>
-      </div>
-      <div className="space-y-2">
-        <label className="text-sm font-medium">
-          Are you looking for a pediatric or adult endocrinologist?
-        </label>
-        <select
-          name="endocrinologistType"
-          className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm"
-          required
-        >
-          <option value="">Select...</option>
-          <option value="pediatric">Pediatric</option>
-          <option value="adult">Adult</option>
-        </select>
-      </div>
-      <div className="space-y-2">
-        <label className="text-sm font-medium">
-          What major cities are you willing to travel to?
-        </label>
-        <textarea
-          name="citiesWillingToTravel"
-          rows={2}
-          className="flex min-h-[60px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm"
-        />
-      </div>
-      <div className="space-y-2">
-        <label className="text-sm font-medium">
-          Please list the disorder you or your child is seeking an endocrinologist
-          to treat/evaluate
-        </label>
-        <textarea
-          name="disorderDescription"
-          rows={3}
-          className="flex min-h-[80px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm"
-        />
-      </div>
-      <div className="space-y-3">
-        <span className="text-sm font-medium block">
-          Disorder (select one)
-        </span>
-        <div className="space-y-2">
-          {FIND_A_SPECIALIST_DISORDERS.map((value) => (
-            <label
-              key={value}
-              className="flex items-center gap-2 cursor-pointer"
-            >
-              <input
-                type="radio"
-                name="disorder"
-                value={value}
-                className="rounded-full border-input"
-              />
-              <span className="text-sm">{value}</span>
-            </label>
-          ))}
-          <div className="pl-6 pt-1">
-            <Input
-              placeholder="If Other, please list"
-              className="max-w-md"
-              value={otherDisorder}
-              onChange={(e) => setOtherDisorder(e.target.value)}
-              name="disorderOther"
-            />
-          </div>
-        </div>
-      </div>
-      <div className="pt-2">
-        <Button type="submit" className="bg-primary">
-          Submit
-        </Button>
-      </div>
-    </form>
+      Fill Out Our Refer a Specialist Form
+    </a>
   );
 }
 
 function ReferASpecialistForm() {
   const [otherDisorder, setOtherDisorder] = React.useState("");
   return (
-    <form
-      className="space-y-6 pt-6 border-t border-border"
-      onSubmit={(e) => {
-        e.preventDefault();
-        // TODO: wire to API / server action
-      }}
+    // <form
+    //   className="space-y-6 pt-6 border-t border-border"
+    //   onSubmit={(e) => {
+    //     e.preventDefault();
+    //     // TODO: wire to API / server action
+    //   }}
+    // >
+    //   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+    //     <div className="space-y-2">
+    //       <label className="text-sm font-medium">First name</label>
+    //       <Input name="referFirstName" required />
+    //     </div>
+    //     <div className="space-y-2">
+    //       <label className="text-sm font-medium">Last name</label>
+    //       <Input name="referLastName" required />
+    //     </div>
+    //   </div>
+    //   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+    //     <div className="space-y-2">
+    //       <label className="text-sm font-medium">Email address</label>
+    //       <Input name="referEmail" type="email" required />
+    //     </div>
+    //     <div className="space-y-2">
+    //       <label className="text-sm font-medium">Phone number</label>
+    //       <Input name="referPhone" type="tel" required />
+    //     </div>
+    //   </div>
+    //   <div className="space-y-2">
+    //     <label className="text-sm font-medium">
+    //       Please list the disorder you or your child is seeking an
+    //       endocrinologist to treat/evaluate
+    //     </label>
+    //     <textarea
+    //       name="referDisorderDescription"
+    //       rows={3}
+    //       className="flex min-h-[80px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm"
+    //     />
+    //   </div>
+    //   <div className="space-y-3">
+    //     <span className="text-sm font-medium block">Disorder (select one)</span>
+    //     <div className="space-y-2">
+    //       {FIND_A_SPECIALIST_DISORDERS.map((value) => (
+    //         <label
+    //           key={value}
+    //           className="flex items-center gap-2 cursor-pointer"
+    //         >
+    //           <input
+    //             type="radio"
+    //             name="referDisorder"
+    //             value={value}
+    //             className="rounded-full border-input"
+    //           />
+    //           <span className="text-sm">{value}</span>
+    //         </label>
+    //       ))}
+    //       <div className="pl-6 pt-1">
+    //         <Input
+    //           placeholder="If Other, please list"
+    //           className="max-w-md"
+    //           value={otherDisorder}
+    //           onChange={(e) => setOtherDisorder(e.target.value)}
+    //           name="referDisorderOther"
+    //         />
+    //       </div>
+    //     </div>
+    //   </div>
+    //   <div className="pt-2">
+    //     <Button type="submit" className="bg-primary">
+    //       Submit
+    //     </Button>
+    //   </div>
+    // </form>
+    <a
+      href="https://fs3.formsite.com/denoandrews/specialist/index"
+      target="_blank"
+      rel="noopener noreferrer"
     >
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="space-y-2">
-          <label className="text-sm font-medium">First name</label>
-          <Input name="referFirstName" required />
-        </div>
-        <div className="space-y-2">
-          <label className="text-sm font-medium">Last name</label>
-          <Input name="referLastName" required />
-        </div>
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="space-y-2">
-          <label className="text-sm font-medium">Email address</label>
-          <Input name="referEmail" type="email" required />
-        </div>
-        <div className="space-y-2">
-          <label className="text-sm font-medium">Phone number</label>
-          <Input name="referPhone" type="tel" required />
-        </div>
-      </div>
-      <div className="space-y-2">
-        <label className="text-sm font-medium">
-          Please list the disorder you or your child is seeking an endocrinologist
-          to treat/evaluate
-        </label>
-        <textarea
-          name="referDisorderDescription"
-          rows={3}
-          className="flex min-h-[80px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm"
-        />
-      </div>
-      <div className="space-y-3">
-        <span className="text-sm font-medium block">Disorder (select one)</span>
-        <div className="space-y-2">
-          {FIND_A_SPECIALIST_DISORDERS.map((value) => (
-            <label
-              key={value}
-              className="flex items-center gap-2 cursor-pointer"
-            >
-              <input
-                type="radio"
-                name="referDisorder"
-                value={value}
-                className="rounded-full border-input"
-              />
-              <span className="text-sm">{value}</span>
-            </label>
-          ))}
-          <div className="pl-6 pt-1">
-            <Input
-              placeholder="If Other, please list"
-              className="max-w-md"
-              value={otherDisorder}
-              onChange={(e) => setOtherDisorder(e.target.value)}
-              name="referDisorderOther"
-            />
-          </div>
-        </div>
-      </div>
-      <div className="pt-2">
-        <Button type="submit" className="bg-primary">
-          Submit
-        </Button>
-      </div>
-    </form>
+      Fill Out Our Refer a Specialist Form
+    </a>
   );
 }
 

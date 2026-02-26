@@ -2,13 +2,18 @@
   "collectionName": "components_resources_spread_the_word_tabs",
   "info": {
     "displayName": "Spread the Word Tab",
-    "description": "Content for the Spread the Word tab"
+    "description": "Intro description (two paragraphs) and items with image + title like team structure"
   },
   "options": {},
   "attributes": {
-    "content": {
+    "description": {
       "type": "richtext",
       "required": false
+    },
+    "items": {
+      "type": "component",
+      "repeatable": true,
+      "component": "resources.spread-word-item"
     }
   }
 }

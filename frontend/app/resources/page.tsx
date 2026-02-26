@@ -16,6 +16,8 @@ function buildResourcesPopulateQuery(): string {
     "informationalVideosTab.videos.thumbnail",
     "getSupportTab",
     "spreadTheWordTab",
+    "spreadTheWordTab.items",
+    "spreadTheWordTab.items.image",
   ];
   return populate.map((p, i) => `populate[${i}]=${p}`).join("&");
 }

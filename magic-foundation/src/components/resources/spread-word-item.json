@@ -1,0 +1,20 @@
+{
+  "collectionName": "components_resources_spread_word_items",
+  "info": {
+    "displayName": "Spread the Word Item",
+    "description": "Image and title (same display as team structure board members)"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"]
+    }
+  }
+}

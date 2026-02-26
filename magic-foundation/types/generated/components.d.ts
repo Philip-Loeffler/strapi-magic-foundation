@@ -809,11 +809,24 @@ export interface ResourcesSocialMediaTab extends Struct.ComponentSchema {
 export interface ResourcesSpreadTheWordTab extends Struct.ComponentSchema {
   collectionName: 'components_resources_spread_the_word_tabs';
   info: {
-    description: 'Content for the Spread the Word tab';
+    description: 'Intro description (two paragraphs) and items with image + title like team structure';
     displayName: 'Spread the Word Tab';
   };
   attributes: {
-    content: Schema.Attribute.RichText;
+    description: Schema.Attribute.RichText;
+    items: Schema.Attribute.Component<'resources.spread-word-item', true>;
+  };
+}
+
+export interface ResourcesSpreadWordItem extends Struct.ComponentSchema {
+  collectionName: 'components_resources_spread_word_items';
+  info: {
+    description: 'Image and title (same display as team structure board members)';
+    displayName: 'Spread the Word Item';
+  };
+  attributes: {
+    image: Schema.Attribute.Media<'images'>;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
@@ -1558,6 +1571,7 @@ declare module '@strapi/strapi' {
       'resources.social-link': ResourcesSocialLink;
       'resources.social-media-tab': ResourcesSocialMediaTab;
       'resources.spread-the-word-tab': ResourcesSpreadTheWordTab;
+      'resources.spread-word-item': ResourcesSpreadWordItem;
       'resources.video-item': ResourcesVideoItem;
       'rss.content-section': RssContentSection;
       'rss.content-subsection': RssContentSubsection;
