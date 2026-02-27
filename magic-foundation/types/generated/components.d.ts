@@ -519,6 +519,61 @@ export interface GrowthChartChartItem extends Struct.ComponentSchema {
   };
 }
 
+export interface GrowthChartGeneralChartItem extends Struct.ComponentSchema {
+  collectionName: 'components_growth_chart_general_chart_items';
+  info: {
+    description: 'Boy/Girl general growth chart with image, description, and link';
+    displayName: 'General Growth Chart Item';
+  };
+  attributes: {
+    description: Schema.Attribute.Text;
+    gender: Schema.Attribute.Enumeration<['boys', 'girls']>;
+    image: Schema.Attribute.Media<'images'>;
+    linkLabel: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    url: Schema.Attribute.String;
+  };
+}
+
+export interface GrowthChartGeneralTab extends Struct.ComponentSchema {
+  collectionName: 'components_growth_chart_general_tabs';
+  info: {
+    description: 'General growth charts tab content (accordions, general charts, specialty charts)';
+    displayName: 'Growth Chart General Tab';
+  };
+  attributes: {
+    exampleChildTitle: Schema.Attribute.String;
+    exampleDescription: Schema.Attribute.RichText;
+    exampleImage: Schema.Attribute.Media<'images'>;
+    exampleTitle: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Growth Chart Example'>;
+    generalGrowthChartsDescription: Schema.Attribute.RichText;
+    generalGrowthChartsItems: Schema.Attribute.Component<
+      'growth-chart.general-chart-item',
+      true
+    >;
+    generalGrowthChartsTitle: Schema.Attribute.String;
+    introDescription: Schema.Attribute.RichText;
+    measuringSection: Schema.Attribute.Component<
+      'growth-chart.measuring-section',
+      false
+    >;
+    otherSpecialtyDescription: Schema.Attribute.RichText;
+    otherSpecialtyLinks: Schema.Attribute.Component<
+      'growth-chart.specialty-link-item',
+      true
+    >;
+    otherSpecialtyTitle: Schema.Attribute.String;
+    understandingDescription: Schema.Attribute.RichText;
+    understandingItems: Schema.Attribute.Component<
+      'growth-chart.understanding-item',
+      true
+    >;
+    understandingTitle: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Understanding Growth Charts'>;
+  };
+}
+
 export interface GrowthChartInstructionStep extends Struct.ComponentSchema {
   collectionName: 'components_growth_chart_instruction_steps';
   info: {
@@ -557,6 +612,171 @@ export interface GrowthChartIntroSection extends Struct.ComponentSchema {
     instructionLinkText: Schema.Attribute.String &
       Schema.Attribute.DefaultTo<'at home instructions'>;
     title: Schema.Attribute.String;
+  };
+}
+
+export interface GrowthChartLinkItem extends Struct.ComponentSchema {
+  collectionName: 'components_growth_chart_link_items';
+  info: {
+    description: 'Simple title + URL link item for RSS/SGA sections';
+    displayName: 'Growth Chart Link Item';
+  };
+  attributes: {
+    file: Schema.Attribute.Media<'files' | 'images'>;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    url: Schema.Attribute.String;
+  };
+}
+
+export interface GrowthChartMeasuringBullet extends Struct.ComponentSchema {
+  collectionName: 'components_growth_chart_measuring_bullets';
+  info: {
+    description: 'Bullet point for Measuring Your Child at Home';
+    displayName: 'Measuring Bullet';
+  };
+  attributes: {
+    subBullets: Schema.Attribute.Component<
+      'growth-chart.measuring-sub-bullet',
+      true
+    >;
+    text: Schema.Attribute.RichText;
+  };
+}
+
+export interface GrowthChartMeasuringSection extends Struct.ComponentSchema {
+  collectionName: 'components_growth_chart_measuring_sections';
+  info: {
+    description: 'Measuring Your Child at Home section with bullets and sub-bullets';
+    displayName: 'Measuring Section';
+  };
+  attributes: {
+    bullets: Schema.Attribute.Component<'growth-chart.measuring-bullet', true>;
+    subtitle: Schema.Attribute.RichText;
+    title: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Measuring Your Child at Home'>;
+  };
+}
+
+export interface GrowthChartMeasuringSubBullet extends Struct.ComponentSchema {
+  collectionName: 'components_growth_chart_measuring_sub_bullets';
+  info: {
+    description: 'Sub-bullet under a Measuring bullet';
+    displayName: 'Measuring Sub Bullet';
+  };
+  attributes: {
+    text: Schema.Attribute.RichText;
+  };
+}
+
+export interface GrowthChartRssInstructionSection
+  extends Struct.ComponentSchema {
+  collectionName: 'components_growth_chart_rss_instruction_sections';
+  info: {
+    description: 'Instruction block for RSS/SGA growth curves (title + rich text content)';
+    displayName: 'RSS Instruction Section';
+  };
+  attributes: {
+    content: Schema.Attribute.RichText;
+    steps: Schema.Attribute.Component<
+      'growth-chart.rss-instruction-step',
+      true
+    >;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface GrowthChartRssInstructionStep extends Struct.ComponentSchema {
+  collectionName: 'components_growth_chart_rss_instruction_steps';
+  info: {
+    description: 'Numbered step with optional sub-bullets for RSS/SGA instructions';
+    displayName: 'RSS Instruction Step';
+  };
+  attributes: {
+    stepNumber: Schema.Attribute.Integer;
+    subBullets: Schema.Attribute.Component<
+      'growth-chart.rss-instruction-sub-bullet',
+      true
+    >;
+    text: Schema.Attribute.RichText;
+  };
+}
+
+export interface GrowthChartRssInstructionSubBullet
+  extends Struct.ComponentSchema {
+  collectionName: 'components_growth_chart_rss_instruction_sub_bullets';
+  info: {
+    description: 'Optional sub-bullet under an RSS instruction step';
+    displayName: 'RSS Instruction Sub Bullet';
+  };
+  attributes: {
+    text: Schema.Attribute.RichText;
+  };
+}
+
+export interface GrowthChartRssTab extends Struct.ComponentSchema {
+  collectionName: 'components_growth_chart_rss_tabs';
+  info: {
+    description: 'Russell-Silver Syndrome growth charts and RSS/SGA growth curves content';
+    displayName: 'Growth Chart RSS Tab';
+  };
+  attributes: {
+    instructionSections: Schema.Attribute.Component<
+      'growth-chart.rss-instruction-section',
+      true
+    >;
+    rssGrowthCharts: Schema.Attribute.Component<'growth-chart.link-item', true>;
+    rssGrowthChartsDescription: Schema.Attribute.RichText;
+    rssGrowthChartsTitle: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Russell-Silver Syndrome Growth Charts'>;
+    rssSgaCharts: Schema.Attribute.Component<'growth-chart.link-item', true>;
+    rssSgaChartsTitle: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Charts'>;
+    rssSgaCurvesDescription: Schema.Attribute.RichText;
+    rssSgaCurvesTitle: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'RSS/SGA Growth Curves'>;
+    rssSgaSpreadsheets: Schema.Attribute.Component<
+      'growth-chart.link-item',
+      true
+    >;
+  };
+}
+
+export interface GrowthChartSpecialtyLinkItem extends Struct.ComponentSchema {
+  collectionName: 'components_growth_chart_specialty_link_items';
+  info: {
+    description: 'Bullet item for Other Specialty Growth Charts section';
+    displayName: 'Specialty Growth Chart Link';
+  };
+  attributes: {
+    linkTitle: Schema.Attribute.String;
+    secondLinkTitle: Schema.Attribute.String;
+    secondUrl: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    url: Schema.Attribute.String;
+  };
+}
+
+export interface GrowthChartTextTab extends Struct.ComponentSchema {
+  collectionName: 'components_growth_chart_text_tabs';
+  info: {
+    description: 'Simple tab for Growth Charts page with title and rich text content';
+    displayName: 'Growth Chart Text Tab';
+  };
+  attributes: {
+    content: Schema.Attribute.RichText;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface GrowthChartUnderstandingItem extends Struct.ComponentSchema {
+  collectionName: 'components_growth_chart_understanding_items';
+  info: {
+    description: 'Additional title + description used inside Understanding Growth Charts accordion';
+    displayName: 'Understanding Item';
+  };
+  attributes: {
+    description: Schema.Attribute.RichText;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
@@ -1552,9 +1772,22 @@ declare module '@strapi/strapi' {
       'emergency.genetic-disorder-response': EmergencyGeneticDisorderResponse;
       'growth-chart.chart-category': GrowthChartChartCategory;
       'growth-chart.chart-item': GrowthChartChartItem;
+      'growth-chart.general-chart-item': GrowthChartGeneralChartItem;
+      'growth-chart.general-tab': GrowthChartGeneralTab;
       'growth-chart.instruction-step': GrowthChartInstructionStep;
       'growth-chart.instructions-section': GrowthChartInstructionsSection;
       'growth-chart.intro-section': GrowthChartIntroSection;
+      'growth-chart.link-item': GrowthChartLinkItem;
+      'growth-chart.measuring-bullet': GrowthChartMeasuringBullet;
+      'growth-chart.measuring-section': GrowthChartMeasuringSection;
+      'growth-chart.measuring-sub-bullet': GrowthChartMeasuringSubBullet;
+      'growth-chart.rss-instruction-section': GrowthChartRssInstructionSection;
+      'growth-chart.rss-instruction-step': GrowthChartRssInstructionStep;
+      'growth-chart.rss-instruction-sub-bullet': GrowthChartRssInstructionSubBullet;
+      'growth-chart.rss-tab': GrowthChartRssTab;
+      'growth-chart.specialty-link-item': GrowthChartSpecialtyLinkItem;
+      'growth-chart.text-tab': GrowthChartTextTab;
+      'growth-chart.understanding-item': GrowthChartUnderstandingItem;
       'insurance-appeals.accordion-section': InsuranceAppealsAccordionSection;
       'insurance-appeals.appeal-list-item': InsuranceAppealsAppealListItem;
       'insurance-appeals.appeal-process-tab': InsuranceAppealsAppealProcessTab;

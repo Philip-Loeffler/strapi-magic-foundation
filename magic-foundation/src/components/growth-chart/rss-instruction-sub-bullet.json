@@ -1,0 +1,14 @@
+{
+  "collectionName": "components_growth_chart_rss_instruction_sub_bullets",
+  "info": {
+    "displayName": "RSS Instruction Sub Bullet",
+    "description": "Optional sub-bullet under an RSS instruction step"
+  },
+  "options": {},
+  "attributes": {
+    "text": {
+      "type": "richtext"
+    }
+  }
+}
+

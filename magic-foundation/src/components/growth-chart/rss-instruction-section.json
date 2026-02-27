@@ -1,0 +1,23 @@
+{
+  "collectionName": "components_growth_chart_rss_instruction_sections",
+  "info": {
+    "displayName": "RSS Instruction Section",
+    "description": "Instruction block for RSS/SGA growth curves (title + rich text content)"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "content": {
+      "type": "richtext"
+    },
+    "steps": {
+      "type": "component",
+      "repeatable": true,
+      "component": "growth-chart.rss-instruction-step"
+    }
+  }
+}
+

@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_growth_chart_understanding_items",
+  "info": {
+    "displayName": "Understanding Item",
+    "description": "Additional title + description used inside Understanding Growth Charts accordion"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "richtext"
+    }
+  }
+}
+

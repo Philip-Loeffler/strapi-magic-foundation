@@ -1,0 +1,35 @@
+{
+  "collectionName": "components_growth_chart_general_chart_items",
+  "info": {
+    "displayName": "General Growth Chart Item",
+    "description": "Boy/Girl general growth chart with image, description, and link"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"]
+    },
+    "gender": {
+      "type": "enumeration",
+      "enum": ["boys", "girls"],
+      "required": false
+    },
+    "linkLabel": {
+      "type": "string"
+    },
+    "url": {
+      "type": "string"
+    }
+  }
+}
+

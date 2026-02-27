@@ -650,7 +650,7 @@ export interface ApiEventEvent extends Struct.CollectionTypeSchema {
 export interface ApiGrowthChartGrowthChart extends Struct.CollectionTypeSchema {
   collectionName: 'growth_charts';
   info: {
-    description: 'RSS-SGA Growth Charts content';
+    description: 'Growth Charts page content';
     displayName: 'Growth Chart';
     pluralName: 'growth-charts';
     singularName: 'growth-chart';
@@ -659,21 +659,10 @@ export interface ApiGrowthChartGrowthChart extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    chartCategories: Schema.Attribute.Component<
-      'growth-chart.chart-category',
-      true
-    >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    instructionsSections: Schema.Attribute.Component<
-      'growth-chart.instructions-section',
-      true
-    >;
-    introSection: Schema.Attribute.Component<
-      'growth-chart.intro-section',
-      false
-    >;
+    generalTab: Schema.Attribute.Component<'growth-chart.general-tab', false>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -681,6 +670,8 @@ export interface ApiGrowthChartGrowthChart extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
+    rssTab: Schema.Attribute.Component<'growth-chart.rss-tab', false>;
+    sgaTab: Schema.Attribute.Component<'growth-chart.text-tab', false>;
     slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
     title: Schema.Attribute.String & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;

@@ -18,7 +18,7 @@ export function GrowthChartContentRenderer({
   content,
 }: GrowthChartContentRendererProps) {
   if (!content) return null;
-
+  console.log(content, "content inside content renderer");
   return (
     <div className="space-y-12">
       {/* Intro Section */}

@@ -1,0 +1,69 @@
+{
+  "collectionName": "components_growth_chart_general_tabs",
+  "info": {
+    "displayName": "Growth Chart General Tab",
+    "description": "General growth charts tab content (accordions, general charts, specialty charts)"
+  },
+  "options": {},
+  "attributes": {
+    "introDescription": {
+      "type": "richtext"
+    },
+    "measuringSection": {
+      "type": "component",
+      "component": "growth-chart.measuring-section",
+      "repeatable": false
+    },
+    "understandingTitle": {
+      "type": "string",
+      "default": "Understanding Growth Charts"
+    },
+    "understandingDescription": {
+      "type": "richtext"
+    },
+    "understandingItems": {
+      "type": "component",
+      "repeatable": true,
+      "component": "growth-chart.understanding-item"
+    },
+    "exampleTitle": {
+      "type": "string",
+      "default": "Growth Chart Example"
+    },
+    "exampleDescription": {
+      "type": "richtext"
+    },
+    "exampleChildTitle": {
+      "type": "string"
+    },
+    "exampleImage": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"]
+    },
+    "generalGrowthChartsTitle": {
+      "type": "string"
+    },
+    "generalGrowthChartsDescription": {
+      "type": "richtext"
+    },
+    "generalGrowthChartsItems": {
+      "type": "component",
+      "repeatable": true,
+      "component": "growth-chart.general-chart-item"
+    },
+    "otherSpecialtyTitle": {
+      "type": "string"
+    },
+    "otherSpecialtyDescription": {
+      "type": "richtext"
+    },
+    "otherSpecialtyLinks": {
+      "type": "component",
+      "repeatable": true,
+      "component": "growth-chart.specialty-link-item"
+    }
+  }
+}
+

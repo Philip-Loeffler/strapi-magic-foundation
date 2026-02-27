@@ -1,0 +1,49 @@
+{
+  "collectionName": "components_growth_chart_rss_tabs",
+  "info": {
+    "displayName": "Growth Chart RSS Tab",
+    "description": "Russell-Silver Syndrome growth charts and RSS/SGA growth curves content"
+  },
+  "options": {},
+  "attributes": {
+    "rssGrowthChartsTitle": {
+      "type": "string",
+      "default": "Russell-Silver Syndrome Growth Charts"
+    },
+    "rssGrowthChartsDescription": {
+      "type": "richtext"
+    },
+    "rssGrowthCharts": {
+      "type": "component",
+      "repeatable": true,
+      "component": "growth-chart.link-item"
+    },
+    "rssSgaCurvesTitle": {
+      "type": "string",
+      "default": "RSS/SGA Growth Curves"
+    },
+    "rssSgaCurvesDescription": {
+      "type": "richtext"
+    },
+    "rssSgaSpreadsheets": {
+      "type": "component",
+      "repeatable": true,
+      "component": "growth-chart.link-item"
+    },
+    "rssSgaChartsTitle": {
+      "type": "string",
+      "default": "Charts"
+    },
+    "rssSgaCharts": {
+      "type": "component",
+      "repeatable": true,
+      "component": "growth-chart.link-item"
+    },
+    "instructionSections": {
+      "type": "component",
+      "repeatable": true,
+      "component": "growth-chart.rss-instruction-section"
+    }
+  }
+}
+

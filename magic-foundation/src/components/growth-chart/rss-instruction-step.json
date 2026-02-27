@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_growth_chart_rss_instruction_steps",
+  "info": {
+    "displayName": "RSS Instruction Step",
+    "description": "Numbered step with optional sub-bullets for RSS/SGA instructions"
+  },
+  "options": {},
+  "attributes": {
+    "stepNumber": {
+      "type": "integer"
+    },
+    "text": {
+      "type": "richtext"
+    },
+    "subBullets": {
+      "type": "component",
+      "repeatable": true,
+      "component": "growth-chart.rss-instruction-sub-bullet"
+    }
+  }
+}
+

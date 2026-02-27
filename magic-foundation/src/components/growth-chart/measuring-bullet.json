@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_growth_chart_measuring_bullets",
+  "info": {
+    "displayName": "Measuring Bullet",
+    "description": "Bullet point for Measuring Your Child at Home"
+  },
+  "options": {},
+  "attributes": {
+    "text": {
+      "type": "richtext"
+    },
+    "subBullets": {
+      "type": "component",
+      "repeatable": true,
+      "component": "growth-chart.measuring-sub-bullet"
+    }
+  }
+}
+

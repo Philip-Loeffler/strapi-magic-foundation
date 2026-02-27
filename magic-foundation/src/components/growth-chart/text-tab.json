@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_growth_chart_text_tabs",
+  "info": {
+    "displayName": "Growth Chart Text Tab",
+    "description": "Simple tab for Growth Charts page with title and rich text content"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "content": {
+      "type": "richtext"
+    }
+  }
+}
+

@@ -1,0 +1,14 @@
+{
+  "collectionName": "components_growth_chart_measuring_sub_bullets",
+  "info": {
+    "displayName": "Measuring Sub Bullet",
+    "description": "Sub-bullet under a Measuring bullet"
+  },
+  "options": {},
+  "attributes": {
+    "text": {
+      "type": "richtext"
+    }
+  }
+}
+

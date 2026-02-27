@@ -1,0 +1,24 @@
+{
+  "collectionName": "components_growth_chart_link_items",
+  "info": {
+    "displayName": "Growth Chart Link Item",
+    "description": "Simple title + URL link item for RSS/SGA sections"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "file": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["files", "images"]
+    },
+    "url": {
+      "type": "string"
+    }
+  }
+}
+

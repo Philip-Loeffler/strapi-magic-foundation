@@ -5,7 +5,7 @@
     "singularName": "growth-chart",
     "pluralName": "growth-charts",
     "displayName": "Growth Chart",
-    "description": "RSS-SGA Growth Charts content"
+    "description": "Growth Charts page content"
   },
   "options": {
     "draftAndPublish": true
@@ -21,20 +21,20 @@
       "targetField": "title",
       "required": true
     },
-    "introSection": {
+    "generalTab": {
       "type": "component",
-      "component": "growth-chart.intro-section",
+      "component": "growth-chart.general-tab",
       "repeatable": false
     },
-    "chartCategories": {
+    "rssTab": {
       "type": "component",
-      "component": "growth-chart.chart-category",
-      "repeatable": true
+      "component": "growth-chart.rss-tab",
+      "repeatable": false
     },
-    "instructionsSections": {
+    "sgaTab": {
       "type": "component",
-      "component": "growth-chart.instructions-section",
-      "repeatable": true
+      "component": "growth-chart.text-tab",
+      "repeatable": false
     }
   }
 }

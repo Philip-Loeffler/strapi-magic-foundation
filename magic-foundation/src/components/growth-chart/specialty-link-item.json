@@ -1,0 +1,27 @@
+{
+  "collectionName": "components_growth_chart_specialty_link_items",
+  "info": {
+    "displayName": "Specialty Growth Chart Link",
+    "description": "Bullet item for Other Specialty Growth Charts section"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "linkTitle": {
+      "type": "string"
+    },
+    "url": {
+      "type": "string"
+    },
+    "secondLinkTitle": {
+      "type": "string"
+    },
+    "secondUrl": {
+      "type": "string"
+    }
+  }
+}
+
