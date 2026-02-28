@@ -1,0 +1,14 @@
+{
+  "collectionName": "components_insurance_appeals_bullet_points",
+  "info": {
+    "displayName": "Insurance Bullet Point",
+    "description": "A single bullet point for accordion sections"
+  },
+  "options": {},
+  "attributes": {
+    "text": {
+      "type": "string",
+      "required": true
+    }
+  }
+}

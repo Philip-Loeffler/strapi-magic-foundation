@@ -1,20 +1,29 @@
+import qs from "qs";
 import { InsuranceTabsClient } from "./InsuranceTabsClient";
 import { PageContainer } from "@/components/layout/PageContainer";
 
 function buildInsuranceAppealsPopulateQuery(): string {
-  const populate = [
-    "overviewTab",
-    "overviewTab.accordionSections",
-    "faqTab",
-    "faqTab.faqItems",
-    "appealProcessTab",
-    "appealProcessTab.listItems",
-    "followUpProcedureTab",
-    "followUpProcedureTab.hipaaFormFile",
-    "patientAssistanceTab",
-    "patientAssistanceTab.testimonials",
-  ];
-  return populate.map((p, i) => `populate[${i}]=${p}`).join("&");
+  // Strapi 5: nested populate format for reliable deep population
+  const query = qs.stringify(
+    {
+      populate: {
+        overviewTab: {
+          populate: ["accordionSections", "accordionSections.bulletPoints"],
+        },
+        faqTab: {
+          populate: ["faqItems", "faqItems.links"],
+        },
+        appealProcessTab: {
+          populate: ["listItems", "sampleAppealLinks", "followUpItems", "followUpQuote"],
+        },
+        patientAssistanceTab: {
+          populate: ["pharmaceuticalAccordion", "foundationsLinks"],
+        },
+      },
+    },
+    { encodeValuesOnly: true }
+  );
+  return query;
 }
 
 async function getInsuranceAppealsData() {

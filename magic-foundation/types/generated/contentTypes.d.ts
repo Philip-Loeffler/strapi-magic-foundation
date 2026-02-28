@@ -865,10 +865,6 @@ export interface ApiInsuranceAppealsInsuranceAppeals
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     faqTab: Schema.Attribute.Component<'insurance-appeals.faq-tab', false>;
-    followUpProcedureTab: Schema.Attribute.Component<
-      'insurance-appeals.follow-up-procedure-tab',
-      false
-    >;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',

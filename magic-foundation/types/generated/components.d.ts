@@ -788,6 +788,10 @@ export interface InsuranceAppealsAccordionSection
     displayName: 'Insurance Accordion Section';
   };
   attributes: {
+    bulletPoints: Schema.Attribute.Component<
+      'insurance-appeals.bullet-point',
+      true
+    >;
     content: Schema.Attribute.RichText;
     title: Schema.Attribute.String & Schema.Attribute.Required;
   };
@@ -815,12 +819,51 @@ export interface InsuranceAppealsAppealProcessTab
   attributes: {
     buttonText: Schema.Attribute.String;
     buttonUrl: Schema.Attribute.String;
+    followUpDescription: Schema.Attribute.RichText;
+    followUpItems: Schema.Attribute.Component<
+      'insurance-appeals.follow-up-item',
+      true
+    >;
+    followUpQuote: Schema.Attribute.Component<
+      'insurance-appeals.follow-up-quote',
+      false
+    >;
+    followUpTitle: Schema.Attribute.String;
     footnote: Schema.Attribute.Text;
     intro: Schema.Attribute.RichText;
     listItems: Schema.Attribute.Component<
       'insurance-appeals.appeal-list-item',
       true
     >;
+    sampleAppealDescription: Schema.Attribute.RichText;
+    sampleAppealLinks: Schema.Attribute.Component<
+      'insurance-appeals.bullet-link',
+      true
+    >;
+    sampleAppealTitle: Schema.Attribute.String;
+  };
+}
+
+export interface InsuranceAppealsBulletLink extends Struct.ComponentSchema {
+  collectionName: 'components_insurance_appeals_bullet_links';
+  info: {
+    description: 'A bullet point where the whole text is a link';
+    displayName: 'Insurance Bullet Link';
+  };
+  attributes: {
+    text: Schema.Attribute.String & Schema.Attribute.Required;
+    url: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface InsuranceAppealsBulletPoint extends Struct.ComponentSchema {
+  collectionName: 'components_insurance_appeals_bullet_points';
+  info: {
+    description: 'A single bullet point for accordion sections';
+    displayName: 'Insurance Bullet Point';
+  };
+  attributes: {
+    text: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
@@ -832,7 +875,20 @@ export interface InsuranceAppealsFaqItem extends Struct.ComponentSchema {
   };
   attributes: {
     answer: Schema.Attribute.RichText & Schema.Attribute.Required;
+    links: Schema.Attribute.Component<'insurance-appeals.faq-link', true>;
     question: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface InsuranceAppealsFaqLink extends Struct.ComponentSchema {
+  collectionName: 'components_insurance_appeals_faq_links';
+  info: {
+    description: 'A link within an FAQ answer - text in answer gets replaced with this link';
+    displayName: 'Insurance FAQ Link';
+  };
+  attributes: {
+    linkText: Schema.Attribute.String & Schema.Attribute.Required;
+    linkUrl: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
@@ -848,18 +904,43 @@ export interface InsuranceAppealsFaqTab extends Struct.ComponentSchema {
   };
 }
 
-export interface InsuranceAppealsFollowUpProcedureTab
-  extends Struct.ComponentSchema {
-  collectionName: 'components_insurance_appeals_follow_up_procedure_tabs';
+export interface InsuranceAppealsFollowUpItem extends Struct.ComponentSchema {
+  collectionName: 'components_insurance_appeals_follow_up_items';
   info: {
-    description: 'Follow up Procedure tab - intro and HIPAA form link';
-    displayName: 'Insurance Follow Up Procedure Tab';
+    description: 'A follow-up item with title and form link button';
+    displayName: 'Follow Up Item';
   };
   attributes: {
-    hipaaFormFile: Schema.Attribute.Media<'files'>;
-    hipaaFormUrl: Schema.Attribute.String;
-    instructions: Schema.Attribute.RichText;
-    intro: Schema.Attribute.RichText;
+    buttonText: Schema.Attribute.String;
+    buttonUrl: Schema.Attribute.String & Schema.Attribute.Required;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface InsuranceAppealsFollowUpQuote extends Struct.ComponentSchema {
+  collectionName: 'components_insurance_appeals_follow_up_quotes';
+  info: {
+    description: 'A quote/testimonial below the Follow Up section';
+    displayName: 'Follow Up Quote';
+  };
+  attributes: {
+    author: Schema.Attribute.String;
+    location: Schema.Attribute.String;
+    quote: Schema.Attribute.RichText & Schema.Attribute.Required;
+  };
+}
+
+export interface InsuranceAppealsFoundationLinkItem
+  extends Struct.ComponentSchema {
+  collectionName: 'components_insurance_appeals_foundation_link_items';
+  info: {
+    description: 'A foundation with title and website link';
+    displayName: 'Foundation Link Item';
+  };
+  attributes: {
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    websiteDisplayText: Schema.Attribute.String;
+    websiteUrl: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
@@ -874,7 +955,12 @@ export interface InsuranceAppealsOverviewTab extends Struct.ComponentSchema {
       'insurance-appeals.accordion-section',
       true
     >;
-    intro: Schema.Attribute.RichText;
+    externalAppealProcessParagraph1: Schema.Attribute.Text;
+    externalAppealProcessParagraph2: Schema.Attribute.Text;
+    externalAppealProcessParagraph3: Schema.Attribute.Text;
+    introParagraph1: Schema.Attribute.Text;
+    introParagraph2: Schema.Attribute.Text;
+    introParagraph3: Schema.Attribute.Text;
     videoEmbedUrl: Schema.Attribute.String;
   };
 }
@@ -883,15 +969,43 @@ export interface InsuranceAppealsPatientAssistanceTab
   extends Struct.ComponentSchema {
   collectionName: 'components_insurance_appeals_patient_assistance_tabs';
   info: {
-    description: 'Patient Assistance tab with intro and testimonials';
+    description: 'Patient Assistance tab with pharmaceutical programs and foundations';
     displayName: 'Insurance Patient Assistance Tab';
   };
   attributes: {
-    intro: Schema.Attribute.RichText;
-    testimonials: Schema.Attribute.Component<
-      'insurance-appeals.testimonial-item',
+    foundationsDescription: Schema.Attribute.RichText;
+    foundationsEmailLinkText: Schema.Attribute.String;
+    foundationsEmailUrl: Schema.Attribute.String;
+    foundationsLinks: Schema.Attribute.Component<
+      'insurance-appeals.foundation-link-item',
       true
     >;
+    foundationsTitle: Schema.Attribute.String;
+    pharmaceuticalAccordion: Schema.Attribute.Component<
+      'insurance-appeals.pharmaceutical-accordion-item',
+      true
+    >;
+    pharmaceuticalDescription: Schema.Attribute.RichText;
+    pharmaceuticalEmailLinkText: Schema.Attribute.String;
+    pharmaceuticalEmailUrl: Schema.Attribute.String;
+    pharmaceuticalTitle: Schema.Attribute.String;
+  };
+}
+
+export interface InsuranceAppealsPharmaceuticalAccordionItem
+  extends Struct.ComponentSchema {
+  collectionName: 'components_insurance_appeals_pharmaceutical_accordion_items';
+  info: {
+    description: 'Single pharmaceutical program in the accordion';
+    displayName: 'Pharmaceutical Accordion Item';
+  };
+  attributes: {
+    companyName: Schema.Attribute.String;
+    name: Schema.Attribute.String;
+    phoneNumber: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    website2Url: Schema.Attribute.String;
+    websiteUrl: Schema.Attribute.String;
   };
 }
 
@@ -1791,11 +1905,17 @@ declare module '@strapi/strapi' {
       'insurance-appeals.accordion-section': InsuranceAppealsAccordionSection;
       'insurance-appeals.appeal-list-item': InsuranceAppealsAppealListItem;
       'insurance-appeals.appeal-process-tab': InsuranceAppealsAppealProcessTab;
+      'insurance-appeals.bullet-link': InsuranceAppealsBulletLink;
+      'insurance-appeals.bullet-point': InsuranceAppealsBulletPoint;
       'insurance-appeals.faq-item': InsuranceAppealsFaqItem;
+      'insurance-appeals.faq-link': InsuranceAppealsFaqLink;
       'insurance-appeals.faq-tab': InsuranceAppealsFaqTab;
-      'insurance-appeals.follow-up-procedure-tab': InsuranceAppealsFollowUpProcedureTab;
+      'insurance-appeals.follow-up-item': InsuranceAppealsFollowUpItem;
+      'insurance-appeals.follow-up-quote': InsuranceAppealsFollowUpQuote;
+      'insurance-appeals.foundation-link-item': InsuranceAppealsFoundationLinkItem;
       'insurance-appeals.overview-tab': InsuranceAppealsOverviewTab;
       'insurance-appeals.patient-assistance-tab': InsuranceAppealsPatientAssistanceTab;
+      'insurance-appeals.pharmaceutical-accordion-item': InsuranceAppealsPharmaceuticalAccordionItem;
       'insurance-appeals.testimonial-item': InsuranceAppealsTestimonialItem;
       'resources.get-support-tab': ResourcesGetSupportTab;
       'resources.informational-videos-tab': ResourcesInformationalVideosTab;

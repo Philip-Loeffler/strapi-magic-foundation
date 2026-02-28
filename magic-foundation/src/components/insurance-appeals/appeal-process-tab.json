@@ -22,6 +22,33 @@
     },
     "footnote": {
       "type": "text"
+    },
+    "sampleAppealTitle": {
+      "type": "string"
+    },
+    "sampleAppealDescription": {
+      "type": "richtext"
+    },
+    "sampleAppealLinks": {
+      "type": "component",
+      "repeatable": true,
+      "component": "insurance-appeals.bullet-link"
+    },
+    "followUpTitle": {
+      "type": "string"
+    },
+    "followUpDescription": {
+      "type": "richtext"
+    },
+    "followUpItems": {
+      "type": "component",
+      "repeatable": true,
+      "component": "insurance-appeals.follow-up-item"
+    },
+    "followUpQuote": {
+      "type": "component",
+      "repeatable": false,
+      "component": "insurance-appeals.follow-up-quote"
     }
   }
 }

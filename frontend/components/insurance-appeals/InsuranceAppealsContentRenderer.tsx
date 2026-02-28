@@ -12,12 +12,7 @@ import { JSX } from "react";
 
 interface InsuranceAppealsContentRendererProps {
   content: any;
-  tab:
-    | "overview"
-    | "faq"
-    | "appeal-process"
-    | "follow-up-procedure"
-    | "patient-assistance";
+  tab: "overview" | "faq" | "appeal-process" | "patient-assistance";
 }
 
 export function InsuranceAppealsContentRenderer({
@@ -33,8 +28,6 @@ export function InsuranceAppealsContentRenderer({
       return <FAQTab content={content} />;
     case "appeal-process":
       return <AppealProcessTab content={content} />;
-    case "follow-up-procedure":
-      return <FollowUpProcedureTab content={content} />;
     case "patient-assistance":
       return <PatientAssistanceTab content={content} />;
     default:
@@ -42,46 +35,101 @@ export function InsuranceAppealsContentRenderer({
   }
 }
 
+function introParagraphs(content: any): string[] {
+  return [
+    content.introParagraph1,
+    content.introParagraph2,
+    content.introParagraph3,
+  ].filter(Boolean);
+}
+
+function externalAppealParagraphs(content: any): string[] {
+  return [
+    content.externalAppealProcessParagraph1,
+    content.externalAppealProcessParagraph2,
+    content.externalAppealProcessParagraph3,
+  ].filter(Boolean);
+}
+
 function OverviewTab({ content }: { content: any }) {
+  const intro = introParagraphs(content);
+  const externalAppeal = externalAppealParagraphs(content);
+
   return (
-    <div className="space-y-6">
-      {content.intro && (
-        <div className="prose max-w-none">
-          <RichTextRenderer content={content.intro} />
+    <div className="space-y-12">
+      {/* Top section: description left, video right (RSS-style grid) */}
+      {(intro.length > 0 || content.videoEmbedUrl) && (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {/* Left: description (3 paragraphs) */}
+          {intro.length > 0 && (
+            <div className="space-y-4">
+              <div className="prose max-w-none space-y-4">
+                {intro.map((p, i) => (
+                  <p key={i}>{p}</p>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Right: video */}
+          {content.videoEmbedUrl && (
+            <div className="relative w-full aspect-video overflow-hidden rounded-lg bg-muted">
+              <iframe
+                src={content.videoEmbedUrl}
+                title="Insurance Appeals Video"
+                className="w-full h-full"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            </div>
+          )}
         </div>
       )}
-      {content.videoEmbedUrl && (
-        <div className="flex justify-end">
-          <div className="w-full max-w-xl aspect-video rounded-lg overflow-hidden bg-muted">
-            <iframe
-              src={content.videoEmbedUrl}
-              title="Insurance Appeals Video"
-              className="w-full h-full"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            />
-          </div>
-        </div>
-      )}
-      {content.accordionSections && content.accordionSections.length > 0 && (
-        <div className="mt-8">
-          <h2 className="text-xl font-semibold mb-4">
+
+      {/* External Appeal Process Information: title + 3 paragraphs + accordion */}
+      {(externalAppeal.length > 0 ||
+        (content.accordionSections &&
+          content.accordionSections.length > 0)) && (
+        <div className="space-y-6">
+          <h2 className="text-xl font-bold">
             External Appeal Process Information
           </h2>
-          <Accordion type="single" collapsible className="w-full">
-            {content.accordionSections.map((section: any, index: number) => (
-              <AccordionItem key={index} value={`section-${index}`}>
-                <AccordionTrigger className="text-left">
-                  {section.title}
-                </AccordionTrigger>
-                <AccordionContent className="pl-4">
-                  {section.content && (
-                    <RichTextRenderer content={section.content} />
-                  )}
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
+          {externalAppeal.length > 0 && (
+            <div className="prose max-w-none space-y-4">
+              {externalAppeal.map((p, i) => (
+                <p key={i}>{p}</p>
+              ))}
+            </div>
+          )}
+          {content.accordionSections &&
+            content.accordionSections.length > 0 && (
+              <Accordion type="single" collapsible className="w-full">
+                {content.accordionSections.map(
+                  (section: any, index: number) => (
+                    <AccordionItem key={index} value={`section-${index}`}>
+                      <AccordionTrigger className="text-left font-bold">
+                        {section.title}
+                      </AccordionTrigger>
+                      <AccordionContent className="pl-6 space-y-2">
+                        {section.content && (
+                          <RichTextRenderer content={section.content} />
+                        )}
+                        {section.bulletPoints &&
+                          section.bulletPoints.length > 0 && (
+                            <ul className="list-disc pl-6 mt-2 space-y-1">
+                              {section.bulletPoints.map(
+                                (bp: { text: string }, i: number) => (
+                                  <li key={i}>{bp.text}</li>
+                                ),
+                              )}
+                            </ul>
+                          )}
+                      </AccordionContent>
+                    </AccordionItem>
+                  ),
+                )}
+              </Accordion>
+            )}
         </div>
       )}
     </div>
@@ -98,7 +146,19 @@ function FAQTab({ content }: { content: any }) {
             <div key={index} className="space-y-2">
               <p className="font-semibold text-primary">Q: {item.question}</p>
               <div className="pl-4 prose prose-sm max-w-none">
-                <RichTextRenderer content={item.answer} />
+                <RichTextRenderer
+                  content={item.answer}
+                  linkReplacements={
+                    item.links?.length > 0
+                      ? item.links
+                          .filter((l: any) => l.linkUrl && l.linkText)
+                          .map((l: any) => ({
+                            url: l.linkUrl,
+                            text: l.linkText,
+                          }))
+                      : undefined
+                  }
+                />
               </div>
             </div>
           ))}
@@ -148,304 +208,262 @@ function AppealProcessTab({ content }: { content: any }) {
           {content.footnote}
         </p>
       )}
+
+      {/* Sample Appeal Letters section */}
+      {(content.sampleAppealTitle ||
+        content.sampleAppealDescription ||
+        (content.sampleAppealLinks &&
+          content.sampleAppealLinks.length > 0)) && (
+        <div className="space-y-4 pt-6 border-t">
+          {content.sampleAppealTitle && (
+            <h2 className="text-xl font-bold">{content.sampleAppealTitle}</h2>
+          )}
+          {content.sampleAppealDescription && (
+            <div className="prose max-w-none">
+              <RichTextRenderer content={content.sampleAppealDescription} />
+            </div>
+          )}
+          {content.sampleAppealLinks &&
+            content.sampleAppealLinks.length > 0 && (
+              <ul className="list-disc pl-6 space-y-2">
+                {content.sampleAppealLinks.map((item: any, index: number) => (
+                  <li key={index}>
+                    <Link
+                      href={item.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-primary underline"
+                    >
+                      {item.text}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            )}
+        </div>
+      )}
+
+      {/* Follow Up section */}
+      {(content.followUpTitle ||
+        content.followUpDescription ||
+        (content.followUpItems && content.followUpItems.length > 0) ||
+        content.followUpQuote) && (
+        <div className="space-y-6 pt-6 border-t">
+          {content.followUpTitle && (
+            <h2 className="text-xl font-bold">{content.followUpTitle}</h2>
+          )}
+          {content.followUpDescription && (
+            <div className="prose max-w-none">
+              <RichTextRenderer content={content.followUpDescription} />
+            </div>
+          )}
+          {content.followUpItems && content.followUpItems.length > 0 && (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {content.followUpItems.map((item: any, index: number) => (
+                <div key={index} className="space-y-3">
+                  {item.title && (
+                    <h3 className="font-semibold">{item.title}</h3>
+                  )}
+                  {item.buttonUrl && (
+                    <Button asChild className="bg-primary">
+                      <Link
+                        href={item.buttonUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {item.buttonText || "Open Form"}
+                      </Link>
+                    </Button>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+          <div className="space-y-6 pt-1 border-t"> </div>
+
+          {content.followUpQuote && (
+            <div className="border-l-4 border-primary pl-4 italic my-8">
+              <RichTextRenderer content={content.followUpQuote.quote} />
+              {content.followUpQuote.author && (
+                <p className="mt-2 not-italic">
+                  <strong>{content.followUpQuote.author}</strong>
+                  {content.followUpQuote.location &&
+                    `, ${content.followUpQuote.location}`}
+                </p>
+              )}
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }
 
-function FollowUpProcedureTab({ content }: { content: any }) {
-  const hipaaUrl = content
-    ? content.hipaaFormUrl ||
-      (content.hipaaFormFile?.url
-        ? `${process.env.NEXT_PUBLIC_STRAPI_URL}${content.hipaaFormFile.url}`
-        : null)
-    : null;
-
-  return (
-    <div className="space-y-6">
-      {content?.intro && (
-        <div className="prose max-w-none">
-          <RichTextRenderer content={content.intro} />
-        </div>
-      )}
-      {content?.instructions && (
-        <div className="prose max-w-none text-sm text-muted-foreground">
-          <RichTextRenderer content={content.instructions} />
-        </div>
-      )}
-      {hipaaUrl && (
-        <div className="pt-2">
-          <Button
-            asChild
-            variant="outline"
-            className="bg-primary/10 border-primary"
-          >
-            <Link href={hipaaUrl} target="_blank" rel="noopener noreferrer">
-              Download MAGIC HIPAA Form
-            </Link>
-          </Button>
-        </div>
-      )}
-      <FollowUpProcedureForm />
-    </div>
-  );
-}
-
-function FollowUpProcedureForm() {
-  return (
-    <form className="space-y-8 pt-6 border-t">
-      {/* Section 1 */}
-      <section className="space-y-4">
-        <h3 className="text-lg font-bold text-primary">
-          1. External Appeal For Pediatric Patient
-        </h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="space-y-2">
-            <label className="text-sm font-medium">
-              Applicant&apos;s Last Name
-            </label>
-            <input type="text" className="w-full border rounded-md px-3 py-2" />
-          </div>
-          <div className="space-y-2">
-            <label className="text-sm font-medium">
-              Applicant&apos;s First Name
-            </label>
-            <input type="text" className="w-full border rounded-md px-3 py-2" />
-          </div>
-          <div className="md:col-span-2 space-y-2">
-            <label className="text-sm font-medium">Address</label>
-            <input type="text" className="w-full border rounded-md px-3 py-2" />
-          </div>
-          <div className="space-y-2">
-            <label className="text-sm font-medium">City</label>
-            <input type="text" className="w-full border rounded-md px-3 py-2" />
-          </div>
-          <div className="space-y-2">
-            <label className="text-sm font-medium">State</label>
-            <select className="w-full border rounded-md px-3 py-2">
-              <option value="">Select</option>
-            </select>
-          </div>
-          <div className="space-y-2">
-            <label className="text-sm font-medium">Zip Code</label>
-            <input type="text" className="w-full border rounded-md px-3 py-2" />
-          </div>
-          <div className="space-y-2">
-            <label className="text-sm font-medium">Email</label>
-            <input
-              type="email"
-              className="w-full border rounded-md px-3 py-2"
-            />
-          </div>
-          <div className="space-y-2">
-            <label className="text-sm font-medium">Daytime Phone</label>
-            <input type="tel" className="w-full border rounded-md px-3 py-2" />
-          </div>
-          <div className="space-y-2">
-            <label className="text-sm font-medium">Patient&apos;s Name</label>
-            <input type="text" className="w-full border rounded-md px-3 py-2" />
-          </div>
-          <div className="space-y-2">
-            <label className="text-sm font-medium">
-              Patient&apos;s Birthday
-            </label>
-            <input type="date" className="w-full border rounded-md px-3 py-2" />
-          </div>
-        </div>
-        <div className="space-y-2">
-          <label className="text-sm font-medium block">Diagnoses</label>
-          <div className="flex flex-col gap-2">
-            {[
-              "Growth Hormone Deficiency (GHD)",
-              "Russell-Silver Syndrome (RSS)",
-              "Small for Gestational Age (SGA)",
-              "Turner Syndrome (TS)",
-              "Idiopathic Short Stature",
-              "Other",
-            ].map((opt) => (
-              <label key={opt} className="flex items-center gap-2">
-                <input type="radio" name="diagnoses" value={opt} />
-                <span className="text-sm">{opt}</span>
-              </label>
-            ))}
-          </div>
-        </div>
-        <div className="space-y-2">
-          <label className="text-sm font-medium block">Drug Name</label>
-          <div className="flex flex-col gap-2">
-            {[
-              "Humatrope",
-              "Norditropin",
-              "Omnitrope",
-              "Genotropin",
-              "Saizen",
-              "Zorbtive",
-              "Other",
-            ].map((opt) => (
-              <label key={opt} className="flex items-center gap-2">
-                <input type="radio" name="drug" value={opt} />
-                <span className="text-sm">{opt}</span>
-              </label>
-            ))}
-          </div>
-        </div>
-        <div className="space-y-2">
-          <label className="text-sm font-medium block">Current Situation</label>
-          <div className="flex flex-col gap-2">
-            <label className="flex items-center gap-2">
-              <input type="radio" name="situation" value="starting" />
-              <span className="text-sm">Just starting therapy</span>
-            </label>
-            <label className="flex items-center gap-2">
-              <input type="radio" name="situation" value="discontinued" />
-              <span className="text-sm">
-                Had therapy discontinued (drugs and how long)
-              </span>
-            </label>
-            <label className="flex items-center gap-2">
-              <input type="radio" name="situation" value="other" />
-              <span className="text-sm">Other (please write in below)</span>
-            </label>
-          </div>
-        </div>
-      </section>
-
-      {/* Section 2 */}
-      <section className="space-y-4 border-t pt-6">
-        <h3 className="text-lg font-bold text-primary">
-          2. Denial Letter Information
-        </h3>
-        <div className="space-y-2">
-          <label className="text-sm font-medium">Denial code / reference</label>
-          <input
-            type="text"
-            className="w-full border rounded-md px-3 py-2"
-            placeholder="KMCGSHYW"
-          />
-        </div>
-        <div className="space-y-2">
-          <label className="text-sm font-medium">
-            Add final determination denial letter
-          </label>
-          <input type="file" className="w-full border rounded-md px-3 py-2" />
-        </div>
-        <div className="space-y-2">
-          <label className="text-sm font-medium">
-            Add copy of insurance card (front and back)
-          </label>
-          <input type="file" className="w-full border rounded-md px-3 py-2" />
-        </div>
-      </section>
-
-      {/* Section 3 */}
-      <section className="space-y-4 border-t pt-6">
-        <h3 className="text-lg font-bold text-primary">3. Medical History</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="space-y-2">
-            <label className="text-sm font-medium">
-              GH or IGF-1 highest number (albumin)
-            </label>
-            <input type="text" className="w-full border rounded-md px-3 py-2" />
-          </div>
-          <div className="space-y-2">
-            <label className="text-sm font-medium">IGF-1 Level</label>
-            <input type="text" className="w-full border rounded-md px-3 py-2" />
-          </div>
-          <div className="space-y-2">
-            <label className="text-sm font-medium">
-              Date when growth hormone therapy did NOT manage to work
-            </label>
-            <input type="date" className="w-full border rounded-md px-3 py-2" />
-          </div>
-          <div className="space-y-2">
-            <label className="text-sm font-medium">
-              Most recent Height and Weight
-            </label>
-            <input type="text" className="w-full border rounded-md px-3 py-2" />
-          </div>
-        </div>
-        <div className="space-y-2">
-          <label className="text-sm font-medium">Family history of GHD?</label>
-          <div className="flex gap-4">
-            <label className="flex items-center gap-2">
-              <input type="radio" name="familyHistory" value="yes" /> Yes
-            </label>
-            <label className="flex items-center gap-2">
-              <input type="radio" name="familyHistory" value="no" /> No
-            </label>
-          </div>
-        </div>
-        <div className="space-y-2">
-          <label className="text-sm font-medium">
-            Did your child ever have an MRI?
-          </label>
-          <div className="flex gap-4">
-            <label className="flex items-center gap-2">
-              <input type="radio" name="mri" value="yes" /> Yes
-            </label>
-            <label className="flex items-center gap-2">
-              <input type="radio" name="mri" value="no" /> No
-            </label>
-          </div>
-        </div>
-        <div className="space-y-2">
-          <label className="text-sm font-medium">
-            Upload IGFR-1 Report (if applicable)
-          </label>
-          <input type="file" className="w-full border rounded-md px-3 py-2" />
-        </div>
-        <div className="space-y-2">
-          <label className="text-sm font-medium">
-            Upload most recent Growth Chart
-          </label>
-          <input type="file" className="w-full border rounded-md px-3 py-2" />
-        </div>
-        <div className="space-y-2">
-          <label className="text-sm font-medium">
-            Upload signed HIPAA (within two weeks of submission)
-          </label>
-          <input type="file" className="w-full border rounded-md px-3 py-2" />
-        </div>
-      </section>
-
-      <div className="pt-6">
-        <Button type="submit" className="bg-primary">
-          Submit
-        </Button>
-      </div>
-    </form>
-  );
-}
+/** Section title styling matching Get Support accordion triggers (blue banner). */
+const patientAssistanceSectionTitleClassName =
+  "bg-primary text-primary-foreground px-4 py-3 font-semibold text-lg rounded-t-lg w-full";
 
 function PatientAssistanceTab({ content }: { content: any }) {
   return (
     <div className="space-y-6">
-      {content.intro && (
-        <div className="prose max-w-none">
-          <RichTextRenderer content={content.intro} />
+      {/* Pharmaceutical Patient Assistance Programs */}
+      {(content.pharmaceuticalTitle ||
+        content.pharmaceuticalDescription ||
+        (content.pharmaceuticalAccordion &&
+          content.pharmaceuticalAccordion.length > 0)) && (
+        <div className="rounded-lg border border-border overflow-hidden">
+          {content.pharmaceuticalTitle && (
+            <div className={patientAssistanceSectionTitleClassName}>
+              {content.pharmaceuticalTitle}
+            </div>
+          )}
+          <div
+            className={`p-4 bg-card space-y-6 ${!content.pharmaceuticalTitle ? "rounded-t-lg" : ""}`}
+          >
+            {content.pharmaceuticalDescription && (
+              <div className="prose max-w-none">
+                <RichTextRenderer
+                  content={content.pharmaceuticalDescription}
+                  linkReplacements={
+                    content.pharmaceuticalEmailUrl &&
+                    content.pharmaceuticalEmailLinkText
+                      ? [
+                          {
+                            url: content.pharmaceuticalEmailUrl,
+                            text: content.pharmaceuticalEmailLinkText,
+                          },
+                        ]
+                      : undefined
+                  }
+                />
+              </div>
+            )}
+            {content.pharmaceuticalAccordion &&
+              content.pharmaceuticalAccordion.length > 0 && (
+                <Accordion type="single" collapsible className="w-full">
+                  {content.pharmaceuticalAccordion.map(
+                    (item: any, index: number) => (
+                      <AccordionItem key={index} value={`pharma-${index}`}>
+                        <AccordionTrigger className="text-left font-bold">
+                          {item.title}
+                        </AccordionTrigger>
+                        <AccordionContent className="pl-6 space-y-2">
+                          {item.name && (
+                            <p className="font-medium">{item.name}</p>
+                          )}
+                          {item.companyName && <p>{item.companyName}</p>}
+                          {item.websiteUrl && (
+                            <p>
+                              <Link
+                                href={item.websiteUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-primary underline"
+                              >
+                                {item.title}
+                              </Link>
+                            </p>
+                          )}
+                          {item.website2Url && (
+                            <p>
+                              <Link
+                                href={item.website2Url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-primary underline"
+                              >
+                                {item.title}
+                              </Link>
+                            </p>
+                          )}
+                          {item.phoneNumber && (
+                            <p>
+                              <a
+                                href={`tel:${item.phoneNumber.replace(/\D/g, "")}`}
+                                className="text-primary underline"
+                              >
+                                {item.phoneNumber}
+                              </a>
+                            </p>
+                          )}
+                        </AccordionContent>
+                      </AccordionItem>
+                    ),
+                  )}
+                </Accordion>
+              )}
+          </div>
         </div>
       )}
-      {content.testimonials && content.testimonials.length > 0 && (
-        <div className="space-y-6">
-          {content.testimonials.map((t: any, index: number) => (
-            <blockquote
-              key={index}
-              className="border-l-4 border-primary pl-4 py-2 italic text-muted-foreground"
-            >
-              <RichTextRenderer content={t.quote} />
-              {(t.author || t.location) && (
-                <footer className="mt-2 not-italic text-sm">
-                  — {[t.author, t.location].filter(Boolean).join(", ")}
-                </footer>
+
+      {/* Patient Assistance Foundations */}
+      {(content.foundationsTitle ||
+        content.foundationsDescription ||
+        (content.foundationsLinks && content.foundationsLinks.length > 0)) && (
+        <div className="rounded-lg border border-border overflow-hidden">
+          {content.foundationsTitle && (
+            <div className={patientAssistanceSectionTitleClassName}>
+              {content.foundationsTitle}
+            </div>
+          )}
+          <div
+            className={`p-4 bg-card space-y-6 ${!content.foundationsTitle ? "rounded-t-lg" : ""}`}
+          >
+            {content.foundationsDescription && (
+              <div className="prose max-w-none">
+                <RichTextRenderer
+                  content={content.foundationsDescription}
+                  linkReplacements={
+                    content.foundationsEmailUrl &&
+                    content.foundationsEmailLinkText
+                      ? [
+                          {
+                            url: content.foundationsEmailUrl,
+                            text: content.foundationsEmailLinkText,
+                          },
+                        ]
+                      : undefined
+                  }
+                />
+              </div>
+            )}
+            {content.foundationsLinks &&
+              content.foundationsLinks.length > 0 && (
+                <ul className="list-disc pl-6 space-y-2">
+                  {content.foundationsLinks.map((item: any, index: number) => (
+                    <li key={index}>
+                      {item.title}
+                      {item.websiteUrl && (
+                        <>
+                          {" — "}
+                          <Link
+                            href={item.websiteUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-primary underline"
+                          >
+                            {item.websiteDisplayText || item.websiteUrl}
+                          </Link>
+                        </>
+                      )}
+                    </li>
+                  ))}
+                </ul>
               )}
-            </blockquote>
-          ))}
+          </div>
         </div>
       )}
     </div>
   );
 }
 
-function RichTextRenderer({ content }: { content: any }) {
+function RichTextRenderer({
+  content,
+  linkReplacements,
+}: {
+  content: any;
+  linkReplacements?: Array<{ url: string; text: string }>;
+}) {
   if (!content) return null;
   if (typeof content === "string") {
     return <div dangerouslySetInnerHTML={{ __html: content }} />;
@@ -458,14 +476,14 @@ function RichTextRenderer({ content }: { content: any }) {
             case "paragraph":
               return (
                 <p key={index} className="mb-2">
-                  {renderChildren(node.children)}
+                  {renderChildren(node.children, linkReplacements)}
                 </p>
               );
             case "heading": {
               const Tag = `h${node.level}` as keyof JSX.IntrinsicElements;
               return (
                 <Tag key={index} className="font-bold mb-2">
-                  {renderChildren(node.children)}
+                  {renderChildren(node.children, linkReplacements)}
                 </Tag>
               );
             }
@@ -474,7 +492,9 @@ function RichTextRenderer({ content }: { content: any }) {
               return (
                 <ListTag key={index} className="list-disc pl-6 mb-2">
                   {node.children?.map((item: any, j: number) => (
-                    <li key={j}>{renderChildren(item.children)}</li>
+                    <li key={j}>
+                      {renderChildren(item.children, linkReplacements)}
+                    </li>
                   ))}
                 </ListTag>
               );
@@ -486,11 +506,15 @@ function RichTextRenderer({ content }: { content: any }) {
                   target={node.target || "_self"}
                   className="text-primary underline"
                 >
-                  {renderChildren(node.children)}
+                  {renderChildren(node.children, linkReplacements)}
                 </a>
               );
             default:
-              return <div key={index}>{renderChildren(node.children)}</div>;
+              return (
+                <div key={index}>
+                  {renderChildren(node.children, linkReplacements)}
+                </div>
+              );
           }
         })}
       </div>
@@ -499,11 +523,31 @@ function RichTextRenderer({ content }: { content: any }) {
   return null;
 }
 
-function renderChildren(children: any[]): React.ReactNode {
+function renderChildren(
+  children: any[],
+  linkReplacements?: Array<{ url: string; text: string }>,
+): React.ReactNode {
   if (!children) return null;
   return children.map((child: any, index: number) => {
     if (child.type === "text") {
-      let text = child.text;
+      const textContent = child.text;
+      if (
+        linkReplacements &&
+        linkReplacements.length > 0 &&
+        linkReplacements.some((r) => textContent.includes(r.text))
+      ) {
+        return (
+          <span key={index}>
+            {applyLinkReplacements(
+              textContent,
+              linkReplacements,
+              child.bold,
+              child.italic,
+            )}
+          </span>
+        );
+      }
+      let text: React.ReactNode = textContent;
       if (child.bold) text = <strong key={index}>{text}</strong>;
       if (child.italic) text = <em key={index}>{text}</em>;
       return <span key={index}>{text}</span>;
@@ -516,10 +560,51 @@ function renderChildren(children: any[]): React.ReactNode {
           target={child.target || "_self"}
           className="text-primary underline"
         >
-          {renderChildren(child.children)}
+          {renderChildren(child.children, linkReplacements)}
         </a>
       );
     }
-    return renderChildren(child.children);
+    return renderChildren(child.children, linkReplacements);
   });
+}
+
+function applyLinkReplacements(
+  text: string,
+  replacements: Array<{ url: string; text: string }>,
+  bold?: boolean,
+  italic?: boolean,
+): React.ReactNode {
+  if (replacements.length === 0) {
+    const content = bold ? (
+      <strong>{text}</strong>
+    ) : italic ? (
+      <em>{text}</em>
+    ) : (
+      text
+    );
+    return content;
+  }
+  const [first, ...rest] = replacements;
+  if (!text.includes(first.text)) {
+    return applyLinkReplacements(text, rest, bold, italic);
+  }
+  const parts = text.split(first.text);
+  const result: React.ReactNode[] = [];
+  for (let i = 0; i < parts.length; i++) {
+    if (i > 0) {
+      result.push(
+        <a
+          key={`link-${i}`}
+          href={first.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-primary underline"
+        >
+          {first.text}
+        </a>,
+      );
+    }
+    result.push(applyLinkReplacements(parts[i], rest, bold, italic));
+  }
+  return <>{result}</>;
 }

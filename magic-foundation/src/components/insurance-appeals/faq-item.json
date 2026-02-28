@@ -13,6 +13,11 @@
     "answer": {
       "type": "richtext",
       "required": true
+    },
+    "links": {
+      "type": "component",
+      "repeatable": true,
+      "component": "insurance-appeals.faq-link"
     }
   }
 }

@@ -1,0 +1,29 @@
+{
+  "collectionName": "components_insurance_appeals_pharmaceutical_accordion_items",
+  "info": {
+    "displayName": "Pharmaceutical Accordion Item",
+    "description": "Single pharmaceutical program in the accordion"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "name": {
+      "type": "string"
+    },
+    "companyName": {
+      "type": "string"
+    },
+    "websiteUrl": {
+      "type": "string"
+    },
+    "website2Url": {
+      "type": "string"
+    },
+    "phoneNumber": {
+      "type": "string"
+    }
+  }
+}

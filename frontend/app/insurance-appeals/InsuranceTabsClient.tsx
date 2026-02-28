@@ -8,7 +8,6 @@ const TABS = [
   { slug: "overview", title: "Overview" },
   { slug: "faq", title: "FAQ" },
   { slug: "appeal-process", title: "Appeal Process" },
-  { slug: "follow-up-procedure", title: "Follow up Procedure" },
   { slug: "patient-assistance", title: "Patient Assistance" },
 ] as const;
 
@@ -24,7 +23,7 @@ export function InsuranceTabsClient({ data }: { data: any }) {
       <div className="w-full flex flex-col">
         <Tabs defaultValue="overview" className="w-full flex flex-col">
           <div className="flex justify-center mb-8">
-            <TabsList className="grid w-full max-w-3xl grid-cols-5 gap-1 h-auto p-1 bg-muted rounded-lg">
+            <TabsList className="grid w-full max-w-3xl grid-cols-4 gap-1 h-auto p-1 bg-muted rounded-lg">
               {TABS.map((tab) => (
                 <TabsTrigger
                   key={tab.slug}
@@ -56,7 +55,7 @@ export function InsuranceTabsClient({ data }: { data: any }) {
   return (
     <Tabs defaultValue="overview" className="w-full flex flex-col">
       <div className="flex justify-center mb-8">
-        <TabsList className="grid w-full max-w-3xl grid-cols-5 gap-1 h-auto p-1 bg-muted rounded-lg">
+        <TabsList className="grid w-full max-w-3xl grid-cols-4 gap-1 h-auto p-1 bg-muted rounded-lg">
           {TABS.map((tab) => (
             <TabsTrigger
               key={tab.slug}
@@ -102,20 +101,6 @@ export function InsuranceTabsClient({ data }: { data: any }) {
           <div className="text-center py-12 text-muted-foreground">
             Appeal process content coming soon...
           </div>
-        )}
-      </TabsContent>
-
-      <TabsContent value="follow-up-procedure" className="w-full mt-0">
-        {data?.followUpProcedureTab ? (
-          <InsuranceAppealsContentRenderer
-            content={data.followUpProcedureTab}
-            tab="follow-up-procedure"
-          />
-        ) : (
-          <InsuranceAppealsContentRenderer
-            content={null}
-            tab="follow-up-procedure"
-          />
         )}
       </TabsContent>
 

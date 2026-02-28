@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_insurance_appeals_bullet_links",
+  "info": {
+    "displayName": "Insurance Bullet Link",
+    "description": "A bullet point where the whole text is a link"
+  },
+  "options": {},
+  "attributes": {
+    "text": {
+      "type": "string",
+      "required": true
+    },
+    "url": {
+      "type": "string",
+      "required": true
+    }
+  }
+}

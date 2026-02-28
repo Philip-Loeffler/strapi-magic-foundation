@@ -2,17 +2,43 @@
   "collectionName": "components_insurance_appeals_patient_assistance_tabs",
   "info": {
     "displayName": "Insurance Patient Assistance Tab",
-    "description": "Patient Assistance tab with intro and testimonials"
+    "description": "Patient Assistance tab with pharmaceutical programs and foundations"
   },
   "options": {},
   "attributes": {
-    "intro": {
+    "pharmaceuticalTitle": {
+      "type": "string"
+    },
+    "pharmaceuticalDescription": {
       "type": "richtext"
     },
-    "testimonials": {
+    "pharmaceuticalEmailUrl": {
+      "type": "string"
+    },
+    "pharmaceuticalEmailLinkText": {
+      "type": "string"
+    },
+    "pharmaceuticalAccordion": {
       "type": "component",
       "repeatable": true,
-      "component": "insurance-appeals.testimonial-item"
+      "component": "insurance-appeals.pharmaceutical-accordion-item"
+    },
+    "foundationsTitle": {
+      "type": "string"
+    },
+    "foundationsDescription": {
+      "type": "richtext"
+    },
+    "foundationsEmailUrl": {
+      "type": "string"
+    },
+    "foundationsEmailLinkText": {
+      "type": "string"
+    },
+    "foundationsLinks": {
+      "type": "component",
+      "repeatable": true,
+      "component": "insurance-appeals.foundation-link-item"
     }
   }
 }

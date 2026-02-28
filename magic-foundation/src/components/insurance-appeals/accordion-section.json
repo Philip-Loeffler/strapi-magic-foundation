@@ -12,6 +12,11 @@
     },
     "content": {
       "type": "richtext"
+    },
+    "bulletPoints": {
+      "type": "component",
+      "repeatable": true,
+      "component": "insurance-appeals.bullet-point"
     }
   }
 }

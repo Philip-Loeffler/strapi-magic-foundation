@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_insurance_appeals_foundation_link_items",
+  "info": {
+    "displayName": "Foundation Link Item",
+    "description": "A foundation with title and website link"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "websiteUrl": {
+      "type": "string",
+      "required": true
+    },
+    "websiteDisplayText": {
+      "type": "string"
+    }
+  }
+}

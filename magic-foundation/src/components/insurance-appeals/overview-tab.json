@@ -6,11 +6,26 @@
   },
   "options": {},
   "attributes": {
-    "intro": {
-      "type": "richtext"
+    "introParagraph1": {
+      "type": "text"
+    },
+    "introParagraph2": {
+      "type": "text"
+    },
+    "introParagraph3": {
+      "type": "text"
     },
     "videoEmbedUrl": {
       "type": "string"
+    },
+    "externalAppealProcessParagraph1": {
+      "type": "text"
+    },
+    "externalAppealProcessParagraph2": {
+      "type": "text"
+    },
+    "externalAppealProcessParagraph3": {
+      "type": "text"
     },
     "accordionSections": {
       "type": "component",

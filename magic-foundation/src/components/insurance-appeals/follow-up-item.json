@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_insurance_appeals_follow_up_items",
+  "info": {
+    "displayName": "Follow Up Item",
+    "description": "A follow-up item with title and form link button"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "buttonText": {
+      "type": "string"
+    },
+    "buttonUrl": {
+      "type": "string",
+      "required": true
+    }
+  }
+}
