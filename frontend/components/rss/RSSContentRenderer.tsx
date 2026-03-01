@@ -132,6 +132,11 @@ function OverviewTabRenderer({ content }: { content: any }) {
         );
       })()}
 
+      {/* Emergency / Hypoglycemia Guide (intro + repeatable sections) */}
+      {content.emergencyGuide && (
+        <EmergencyGuideSection guide={content.emergencyGuide} />
+      )}
+
       {/* FAQ Section */}
       {content.faqSection && (
         <div className="space-y-6">
@@ -475,6 +480,59 @@ function ListItems({ items }: { items: any }) {
         </li>
       ))}
     </ul>
+  );
+}
+
+function GuideBlock({ block, asSection }: { block: any; asSection?: boolean }) {
+  if (!block) return null;
+  const bullets = block.bulletPoints ?? block.attributes?.bulletPoints ?? [];
+  const bulletList = Array.isArray(bullets) ? bullets : [];
+  return (
+    <div className="space-y-4">
+      {block.title &&
+        (asSection ? (
+          <h3 className="text-xl font-bold">{block.title}</h3>
+        ) : (
+          <h2 className="text-2xl font-bold">{block.title}</h2>
+        ))}
+      {block.description && (
+        <p className="prose max-w-none text-muted-foreground">
+          {block.description}
+        </p>
+      )}
+      {bulletList.length > 0 && (
+        <ul className="list-disc pl-6 space-y-2">
+          {bulletList.map((bp: any, i: number) => (
+            <li key={i}>
+              {bp?.text ?? bp?.attributes?.text ?? ""}
+            </li>
+          ))}
+        </ul>
+      )}
+      {block.descriptionAfter && (
+        <p className="prose max-w-none text-muted-foreground">
+          {block.descriptionAfter}
+        </p>
+      )}
+    </div>
+  );
+}
+
+function EmergencyGuideSection({ guide }: { guide: any }) {
+  if (!guide) return null;
+  const intro = guide.intro ?? guide.attributes?.intro;
+  const sections = guide.sections ?? guide.attributes?.sections ?? [];
+  const sectionList = Array.isArray(sections) ? sections : [];
+
+  return (
+    <div className="space-y-10">
+      {intro && <GuideBlock block={intro} />}
+      {sectionList.map((section: any, index: number) => (
+        <div key={index} className="border-t pt-6">
+          <GuideBlock block={section} asSection={true} />
+        </div>
+      ))}
+    </div>
   );
 }
 

@@ -26,15 +26,29 @@ function getImageUrl(image: EventItem["image"]): string {
   return "";
 }
 
-/** Convert YouTube watch URL to embed URL for iframe, or return as-is if already embed. */
-function getVideoEmbedUrl(url: string): string {
+/** Convert YouTube/Vimeo URLs to embed URL for iframe. Returns null if URL is not embeddable (e.g. regular webpage). */
+function getVideoEmbedUrl(url: string): string | null {
   const u = url.trim();
-  const watchMatch = u.match(
+  // YouTube: watch or youtu.be
+  const youtubeMatch = u.match(
     /(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)/,
   );
-  if (watchMatch) return `https://www.youtube.com/embed/${watchMatch[1]}`;
-  if (u.includes("/embed/")) return u;
-  return u;
+  if (youtubeMatch)
+    return `https://www.youtube.com/embed/${youtubeMatch[1]}`;
+  // YouTube/Vimeo: already embed
+  if (u.includes("youtube.com/embed/") || u.includes("player.vimeo.com/"))
+    return u;
+  // Vimeo: standard video page
+  const vimeoMatch = u.match(/vimeo\.com\/(?:video\/)?(\d+)/);
+  if (vimeoMatch)
+    return `https://player.vimeo.com/video/${vimeoMatch[1]}`;
+  // Not a known embeddable URL (e.g. magicfoundation.org page) — can't embed in iframe
+  return null;
+}
+
+/** True if we should show "open in new tab" link instead of iframe (non-embeddable URL). */
+function isExternalVideoLink(url: string): boolean {
+  return getVideoEmbedUrl(url) === null;
 }
 
 export function EventsCarousel({ events }: { events: EventItem[] }) {
@@ -142,7 +156,10 @@ function EventModal({
   onClose: () => void;
 }) {
   const imageUrl = modalEvent.image ? getImageUrl(modalEvent.image) : null;
-  const hasVideo = Boolean(modalEvent.videoUrl?.trim());
+  const videoUrl = modalEvent.videoUrl?.trim() ?? "";
+  const hasVideo = Boolean(videoUrl);
+  const embedUrl = hasVideo ? getVideoEmbedUrl(videoUrl) : null;
+  const videoIsExternalLink = hasVideo && isExternalVideoLink(videoUrl);
   const hasImage = Boolean(imageUrl);
 
   useEffect(() => {
@@ -195,15 +212,43 @@ function EventModal({
             <div className="flex flex-col px-6 py-6">
               {hasVideo && (
                 <div className="mb-6">
-                  <div className="relative w-full aspect-video overflow-hidden rounded-xl border bg-slate-100">
-                    <iframe
-                      src={getVideoEmbedUrl(modalEvent.videoUrl!)}
-                      title={`${modalEvent.title} video`}
-                      className="absolute inset-0 w-full h-full"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                    />
-                  </div>
+                  {embedUrl ? (
+                    <div className="relative w-full aspect-video overflow-hidden rounded-xl border bg-slate-100">
+                      <iframe
+                        src={embedUrl}
+                        title={`${modalEvent.title} video`}
+                        className="absolute inset-0 w-full h-full"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                      />
+                    </div>
+                  ) : videoIsExternalLink ? (
+                    <a
+                      href={videoUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block relative w-full aspect-video overflow-hidden rounded-xl border bg-slate-100 group"
+                    >
+                      {imageUrl ? (
+                        <img
+                          src={imageUrl}
+                          alt=""
+                          className="absolute inset-0 w-full h-full object-cover"
+                        />
+                      ) : (
+                        <div className="absolute inset-0 flex items-center justify-center bg-slate-200 text-slate-600">
+                          <span className="text-sm font-medium">
+                            Watch video
+                          </span>
+                        </div>
+                      )}
+                      <div className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/40 transition-colors">
+                        <span className="rounded-full bg-white/90 px-4 py-2 text-sm font-semibold text-slate-900 shadow">
+                          Watch video →
+                        </span>
+                      </div>
+                    </a>
+                  ) : null}
                 </div>
               )}
 

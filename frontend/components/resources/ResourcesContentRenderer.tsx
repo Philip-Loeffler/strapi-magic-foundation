@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Play } from "lucide-react";
 import { JSX } from "react";
 import {
@@ -10,6 +11,13 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
@@ -22,6 +30,20 @@ function getImageUrl(image: any): string {
   if (image.data?.attributes?.url)
     return `${baseUrl}${image.data.attributes.url}`;
   return "";
+}
+
+/** Get YouTube thumbnail URL from a YouTube watch or embed URL. Returns null if not a YouTube URL. */
+function getYouTubeThumbnailUrl(
+  videoUrl: string | null | undefined,
+): string | null {
+  if (!videoUrl?.trim()) return null;
+  const u = videoUrl.trim();
+  const match = u.match(
+    /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/,
+  );
+  if (!match) return null;
+  const videoId = match[1];
+  return `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
 }
 
 export function ResourcesContentRenderer({
@@ -150,7 +172,7 @@ export function ResourcesContentRenderer({
             videos.map((video: any, index: number) => {
               const thumbUrl = video.thumbnail
                 ? getImageUrl(video.thumbnail)
-                : null;
+                : getYouTubeThumbnailUrl(video.videoUrl);
               const href = video.videoUrl || "#";
               return (
                 <Link
@@ -646,7 +668,7 @@ function GetSupportTab({ content }: { content: any }) {
   );
 }
 
-/** Spread the Word tab: description (two paragraphs) + image + title grid (same as team structure board members). */
+/** Spread the Word tab: intro description + cards (image, title, description, button) matching homepage design. */
 function SpreadTheWordTab({ content }: { content: any }) {
   const description = content?.description;
   const items = content?.items ?? [];
@@ -659,8 +681,6 @@ function SpreadTheWordTab({ content }: { content: any }) {
       </div>
     );
   }
-  const placeholderImage =
-    "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2394a3b8'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E";
   return (
     <div className="space-y-8">
       {hasDescription && (
@@ -669,22 +689,47 @@ function SpreadTheWordTab({ content }: { content: any }) {
         </div>
       )}
       {hasItems && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 w-full">
+        <div className="flex flex-wrap justify-center gap-8 sm:gap-12 w-full">
           {items.map((item: any, index: number) => {
-            const imageUrl = item.image
-              ? getImageUrl(item.image)
-              : placeholderImage;
+            const imageUrl = item.image ? getImageUrl(item.image) : null;
+            const href = item.buttonLink || "#";
             return (
-              <div key={index} className="text-left w-full min-w-0">
-                <div className="w-[264px] h-[200px] mb-4 overflow-hidden bg-gray-200 rounded">
-                  <img
-                    src={imageUrl}
-                    alt={item.title}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <h3 className="text-lg font-semibold">{item.title}</h3>
-              </div>
+              <Card
+                key={index}
+                className="w-full max-w-[360px] overflow-hidden"
+              >
+                {imageUrl && (
+                  <div className="relative w-full aspect-[360/265] bg-muted">
+                    <Image
+                      src={imageUrl}
+                      alt={item.title || ""}
+                      width={360}
+                      height={265}
+                      className="w-full h-auto object-cover"
+                    />
+                    {/* <Image
+                      src={imageUrl}
+                      alt={item.title || ""}
+                      fill
+                      className="object-cover"
+                      sizes="360px"
+                    /> */}
+                  </div>
+                )}
+                <CardHeader>
+                  <CardTitle>{item.title || "Spread the Word"}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-muted-foreground">
+                    {item.description || ""}
+                  </p>
+                </CardContent>
+                <CardFooter className="justify-center">
+                  <Button asChild size="lg" variant="outline">
+                    <Link href={href}>{item.buttonLabel || "Learn More"}</Link>
+                  </Button>
+                </CardFooter>
+              </Card>
             );
           })}
         </div>

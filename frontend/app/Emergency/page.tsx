@@ -1,51 +1,68 @@
 import { PageContainer } from "@/components/layout/PageContainer";
+import { EmergencyContent } from "./EmergencyContent";
 
-const Page = async () => {
-  // Static for deploy; restore API fetch when ready for dynamic data
-  type EmergencyData = {
-    overView: string;
-  };
-  const emergency = null as EmergencyData | null;
+function buildEmergencyPopulateQuery(): string {
+  const populate = [
+    "emergencyAccordion",
+    "emergencyAccordion.geneticDisorderResponse",
+  ];
+  return populate.map((p, i) => `populate[${i}]=${p}`).join("&");
+}
+
+async function getEmergencyData() {
+  try {
+    const strapiUrl = process.env.NEXT_PUBLIC_STRAPI_URL;
+    if (!strapiUrl) return null;
+    const populateQuery = buildEmergencyPopulateQuery();
+    const res = await fetch(
+      `${strapiUrl}/api/emergencies?${populateQuery}`,
+      {
+        cache: "no-store",
+        headers: { "Content-Type": "application/json" },
+      },
+    );
+    if (!res.ok) return null;
+    const data = await res.json();
+    const raw = data?.data ?? data;
+    const list = Array.isArray(raw) ? raw : [raw];
+    const entry = list[0];
+    return entry ? (entry.attributes ?? entry) : null;
+  } catch {
+    return null;
+  }
+}
+
+export default async function EmergencyPage() {
+  const emergency = await getEmergencyData();
+
+  const description =
+    emergency?.description ?? emergency?.overView ?? null;
+  const accordionItems = emergency?.emergencyAccordion ?? [];
+
+  const pageTitle = emergency?.title;
 
   return (
     <PageContainer>
       <div className="flex flex-col w-full justify-center items-center gap-8">
-        <h1 className="text-3xl font-bold text-left">
-          Have <span className="text-primaryOrange">Emergency?</span> We are
-          here to help.
+        <h1 className="text-3xl font-bold text-left w-full">
+          {pageTitle ?? (
+            <>
+              Have <span className="text-primaryOrange">Emergency?</span> We
+              are here to help.
+            </>
+          )}
         </h1>
-        {emergency?.overView && (
-          <div className="text-left">{emergency.overView}</div>
+
+        {description && (
+          <div className="text-left w-full text-muted-foreground">
+            {description}
+          </div>
         )}
-        {/* {emergency?.emergencyAccordion &&
-          emergency.emergencyAccordion.length > 0 && (
-            <div className="flex self-start p-24 w-full">
-              <Accordion className="w-full" type="single" collapsible>
-                {emergency.emergencyAccordion.map((x, i) => (
-                  <AccordionItem key={i} value={x.geneticDisorderName}>
-                    <AccordionTrigger className="font-bold">
-                      {x.geneticDisorderName}
-                    </AccordionTrigger>
-                    <AccordionContent className="pl-6 space-y-2">
-                      {x.geneticDisorderResponse?.map((item) => (
-                        <li key={item.geneticRsponseTitle}>
-                          <span className="pl-2">
-                            <span className="font-bold">
-                              {item.geneticRsponseTitle}
-                            </span>{" "}
-                            {item.geneticRsponseAnswer}
-                          </span>
-                        </li>
-                      ))}
-                    </AccordionContent>
-                  </AccordionItem>
-                ))}
-              </Accordion>
-            </div>
-          )} */}
+
+        <div className="w-full max-w-2xl flex flex-col gap-6">
+          <EmergencyContent accordionItems={accordionItems} />
+        </div>
       </div>
     </PageContainer>
   );
-};
-
-export default Page;
+}

@@ -1,0 +1,56 @@
+{
+  "kind": "singleType",
+  "collectionName": "landing_page",
+  "info": {
+    "singularName": "landing-page",
+    "pluralName": "landing-pages",
+    "displayName": "Landing Page",
+    "description": "Home page: hero carousel, title, description, cards, CTA banner"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "heroCarousel": {
+      "type": "component",
+      "repeatable": true,
+      "component": "landing.hero-carousel-slide"
+    },
+    "mainTitle": {
+      "type": "string",
+      "required": false
+    },
+    "mainTitleHighlight": {
+      "type": "string",
+      "required": false
+    },
+    "description": {
+      "type": "richtext",
+      "required": false
+    },
+    "cards": {
+      "type": "component",
+      "repeatable": true,
+      "component": "landing.landing-card"
+    },
+    "ctaBannerText": {
+      "type": "text",
+      "required": false
+    },
+    "ctaBannerButtonLabel": {
+      "type": "string",
+      "required": false
+    },
+    "ctaBannerButtonLink": {
+      "type": "string",
+      "required": false
+    },
+    "ctaBannerBackgroundImage": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"]
+    }
+  }
+}

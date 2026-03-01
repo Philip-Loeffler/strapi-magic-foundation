@@ -1,0 +1,32 @@
+{
+  "collectionName": "components_landing_hero_carousel_slides",
+  "info": {
+    "displayName": "Landing Hero Carousel Slide",
+    "description": "One slide in the hero carousel: background image, headline, CTA button, regulatory text"
+  },
+  "options": {},
+  "attributes": {
+    "backgroundImage": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"]
+    },
+    "headline": {
+      "type": "string",
+      "required": false
+    },
+    "ctaLabel": {
+      "type": "string",
+      "required": false
+    },
+    "ctaLink": {
+      "type": "string",
+      "required": false
+    },
+    "regulatoryText": {
+      "type": "string",
+      "required": false
+    }
+  }
+}

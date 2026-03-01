@@ -358,12 +358,13 @@ export interface DisorderHeroSection extends Struct.ComponentSchema {
 export interface DisorderListItem extends Struct.ComponentSchema {
   collectionName: 'components_disorder_list_items';
   info: {
-    description: 'A single list item';
+    description: 'A single list item. Use rich text for inline links (e.g. email, website). Add a file to make the whole item a download link (e.g. PDF brochure).';
     displayName: 'Disorder List Item';
   };
   attributes: {
+    downloadFile: Schema.Attribute.Media<'files'>;
     isHighlighted: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
-    text: Schema.Attribute.Text & Schema.Attribute.Required;
+    text: Schema.Attribute.RichText & Schema.Attribute.Required;
   };
 }
 
@@ -407,6 +408,9 @@ export interface DisorderPersonalStory extends Struct.ComponentSchema {
     content: Schema.Attribute.RichText & Schema.Attribute.Required;
     date: Schema.Attribute.Date;
     image: Schema.Attribute.Media<'images'>;
+    image2: Schema.Attribute.Media<'images'>;
+    image3: Schema.Attribute.Media<'images'>;
+    subcontent: Schema.Attribute.RichText;
     title: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
@@ -482,8 +486,8 @@ export interface EmergencyGeneticDisorderResponse
     displayName: 'Genetic Disorder Response';
   };
   attributes: {
-    geneticRsponseAnswer: Schema.Attribute.Text & Schema.Attribute.Required;
-    geneticRsponseTitle: Schema.Attribute.String & Schema.Attribute.Required;
+    geneticRsponseAnswer: Schema.Attribute.Text;
+    geneticRsponseTitle: Schema.Attribute.String;
   };
 }
 
@@ -1023,6 +1027,36 @@ export interface InsuranceAppealsTestimonialItem
   };
 }
 
+export interface LandingHeroCarouselSlide extends Struct.ComponentSchema {
+  collectionName: 'components_landing_hero_carousel_slides';
+  info: {
+    description: 'One slide in the hero carousel: background image, headline, CTA button, regulatory text';
+    displayName: 'Landing Hero Carousel Slide';
+  };
+  attributes: {
+    backgroundImage: Schema.Attribute.Media<'images'>;
+    ctaLabel: Schema.Attribute.String;
+    ctaLink: Schema.Attribute.String;
+    headline: Schema.Attribute.String;
+    regulatoryText: Schema.Attribute.String;
+  };
+}
+
+export interface LandingLandingCard extends Struct.ComponentSchema {
+  collectionName: 'components_landing_landing_cards';
+  info: {
+    description: 'Card for the landing page: image, title, description, Learn More button';
+    displayName: 'Landing Card';
+  };
+  attributes: {
+    buttonLabel: Schema.Attribute.String;
+    buttonLink: Schema.Attribute.String;
+    description: Schema.Attribute.Text;
+    image: Schema.Attribute.Media<'images'>;
+    title: Schema.Attribute.String;
+  };
+}
+
 export interface ResourcesGetSupportTab extends Struct.ComponentSchema {
   collectionName: 'components_resources_get_support_tabs';
   info: {
@@ -1155,12 +1189,15 @@ export interface ResourcesSpreadTheWordTab extends Struct.ComponentSchema {
 export interface ResourcesSpreadWordItem extends Struct.ComponentSchema {
   collectionName: 'components_resources_spread_word_items';
   info: {
-    description: 'Image and title (same display as team structure board members)';
+    description: 'Card with image, title, description, and button (matches homepage cards)';
     displayName: 'Spread the Word Item';
   };
   attributes: {
+    buttonLabel: Schema.Attribute.String;
+    buttonLink: Schema.Attribute.String;
+    description: Schema.Attribute.Text;
     image: Schema.Attribute.Media<'images'>;
-    title: Schema.Attribute.String & Schema.Attribute.Required;
+    title: Schema.Attribute.String;
   };
 }
 
@@ -1174,6 +1211,17 @@ export interface ResourcesVideoItem extends Struct.ComponentSchema {
     thumbnail: Schema.Attribute.Media<'images'>;
     title: Schema.Attribute.String & Schema.Attribute.Required;
     videoUrl: Schema.Attribute.String;
+  };
+}
+
+export interface RssBulletPoint extends Struct.ComponentSchema {
+  collectionName: 'components_rss_bullet_points';
+  info: {
+    description: 'A single bullet point for guide blocks';
+    displayName: 'RSS Bullet Point';
+  };
+  attributes: {
+    text: Schema.Attribute.Text & Schema.Attribute.Required;
   };
 }
 
@@ -1233,6 +1281,18 @@ export interface RssDivisionLeadersTab extends Struct.ComponentSchema {
   };
 }
 
+export interface RssEmergencyGuide extends Struct.ComponentSchema {
+  collectionName: 'components_rss_emergency_guides';
+  info: {
+    description: 'Hypoglycemia / emergency services guide: intro block (title, description, bullets, description) then repeatable sections (e.g. For the Emergency Services, For the Inpatient Care Team)';
+    displayName: 'RSS Emergency Guide';
+  };
+  attributes: {
+    intro: Schema.Attribute.Component<'rss.guide-block', false>;
+    sections: Schema.Attribute.Component<'rss.guide-block', true>;
+  };
+}
+
 export interface RssFaqItem extends Struct.ComponentSchema {
   collectionName: 'components_rss_faq_items';
   info: {
@@ -1252,6 +1312,20 @@ export interface RssFaqSection extends Struct.ComponentSchema {
   };
   attributes: {
     faqs: Schema.Attribute.Component<'rss.faq-item', true>;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface RssGuideBlock extends Struct.ComponentSchema {
+  collectionName: 'components_rss_guide_blocks';
+  info: {
+    description: "A block with optional title, description, bullet points, and description after bullets (e.g. intro or 'For the Emergency Services')";
+    displayName: 'RSS Guide Block';
+  };
+  attributes: {
+    bulletPoints: Schema.Attribute.Component<'rss.bullet-point', true>;
+    description: Schema.Attribute.Text;
+    descriptionAfter: Schema.Attribute.Text;
     title: Schema.Attribute.String;
   };
 }
@@ -1299,6 +1373,7 @@ export interface RssOverviewTab extends Struct.ComponentSchema {
       false
     >;
     diagnosis: Schema.Attribute.Component<'rss.content-section', false>;
+    emergencyGuide: Schema.Attribute.Component<'rss.emergency-guide', false>;
     factorsAffectingGht: Schema.Attribute.Component<
       'rss.content-section',
       false
@@ -1917,6 +1992,8 @@ declare module '@strapi/strapi' {
       'insurance-appeals.patient-assistance-tab': InsuranceAppealsPatientAssistanceTab;
       'insurance-appeals.pharmaceutical-accordion-item': InsuranceAppealsPharmaceuticalAccordionItem;
       'insurance-appeals.testimonial-item': InsuranceAppealsTestimonialItem;
+      'landing.hero-carousel-slide': LandingHeroCarouselSlide;
+      'landing.landing-card': LandingLandingCard;
       'resources.get-support-tab': ResourcesGetSupportTab;
       'resources.informational-videos-tab': ResourcesInformationalVideosTab;
       'resources.overview-info-section': ResourcesOverviewInfoSection;
@@ -1926,12 +2003,15 @@ declare module '@strapi/strapi' {
       'resources.spread-the-word-tab': ResourcesSpreadTheWordTab;
       'resources.spread-word-item': ResourcesSpreadWordItem;
       'resources.video-item': ResourcesVideoItem;
+      'rss.bullet-point': RssBulletPoint;
       'rss.content-section': RssContentSection;
       'rss.content-subsection': RssContentSubsection;
       'rss.division-leader': RssDivisionLeader;
       'rss.division-leaders-tab': RssDivisionLeadersTab;
+      'rss.emergency-guide': RssEmergencyGuide;
       'rss.faq-item': RssFaqItem;
       'rss.faq-section': RssFaqSection;
+      'rss.guide-block': RssGuideBlock;
       'rss.hero-section': RssHeroSection;
       'rss.list-item': RssListItem;
       'rss.overview-tab': RssOverviewTab;

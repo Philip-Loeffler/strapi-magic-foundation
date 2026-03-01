@@ -598,6 +598,7 @@ export interface ApiEmergencyEmergency extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    description: Schema.Attribute.Text;
     emergencyAccordion: Schema.Attribute.Component<
       'emergency.emergency-accordion-item',
       true
@@ -608,8 +609,9 @@ export interface ApiEmergencyEmergency extends Struct.CollectionTypeSchema {
       'api::emergency.emergency'
     > &
       Schema.Attribute.Private;
-    overView: Schema.Attribute.Text & Schema.Attribute.Required;
+    overView: Schema.Attribute.Text;
     publishedAt: Schema.Attribute.DateTime;
+    title: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -921,6 +923,46 @@ export interface ApiIntrauterineGrowthRestrictionIntrauterineGrowthRestriction
     resourcesTab: Schema.Attribute.Component<'disorder.resources-tab', false>;
     slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
     title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiLandingPageLandingPage extends Struct.SingleTypeSchema {
+  collectionName: 'landing_page';
+  info: {
+    description: 'Home page: hero carousel, title, description, cards, CTA banner';
+    displayName: 'Landing Page';
+    pluralName: 'landing-pages';
+    singularName: 'landing-page';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    cards: Schema.Attribute.Component<'landing.landing-card', true>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    ctaBannerBackgroundImage: Schema.Attribute.Media<'images'>;
+    ctaBannerButtonLabel: Schema.Attribute.String;
+    ctaBannerButtonLink: Schema.Attribute.String;
+    ctaBannerText: Schema.Attribute.Text;
+    description: Schema.Attribute.RichText;
+    heroCarousel: Schema.Attribute.Component<
+      'landing.hero-carousel-slide',
+      true
+    >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::landing-page.landing-page'
+    > &
+      Schema.Attribute.Private;
+    mainTitle: Schema.Attribute.String;
+    mainTitleHighlight: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1904,6 +1946,7 @@ declare module '@strapi/strapi' {
       'api::insulin-like-growth-factor-deficiency.insulin-like-growth-factor-deficiency': ApiInsulinLikeGrowthFactorDeficiencyInsulinLikeGrowthFactorDeficiency;
       'api::insurance-appeals.insurance-appeals': ApiInsuranceAppealsInsuranceAppeals;
       'api::intrauterine-growth-restriction.intrauterine-growth-restriction': ApiIntrauterineGrowthRestrictionIntrauterineGrowthRestriction;
+      'api::landing-page.landing-page': ApiLandingPageLandingPage;
       'api::mccune-albright-syndrome.mccune-albright-syndrome': ApiMccuneAlbrightSyndromeMccuneAlbrightSyndrome;
       'api::optic-nerve-hypoplasia.optic-nerve-hypoplasia': ApiOpticNerveHypoplasiaOpticNerveHypoplasia;
       'api::panhypopituitarism-tumor.panhypopituitarism-tumor': ApiPanhypopituitarismTumorPanhypopituitarismTumor;

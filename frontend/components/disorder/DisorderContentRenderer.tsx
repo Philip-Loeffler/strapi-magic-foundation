@@ -25,6 +25,7 @@ import {
   MorphingDialogContainer,
 } from "@/components/motion-primitives/morphing-dialog";
 import { JSX } from "react";
+import { cn } from "@/lib/utils";
 
 interface DisorderContentRendererProps {
   content: any;
@@ -180,6 +181,7 @@ function PersonalStoriesTabRenderer({ content }: { content: any }) {
                   >
                     <div className="overflow-y-auto max-h-[90vh]">
                       <div className="relative p-6">
+                        {/* Photo */}
                         <div className="flex justify-center py-6">
                           <MorphingDialogImage
                             src={imageUrl}
@@ -200,11 +202,37 @@ function PersonalStoriesTabRenderer({ content }: { content: any }) {
                             </p>
                           )}
                         </div>
+                        {/* Content */}
                         <div className="mt-6 prose prose-sm max-w-none text-gray-700">
                           {story.content && (
                             <RichTextRenderer content={story.content} />
                           )}
                         </div>
+                        {/* Subcontent (describe photos) */}
+                        {story.subcontent && (
+                          <div className="mt-6 prose prose-sm max-w-none text-gray-700">
+                            <RichTextRenderer content={story.subcontent} />
+                          </div>
+                        )}
+                        {/* Optional photos in a row with gap (use img so they don't share MorphingDialogImage layoutId) */}
+                        {(story.image2 || story.image3) && (
+                          <div className="mt-6 flex flex-wrap gap-4 justify-center">
+                            {story.image2 && (
+                              <img
+                                src={getImageUrl(story.image2)}
+                                alt=""
+                                className="h-48 w-48 object-cover rounded-xl flex-1 min-w-0 max-w-[240px]"
+                              />
+                            )}
+                            {story.image3 && (
+                              <img
+                                src={getImageUrl(story.image3)}
+                                alt=""
+                                className="h-48 w-48 object-cover rounded-xl flex-1 min-w-0 max-w-[240px]"
+                              />
+                            )}
+                          </div>
+                        )}
                       </div>
                     </div>
                     <MorphingDialogClose className="text-zinc-500" />
@@ -405,8 +433,41 @@ function getListItemText(item: any): string {
   return item?.text ?? item?.attributes?.text ?? "";
 }
 
+function getListItemContent(item: any): any {
+  return item?.text ?? item?.attributes?.text ?? "";
+}
+
+function getListItemDownloadFile(item: any): any {
+  return item?.downloadFile ?? item?.attributes?.downloadFile ?? null;
+}
+
 function getListItemHighlighted(item: any): boolean {
   return item?.isHighlighted ?? item?.attributes?.isHighlighted ?? false;
+}
+
+function ListItemContent({ item }: { item: any }) {
+  const content = getListItemContent(item);
+  const downloadFile = getListItemDownloadFile(item);
+  const isDownload = !!downloadFile;
+  const fileUrl = downloadFile ? getImageUrl(downloadFile) : null;
+
+  const inner = content ? <RichTextRenderer content={content} /> : null;
+
+  if (isDownload && fileUrl) {
+    return (
+      <a
+        href={fileUrl}
+        download
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-primary hover:underline"
+      >
+        {inner}
+      </a>
+    );
+  }
+
+  return inner;
 }
 
 function ListItems({ items }: { items: any }) {
@@ -417,9 +478,12 @@ function ListItems({ items }: { items: any }) {
       {listItems.map((item: any, itemIndex: number) => (
         <li
           key={itemIndex}
-          className={getListItemHighlighted(item) ? "font-semibold" : ""}
+          className={cn(
+            getListItemHighlighted(item) ? "font-semibold" : "",
+            "prose prose-sm max-w-none",
+          )}
         >
-          {getListItemText(item)}
+          <ListItemContent item={item} />
         </li>
       ))}
     </ul>

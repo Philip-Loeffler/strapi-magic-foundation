@@ -72,38 +72,38 @@ export default function Page() {
   return (
     <PageContainer>
       <h1 className="text-3xl font-bold text-left mb-4">
-        Understanding{" "}
-        <span className="text-primary">Growth and Hormonal</span> Disorders
+        Understanding <span className="text-primary">Growth and Hormonal</span>{" "}
+        Disorders
       </h1>
       <p className="text-muted-foreground text-left mb-8">
-        Growth and hormonal disorders can significantly impact a
-        child&apos;s physical and emotional development. At The MAGIC
-        Foundation, we are committed to providing comprehensive information
-        and support to families navigating these challenges.
+        Growth and hormonal disorders can significantly impact a child&apos;s
+        physical and emotional development. At The MAGIC Foundation, we are
+        committed to providing comprehensive information and support to families
+        navigating these challenges.
       </p>
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-x-10 gap-y-2 w-full">
-            {Object.keys(disorderList).map((colKey) => (
-              <div key={colKey} className="flex flex-col space-y-4">
-                {disorderList[colKey].map((item) => {
-                  const href = getDisorderHref(item.name);
-                  const isLinked = href !== "#";
-                  return (
-                    <Link
-                      key={item.name}
-                      href={href}
-                      className={`${navigationMenuTriggerStyle()} flex flex-row items-center transition-colors ${
-                        isLinked
-                          ? "text-primary hover:underline hover:text-primary/90"
-                          : "text-muted-foreground cursor-default"
-                      }`}
-                    >
-                      {item.name}
-                    </Link>
-                  );
-                })}
-              </div>
-            ))}
+        {Object.keys(disorderList).map((colKey) => (
+          <div key={colKey} className="flex flex-col space-y-4">
+            {disorderList[colKey].map((item) => {
+              const href = getDisorderHref(item.name);
+              const isLinked = href !== "#";
+              return (
+                <Link
+                  key={item.name}
+                  href={href}
+                  className={`${navigationMenuTriggerStyle()} flex flex-row items-center text-blue-900 transition-colors ${
+                    isLinked
+                      ? "text-blue-900 hover:underline "
+                      : "text-blue-900 cursor-default"
+                  }`}
+                >
+                  {item.name}
+                </Link>
+              );
+            })}
+          </div>
+        ))}
       </div>
     </PageContainer>
   );

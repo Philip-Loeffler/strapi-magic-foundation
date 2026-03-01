@@ -1,0 +1,14 @@
+{
+  "collectionName": "components_rss_bullet_points",
+  "info": {
+    "displayName": "RSS Bullet Point",
+    "description": "A single bullet point for guide blocks"
+  },
+  "options": {},
+  "attributes": {
+    "text": {
+      "type": "text",
+      "required": true
+    }
+  }
+}
