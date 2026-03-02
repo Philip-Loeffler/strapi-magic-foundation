@@ -54,7 +54,7 @@ export function EmergencyContent({ accordionItems }: EmergencyContentProps) {
               key={item.geneticDisorderName ?? i}
               value={item.geneticDisorderName ?? `item-${i}`}
             >
-              <AccordionTrigger className="text-left font-bold">
+              <AccordionTrigger className="text-left">
                 {item.geneticDisorderName}
               </AccordionTrigger>
               <AccordionContent className="pl-6 space-y-2">

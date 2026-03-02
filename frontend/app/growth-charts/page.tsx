@@ -1,5 +1,6 @@
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { navigationMenuTriggerStyle } from "@/components/ui/navigation-menu";
 import Link from "next/link";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { PageContainer } from "@/components/layout/PageContainer";
@@ -26,8 +27,11 @@ function buildPopulateQuery(): string {
     "generalTab.otherSpecialtyLinks",
     "rssTab",
     "rssTab.rssGrowthCharts",
+    "rssTab.rssGrowthCharts.file",
     "rssTab.rssSgaSpreadsheets",
+    "rssTab.rssSgaSpreadsheets.file",
     "rssTab.rssSgaCharts",
+    "rssTab.rssSgaCharts.file",
     "rssTab.instructionSections",
     "rssTab.instructionSections.steps",
     "rssTab.instructionSections.steps.subBullets",
@@ -74,15 +78,12 @@ export default async function GrowthChartsPage() {
       <h1 className="text-3xl font-bold text-left mb-8">Growth Charts</h1>
       <Tabs defaultValue="general" className="w-full flex flex-col">
         <div className="flex justify-center mb-8">
-          <TabsList className="grid w-full max-w-2xl grid-cols-3 gap-2">
+          <TabsList className="grid w-full max-w-2xl grid-cols-2 gap-2">
             <TabsTrigger value="general" className="text-sm md:text-base">
               General
             </TabsTrigger>
             <TabsTrigger value="rss" className="text-sm md:text-base">
-              RSS
-            </TabsTrigger>
-            <TabsTrigger value="sga" className="text-sm md:text-base">
-              SGA
+              RSS/SGA
             </TabsTrigger>
           </TabsList>
         </div>
@@ -99,15 +100,7 @@ export default async function GrowthChartsPage() {
           {growthChartsData?.rssTab ? (
             <RssTabRenderer tab={growthChartsData.rssTab} />
           ) : (
-            <EmptyTabPlaceholder label="RSS" />
-          )}
-        </TabsContent>
-
-        <TabsContent value="sga" className="w-full mt-8">
-          {growthChartsData?.sgaTab ? (
-            <TabContentRenderer tab={growthChartsData.sgaTab} />
-          ) : (
-            <EmptyTabPlaceholder label="SGA" />
+            <EmptyTabPlaceholder label="RSS/SGA" />
           )}
         </TabsContent>
       </Tabs>
@@ -176,7 +169,7 @@ function GeneralTabRenderer({ tab }: { tab: any }) {
       {/* Accordions: Understanding & Example */}
       <Accordion type="single" collapsible className="w-full">
         <AccordionItem value="understanding">
-          <AccordionTrigger className="text-left font-semibold">
+          <AccordionTrigger className="text-left">
             {tab.understandingTitle || "Understanding Growth Charts"}
           </AccordionTrigger>
           <AccordionContent className="space-y-4">
@@ -206,7 +199,7 @@ function GeneralTabRenderer({ tab }: { tab: any }) {
         </AccordionItem>
 
         <AccordionItem value="example">
-          <AccordionTrigger className="text-left font-semibold">
+          <AccordionTrigger className="text-left">
             {tab.exampleTitle || "Growth Chart Example"}
           </AccordionTrigger>
           <AccordionContent className="space-y-6">
@@ -298,7 +291,7 @@ function GeneralTabRenderer({ tab }: { tab: any }) {
                         href={item.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-primary hover:underline font-medium"
+                        className="text-primary underline font-medium"
                       >
                         {item.linkLabel || "View chart"} →
                       </Link>
@@ -352,7 +345,7 @@ function GeneralTabRenderer({ tab }: { tab: any }) {
                         href={item.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-blue-900 underline"
+                        className={`${navigationMenuTriggerStyle()} flex flex-row items-center text-blue-900 transition-colors underline`}
                       >
                         {item.label}
                       </Link>
@@ -401,14 +394,18 @@ function RssTabRenderer({ tab }: { tab: any }) {
         {Array.isArray(tab.rssGrowthCharts) &&
           tab.rssGrowthCharts.length > 0 && (
             <ul className="list-disc pl-6 space-y-2">
-              {tab.rssGrowthCharts.map((item: any, index: number) => (
+              {tab.rssGrowthCharts.map((item: any, index: number) => {
+                const fileUrl = item.file ? getImageUrl(item.file) : "";
+                const href = fileUrl || item.url || "";
+                const isClickable = !!href;
+                return (
                 <li key={index}>
-                  {item.url ? (
+                  {isClickable ? (
                     <Link
-                      href={item.url}
+                      href={href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-blue-900 underline"
+                      className={`${navigationMenuTriggerStyle()} flex flex-row items-center text-blue-900 transition-colors underline`}
                     >
                       {item.title}
                     </Link>
@@ -418,7 +415,8 @@ function RssTabRenderer({ tab }: { tab: any }) {
                     </span>
                   )}
                 </li>
-              ))}
+              );
+              })}
             </ul>
           )}
       </section>
@@ -434,14 +432,18 @@ function RssTabRenderer({ tab }: { tab: any }) {
         {Array.isArray(tab.rssSgaSpreadsheets) &&
           tab.rssSgaSpreadsheets.length > 0 && (
             <ul className="list-disc pl-6 space-y-2">
-              {tab.rssSgaSpreadsheets.map((item: any, index: number) => (
+              {tab.rssSgaSpreadsheets.map((item: any, index: number) => {
+                const fileUrl = item.file ? getImageUrl(item.file) : "";
+                const href = fileUrl || item.url || "";
+                const isClickable = !!href;
+                return (
                 <li key={index}>
-                  {item.url ? (
+                  {isClickable ? (
                     <Link
-                      href={item.url}
+                      href={href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-blue-900 underline"
+                      className={`${navigationMenuTriggerStyle()} flex flex-row items-center text-blue-900 transition-colors underline`}
                     >
                       {item.title}
                     </Link>
@@ -451,7 +453,8 @@ function RssTabRenderer({ tab }: { tab: any }) {
                     </span>
                   )}
                 </li>
-              ))}
+              );
+              })}
             </ul>
           )}
       </section>
@@ -462,15 +465,17 @@ function RssTabRenderer({ tab }: { tab: any }) {
           <h2 className="text-2xl font-bold">{rssSgaChartsTitle}</h2>
           <ul className="list-disc pl-6 space-y-2">
               {tab.rssSgaCharts.map((item: any, index: number) => {
-                const href = item.file ? getImageUrl(item.file) : item.url;
+                const fileUrl = item.file ? getImageUrl(item.file) : "";
+                const href = fileUrl || item.url || "";
+                const isClickable = !!href;
                 return (
                   <li key={index}>
-                    {href ? (
+                    {isClickable ? (
                       <Link
                         href={href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-blue-900 underline"
+                        className={`${navigationMenuTriggerStyle()} flex flex-row items-center text-blue-900 transition-colors underline`}
                       >
                         {item.title}
                       </Link>
@@ -650,7 +655,7 @@ function renderChildren(children: any[]): React.ReactNode {
           key={index}
           href={child.url}
           target={child.target || "_self"}
-          className="text-primary hover:underline"
+          className="text-primary underline"
         >
           {renderChildren(child.children)}
         </a>

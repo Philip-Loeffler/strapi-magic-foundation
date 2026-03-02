@@ -18,6 +18,7 @@ function buildResourcesPopulateQuery(): string {
     "spreadTheWordTab",
     "spreadTheWordTab.items",
     "spreadTheWordTab.items.image",
+    "spreadTheWordTab.items.buttonFile",
   ];
   return populate.map((p, i) => `populate[${i}]=${p}`).join("&");
 }

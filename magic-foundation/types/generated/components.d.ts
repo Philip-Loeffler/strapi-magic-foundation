@@ -1189,10 +1189,11 @@ export interface ResourcesSpreadTheWordTab extends Struct.ComponentSchema {
 export interface ResourcesSpreadWordItem extends Struct.ComponentSchema {
   collectionName: 'components_resources_spread_word_items';
   info: {
-    description: 'Card with image, title, description, and button (matches homepage cards)';
+    description: 'Card with image, title, description, and button (link or PDF)';
     displayName: 'Spread the Word Item';
   };
   attributes: {
+    buttonFile: Schema.Attribute.Media<'files'>;
     buttonLabel: Schema.Attribute.String;
     buttonLink: Schema.Attribute.String;
     description: Schema.Attribute.Text;

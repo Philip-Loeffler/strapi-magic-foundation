@@ -6,6 +6,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { navigationMenuTriggerStyle } from "@/components/ui/navigation-menu";
 import {
   Card,
   CardContent,
@@ -284,7 +285,7 @@ function ResourcesTabRenderer({ content }: { content: any }) {
                             href={resource.url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-primary hover:underline"
+                            className={`${navigationMenuTriggerStyle()} flex flex-row items-center text-blue-900 transition-colors underline`}
                           >
                             View Resource →
                           </Link>
@@ -294,7 +295,7 @@ function ResourcesTabRenderer({ content }: { content: any }) {
                             href={getImageUrl(resource.file)}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-primary hover:underline"
+                            className={`${navigationMenuTriggerStyle()} flex flex-row items-center text-blue-900 transition-colors underline`}
                           >
                             Download File →
                           </Link>
@@ -390,7 +391,7 @@ function DivisionLeadersTabRenderer({ content }: { content: any }) {
                                 <strong>Email:</strong>{" "}
                                 <a
                                   href={`mailto:${leader.email}`}
-                                  className="text-primary hover:underline"
+                                  className={`${navigationMenuTriggerStyle()} flex flex-row items-center text-blue-900 transition-colors underline`}
                                 >
                                   {leader.email}
                                 </a>
@@ -401,7 +402,7 @@ function DivisionLeadersTabRenderer({ content }: { content: any }) {
                                 <strong>Phone:</strong>{" "}
                                 <a
                                   href={`tel:${leader.phone}`}
-                                  className="text-primary hover:underline"
+                                  className={`${navigationMenuTriggerStyle()} flex flex-row items-center text-blue-900 transition-colors underline`}
                                 >
                                   {leader.phone}
                                 </a>
@@ -460,7 +461,7 @@ function ListItemContent({ item }: { item: any }) {
         download
         target="_blank"
         rel="noopener noreferrer"
-        className="text-primary hover:underline"
+        className={`${navigationMenuTriggerStyle()} flex flex-row items-center text-blue-900 transition-colors underline`}
       >
         {inner}
       </a>
@@ -591,7 +592,7 @@ function renderChildren(children: any[]): React.ReactNode {
           key={index}
           href={child.url}
           target={child.target || "_self"}
-          className="text-primary hover:underline"
+          className={`${navigationMenuTriggerStyle()} flex flex-row items-center text-blue-900 transition-colors underline`}
         >
           {renderChildren(child.children)}
         </a>

@@ -37,8 +37,7 @@ export function GiveForm({ causes }: GiveFormProps) {
   })();
 
   const amountCents = presetCents ?? customCents;
-  const canSubmit =
-    cause && amountCents != null && amountCents > 0 && !loading;
+  const canSubmit = cause && amountCents != null && amountCents > 0 && !loading;
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();

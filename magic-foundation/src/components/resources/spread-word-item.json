@@ -1,1 +1,16 @@
-{"collectionName":"components_resources_spread_word_items","info":{"displayName":"Spread the Word Item","description":"Card with image, title, description, and button (matches homepage cards)"},"options":{},"attributes":{"title":{"type":"string","required":false},"image":{"type":"media","multiple":false,"required":false,"allowedTypes":["images"]},"description":{"type":"text","required":false},"buttonLabel":{"type":"string","required":false},"buttonLink":{"type":"string","required":false}}}
+{
+  "collectionName": "components_resources_spread_word_items",
+  "info": {
+    "displayName": "Spread the Word Item",
+    "description": "Card with image, title, description, and button (link or PDF)"
+  },
+  "options": {},
+  "attributes": {
+    "title": { "type": "string", "required": false },
+    "image": { "type": "media", "multiple": false, "required": false, "allowedTypes": ["images"] },
+    "description": { "type": "text", "required": false },
+    "buttonLabel": { "type": "string", "required": false },
+    "buttonLink": { "type": "string", "required": false },
+    "buttonFile": { "type": "media", "multiple": false, "required": false, "allowedTypes": ["files"] }
+  }
+}

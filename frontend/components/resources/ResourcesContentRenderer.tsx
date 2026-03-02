@@ -19,6 +19,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { navigationMenuTriggerStyle } from "@/components/ui/navigation-menu";
 import { Input } from "@/components/ui/input";
 
 function getImageUrl(image: any): string {
@@ -289,7 +290,7 @@ function BrochureAccordionsSection({ content }: { content: any }) {
                       href={link.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-primary underline"
+                      className={`${navigationMenuTriggerStyle()} flex flex-row items-center text-blue-900 transition-colors underline`}
                     >
                       {link.label}
                     </a>
@@ -329,7 +330,7 @@ function OverviewInfoSections({ sections }: { sections: any[] }) {
                     href={link.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-primary underline"
+                    className={`${navigationMenuTriggerStyle()} flex flex-row items-center text-blue-900 transition-colors underline`}
                   >
                     {link.label}
                   </a>
@@ -343,9 +344,9 @@ function OverviewInfoSections({ sections }: { sections: any[] }) {
   );
 }
 
-/** Accordion trigger styling for Get Support: blue banner + visible chevron on the right. */
-const getSupportTriggerClassName =
-  "bg-primary text-primary-foreground px-4 py-3 font-semibold text-lg rounded-t-lg w-full hover:no-underline hover:bg-primary/95 [&>svg]:text-primary-foreground [&>svg]:size-5 [&>svg]:shrink-0 [&>svg]:ml-auto";
+/** Header styling for Get Support sections: dark blue banner (no chevron, not clickable). */
+const getSupportHeaderClassName =
+  "bg-primary text-primary-foreground px-4 py-3 font-semibold text-lg rounded-t-lg w-full";
 
 const inputClassName =
   "flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm";
@@ -566,17 +567,19 @@ function CollegeScholarshipForm() {
     //   </div>
     // </form>
     <a
-      href="https://fs3.formsite.com/denoandrews/jwehgexapm/index
+      href="https://fs3.formsite.com/denoandrews/collegescholarship/index
+
 "
       target="_blank"
       rel="noopener noreferrer"
+      className={`${navigationMenuTriggerStyle()} flex flex-row items-center text-blue-900 transition-colors underline`}
     >
-      Fill Out Our Refer a Specialist Form
+      Fill Out Our College Scholarship Form
     </a>
   );
 }
 
-/** Get Support tab: three sections (College Scholarships, Find a Specialist, Refer a Specialist) with blue banners. */
+/** Get Support tab: three sections (College Scholarships, Find a Specialist, Refer a Specialist) with blue banner headers. All content visible. */
 function GetSupportTab({ content }: { content: any }) {
   const hasCollege =
     content?.collegeScholarshipsTitle ||
@@ -594,16 +597,13 @@ function GetSupportTab({ content }: { content: any }) {
     );
   }
   return (
-    <Accordion type="single" collapsible className="w-full space-y-2">
+    <div className="w-full space-y-6">
       {hasCollege && (
-        <AccordionItem
-          value="college-scholarships"
-          className="rounded-lg border border-border overflow-hidden"
-        >
-          <AccordionTrigger className={getSupportTriggerClassName}>
+        <div className="rounded-lg border border-border overflow-hidden">
+          <div className={getSupportHeaderClassName}>
             {content.collegeScholarshipsTitle || "College Scholarships"}
-          </AccordionTrigger>
-          <AccordionContent className="p-4 pt-0 bg-card">
+          </div>
+          <div className="p-4 bg-card">
             <div className="prose prose-sm max-w-none space-y-4">
               {content.collegeScholarshipsContent ? (
                 <ResourcesRichText
@@ -612,18 +612,15 @@ function GetSupportTab({ content }: { content: any }) {
               ) : null}
               <CollegeScholarshipForm />
             </div>
-          </AccordionContent>
-        </AccordionItem>
+          </div>
+        </div>
       )}
       {hasFind && (
-        <AccordionItem
-          value="find-a-specialist"
-          className="rounded-lg border border-border overflow-hidden"
-        >
-          <AccordionTrigger className={getSupportTriggerClassName}>
+        <div className="rounded-lg border border-border overflow-hidden">
+          <div className={getSupportHeaderClassName}>
             {content.findASpecialistTitle || "Find a Specialist"}
-          </AccordionTrigger>
-          <AccordionContent className="p-4 pt-0 bg-card">
+          </div>
+          <div className="p-4 bg-card">
             <div className="prose prose-sm max-w-none space-y-4">
               {content.findASpecialistContent && (
                 <ResourcesRichText content={content.findASpecialistContent} />
@@ -643,28 +640,25 @@ function GetSupportTab({ content }: { content: any }) {
               )}
               <FindASpecialistForm />
             </div>
-          </AccordionContent>
-        </AccordionItem>
+          </div>
+        </div>
       )}
       {hasRefer && (
-        <AccordionItem
-          value="refer-a-specialist"
-          className="rounded-lg border border-border overflow-hidden"
-        >
-          <AccordionTrigger className={getSupportTriggerClassName}>
+        <div className="rounded-lg border border-border overflow-hidden">
+          <div className={getSupportHeaderClassName}>
             {content.referASpecialistTitle || "Refer a Specialist"}
-          </AccordionTrigger>
-          <AccordionContent className="p-4 pt-0 bg-card">
+          </div>
+          <div className="p-4 bg-card">
             <div className="prose prose-sm max-w-none space-y-4">
               {content.referASpecialistContent ? (
                 <ResourcesRichText content={content.referASpecialistContent} />
               ) : null}
               <ReferASpecialistForm />
             </div>
-          </AccordionContent>
-        </AccordionItem>
+          </div>
+        </div>
       )}
-    </Accordion>
+    </div>
   );
 }
 
@@ -692,7 +686,13 @@ function SpreadTheWordTab({ content }: { content: any }) {
         <div className="flex flex-wrap justify-center gap-8 sm:gap-12 w-full">
           {items.map((item: any, index: number) => {
             const imageUrl = item.image ? getImageUrl(item.image) : null;
-            const href = item.buttonLink || "#";
+            const pdfFile = item.buttonFile || item.file;
+            const pdfHref = pdfFile ? getImageUrl(pdfFile) : null;
+            const href = pdfHref || item.buttonLink || "#";
+            const isExternal =
+              typeof href === "string" &&
+              (href.startsWith("http") || href.endsWith(".pdf"));
+
             return (
               <Card
                 key={index}
@@ -707,13 +707,6 @@ function SpreadTheWordTab({ content }: { content: any }) {
                       height={265}
                       className="w-full h-auto object-cover"
                     />
-                    {/* <Image
-                      src={imageUrl}
-                      alt={item.title || ""}
-                      fill
-                      className="object-cover"
-                      sizes="360px"
-                    /> */}
                   </div>
                 )}
                 <CardHeader>
@@ -726,7 +719,13 @@ function SpreadTheWordTab({ content }: { content: any }) {
                 </CardContent>
                 <CardFooter className="justify-center">
                   <Button asChild size="lg" variant="outline">
-                    <Link href={href}>{item.buttonLabel || "Learn More"}</Link>
+                    <Link
+                      href={href}
+                      target={isExternal ? "_blank" : undefined}
+                      rel={isExternal ? "noopener noreferrer" : undefined}
+                    >
+                      {item.buttonLabel || "Learn More"}
+                    </Link>
                   </Button>
                 </CardFooter>
               </Card>
@@ -878,8 +877,9 @@ function FindASpecialistForm() {
       href="https://fs3.formsite.com/denoandrews/c5e1grlrgc/index"
       target="_blank"
       rel="noopener noreferrer"
+      className={`${navigationMenuTriggerStyle()} flex flex-row items-center text-blue-900 transition-colors underline`}
     >
-      Fill Out Our Refer a Specialist Form
+      Fill Out Our Find A Specialist Form
     </a>
   );
 }
@@ -963,8 +963,9 @@ function ReferASpecialistForm() {
       href="https://fs3.formsite.com/denoandrews/specialist/index"
       target="_blank"
       rel="noopener noreferrer"
+      className={`${navigationMenuTriggerStyle()} flex flex-row items-center text-blue-900 transition-colors underline`}
     >
-      Fill Out Our Refer a Specialist Form
+      Fill Out Our Refer A Specialist Form
     </a>
   );
 }
@@ -998,7 +999,7 @@ function SocialMediaAccordions({ content }: { content: any }) {
                     href={item.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-primary underline"
+                    className={`${navigationMenuTriggerStyle()} flex flex-row items-center text-blue-900 transition-colors underline`}
                   >
                     {item.label}
                   </a>
@@ -1021,7 +1022,7 @@ function SocialMediaAccordions({ content }: { content: any }) {
                     href={item.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-primary underline"
+                    className={`${navigationMenuTriggerStyle()} flex flex-row items-center text-blue-900 transition-colors underline`}
                   >
                     {item.label}
                   </a>
@@ -1058,7 +1059,7 @@ function SocialMediaSection({ content }: { content: any }) {
                   href={item.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-primary underline"
+                  className={`${navigationMenuTriggerStyle()} flex flex-row items-center text-blue-900 transition-colors underline`}
                 >
                   {item.label}
                 </a>
@@ -1079,7 +1080,7 @@ function SocialMediaSection({ content }: { content: any }) {
                   href={item.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-primary underline"
+                  className={`${navigationMenuTriggerStyle()} flex flex-row items-center text-blue-900 transition-colors underline`}
                 >
                   {item.label}
                 </a>
@@ -1131,7 +1132,7 @@ function ResourcesRichText({ content }: { content: unknown }) {
                   key={index}
                   href={node.url}
                   target={node.target || "_self"}
-                  className="text-primary underline"
+                  className={`${navigationMenuTriggerStyle()} flex flex-row items-center text-blue-900 transition-colors underline`}
                 >
                   {renderRichChildren(node.children)}
                 </a>
@@ -1163,7 +1164,7 @@ function renderRichChildren(children: any[]): React.ReactNode {
           key={index}
           href={child.url}
           target={child.target || "_self"}
-          className="text-primary underline"
+          className={`${navigationMenuTriggerStyle()} flex flex-row items-center text-blue-900 transition-colors underline`}
         >
           {renderRichChildren(child.children)}
         </a>

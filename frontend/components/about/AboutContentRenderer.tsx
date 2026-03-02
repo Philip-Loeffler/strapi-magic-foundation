@@ -357,14 +357,14 @@ function TeamStructureTabRenderer({ content }: { content: any }) {
               MAGIC'S BOARD
             </h2>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 w-full">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 w-full">
             {content.boardMembers.map((member: any, index: number) => {
               const imageUrl = member.image
                 ? getImageUrl(member.image)
                 : PLACEHOLDER_AVATAR;
               return (
                 <div key={index} className="text-left w-full min-w-0">
-                  <div className="w-[264px] h-[200px] mb-4 overflow-hidden bg-gray-200 rounded">
+                  <div className="w-full aspect-[264/200] mb-4 overflow-hidden bg-gray-200 rounded">
                     <img
                       src={imageUrl}
                       alt={member.name}
@@ -426,7 +426,7 @@ function TeamStructureTabRenderer({ content }: { content: any }) {
                 : PLACEHOLDER_AVATAR;
               return (
                 <div key={index} className="text-left w-full min-w-0">
-                  <div className="w-[264px] h-[200px] mb-4 overflow-hidden bg-gray-200 rounded">
+                  <div className="w-full aspect-[264/200] mb-4 overflow-hidden bg-gray-200 rounded">
                     <img
                       src={imageUrl}
                       alt={member.name}
@@ -461,7 +461,7 @@ function TeamStructureTabRenderer({ content }: { content: any }) {
                     : PLACEHOLDER_AVATAR;
                   return (
                     <div key={index} className="text-left w-full min-w-0">
-                      <div className="w-[264px] h-[200px] mb-4 overflow-hidden bg-gray-200 rounded">
+                      <div className="w-full aspect-[264/200] mb-4 overflow-hidden bg-gray-200 rounded">
                         <img
                           src={imageUrl}
                           alt={advisor.name}
