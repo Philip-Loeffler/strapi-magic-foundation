@@ -1064,7 +1064,10 @@ export interface ResourcesGetSupportTab extends Struct.ComponentSchema {
     displayName: 'Get Support Tab';
   };
   attributes: {
-    collegeScholarshipsContent: Schema.Attribute.RichText;
+    collegeScholarshipsParagraph1: Schema.Attribute.RichText;
+    collegeScholarshipsParagraph2: Schema.Attribute.RichText;
+    collegeScholarshipsParagraph3: Schema.Attribute.RichText;
+    collegeScholarshipsParagraph4: Schema.Attribute.RichText;
     collegeScholarshipsTitle: Schema.Attribute.String &
       Schema.Attribute.DefaultTo<'College Scholarships'>;
     findASpecialistContent: Schema.Attribute.RichText;

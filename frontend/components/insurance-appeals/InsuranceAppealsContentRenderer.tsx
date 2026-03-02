@@ -9,6 +9,7 @@ import {
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { JSX } from "react";
+import { navigationMenuTriggerStyle } from "../ui/navigation-menu";
 
 interface InsuranceAppealsContentRendererProps {
   content: any;
@@ -232,7 +233,7 @@ function AppealProcessTab({ content }: { content: any }) {
                       href={item.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-primary underline"
+                      className={`${navigationMenuTriggerStyle()} flex flex-row items-center text-blue-900 transition-colors underline cursor-pointer`}
                     >
                       {item.text}
                     </Link>
@@ -265,7 +266,7 @@ function AppealProcessTab({ content }: { content: any }) {
                     <h3 className="font-semibold">{item.title}</h3>
                   )}
                   {item.buttonUrl && (
-                    <Button asChild className="bg-primary">
+                    <Button asChild className="">
                       <Link
                         href={item.buttonUrl}
                         target="_blank"

@@ -13,6 +13,10 @@ import { LandingRichText } from "@/components/landing/LandingRichText";
 
 function getImageUrl(image: any): string {
   if (!image) return "";
+  if (Array.isArray(image)) {
+    const first = image[0];
+    return first ? getImageUrl(first) : "";
+  }
   if (typeof image === "string") return image;
   const baseUrl = process.env.NEXT_PUBLIC_STRAPI_URL;
   if (image.url)
@@ -143,7 +147,7 @@ export default async function Page() {
                   </p>
                 </CardContent>
                 <CardFooter className="justify-center">
-                  <Button asChild size="lg" variant="outline">
+                  <Button asChild>
                     <Link href={href}>{card.buttonLabel || "Learn More"}</Link>
                   </Button>
                 </CardFooter>
@@ -171,7 +175,7 @@ export default async function Page() {
                 </p>
               </CardContent>
               <CardFooter className="justify-center">
-                <Button asChild size="lg" variant="outline">
+                <Button asChild>
                   <Link href="/disorders">Learn More</Link>
                 </Button>
               </CardFooter>
@@ -195,7 +199,7 @@ export default async function Page() {
                 </p>
               </CardContent>
               <CardFooter className="justify-center">
-                <Button asChild size="lg" variant="outline">
+                <Button asChild>
                   <Link href="/growth-charts">Learn More</Link>
                 </Button>
               </CardFooter>
@@ -219,7 +223,7 @@ export default async function Page() {
                 </p>
               </CardContent>
               <CardFooter className="justify-center">
-                <Button asChild size="lg" variant="outline">
+                <Button asChild>
                   <Link href="/disorders/growth-hormone-deficiency-adults">
                     Learn More
                   </Link>

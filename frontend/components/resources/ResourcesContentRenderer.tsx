@@ -583,7 +583,10 @@ function CollegeScholarshipForm() {
 function GetSupportTab({ content }: { content: any }) {
   const hasCollege =
     content?.collegeScholarshipsTitle ||
-    content?.collegeScholarshipsContent ||
+    content?.collegeScholarshipsParagraph1 ||
+    content?.collegeScholarshipsParagraph2 ||
+    content?.collegeScholarshipsParagraph3 ||
+    content?.collegeScholarshipsParagraph4 ||
     true; // always show College Scholarships section (form + optional CMS content)
   const hasFind =
     content?.findASpecialistTitle || content?.findASpecialistContent || true; // always show Find a Specialist section (form + optional CMS content)
@@ -605,11 +608,16 @@ function GetSupportTab({ content }: { content: any }) {
           </div>
           <div className="p-4 bg-card">
             <div className="prose prose-sm max-w-none space-y-4">
-              {content.collegeScholarshipsContent ? (
-                <ResourcesRichText
-                  content={content.collegeScholarshipsContent}
-                />
-              ) : null}
+              {[
+                content.collegeScholarshipsParagraph1,
+                content.collegeScholarshipsParagraph2,
+                content.collegeScholarshipsParagraph3,
+                content.collegeScholarshipsParagraph4,
+              ]
+                .filter(Boolean)
+                .map((paragraph: unknown, index: number) => (
+                  <ResourcesRichText key={index} content={paragraph} />
+                ))}
               <CollegeScholarshipForm />
             </div>
           </div>
@@ -718,7 +726,7 @@ function SpreadTheWordTab({ content }: { content: any }) {
                   </p>
                 </CardContent>
                 <CardFooter className="justify-center">
-                  <Button asChild size="lg" variant="outline">
+                  <Button asChild>
                     <Link
                       href={href}
                       target={isExternal ? "_blank" : undefined}

@@ -11,7 +11,19 @@
       "required": false,
       "default": "College Scholarships"
     },
-    "collegeScholarshipsContent": {
+    "collegeScholarshipsParagraph1": {
+      "type": "richtext",
+      "required": false
+    },
+    "collegeScholarshipsParagraph2": {
+      "type": "richtext",
+      "required": false
+    },
+    "collegeScholarshipsParagraph3": {
+      "type": "richtext",
+      "required": false
+    },
+    "collegeScholarshipsParagraph4": {
       "type": "richtext",
       "required": false
     },

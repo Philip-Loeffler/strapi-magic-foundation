@@ -12,6 +12,7 @@ import {
   MorphingDialogContainer,
 } from "@/components/motion-primitives/morphing-dialog";
 import { JSX } from "react";
+import { Button } from "@/components/ui/button";
 
 interface AboutContentRendererProps {
   content: any;
@@ -646,12 +647,11 @@ function ContactTabRenderer({ content }: { content: any }) {
               placeholder="Your message here..."
             />
           </div>
-          <button
-            type="submit"
-            className="px-6 py-2 bg-blue-900 text-white rounded-md "
-          >
+
+          <Button type="submit" className="bg-primary">
+            {" "}
             SEND MESSAGE
-          </button>
+          </Button>
         </form>
       </div>
     </div>
