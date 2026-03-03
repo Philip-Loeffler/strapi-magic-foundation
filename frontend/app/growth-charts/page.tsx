@@ -1,6 +1,12 @@
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { navigationMenuTriggerStyle } from "@/components/ui/navigation-menu";
+import ConversionCalculator from "@/components/growth-chart/ConversionCalculator";
 import Link from "next/link";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { PageContainer } from "@/components/layout/PageContainer";
@@ -71,7 +77,8 @@ export default async function GrowthChartsPage() {
     sgaTab: any;
   };
 
-  const growthChartsData = (await getGrowthChartsData()) as GrowthChartsData | null;
+  const growthChartsData =
+    (await getGrowthChartsData()) as GrowthChartsData | null;
 
   return (
     <PageContainer>
@@ -124,9 +131,7 @@ function GeneralTabRenderer({ tab }: { tab: any }) {
       {tab.measuringSection && (
         <section className="space-y-4">
           {tab.measuringSection.title && (
-            <h2 className="text-2xl font-bold">
-              {tab.measuringSection.title}
-            </h2>
+            <h2 className="text-2xl font-bold">{tab.measuringSection.title}</h2>
           )}
           {tab.measuringSection.subtitle && (
             <div className="prose max-w-none">
@@ -184,7 +189,7 @@ function GeneralTabRenderer({ tab }: { tab: any }) {
                   {tab.understandingItems.map((item: any, index: number) => (
                     <div key={index} className="space-y-1">
                       {item.title && (
-                        <h3 className="text-lg font-semibold">{item.title}</h3>
+                        <h3 className="text-md font-semibold">{item.title}</h3>
                       )}
                       {item.description && (
                         <div className="prose max-w-none">
@@ -202,20 +207,20 @@ function GeneralTabRenderer({ tab }: { tab: any }) {
           <AccordionTrigger className="text-left">
             {tab.exampleTitle || "Growth Chart Example"}
           </AccordionTrigger>
-          <AccordionContent className="space-y-6">
-            {tab.exampleDescription && (
-              <div className="prose max-w-none">
-                <RichTextRenderer content={tab.exampleDescription} />
-              </div>
-            )}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
-              {tab.exampleChildTitle && (
-                <div>
+          <AccordionContent>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+              <div className="space-y-4">
+                {tab.exampleDescription && (
+                  <div className="prose max-w-none">
+                    <RichTextRenderer content={tab.exampleDescription} />
+                  </div>
+                )}
+                {tab.exampleChildTitle && (
                   <h3 className="text-lg font-semibold">
                     {tab.exampleChildTitle}
                   </h3>
-                </div>
-              )}
+                )}
+              </div>
               {tab.exampleImage && (
                 <div className="border rounded-lg p-4 bg-gray-50 flex items-center justify-center">
                   <img
@@ -345,7 +350,7 @@ function GeneralTabRenderer({ tab }: { tab: any }) {
                         href={item.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className={`${navigationMenuTriggerStyle()} flex flex-row items-center text-blue-900 transition-colors underline`}
+                        className="text-blue-900 underline"
                       >
                         {item.label}
                       </Link>
@@ -376,8 +381,7 @@ function RssTabRenderer({ tab }: { tab: any }) {
   const rssGrowthChartsTitle =
     tab.rssGrowthChartsTitle || "Russell-Silver Syndrome Growth Charts";
 
-  const rssSgaCurvesTitle =
-    tab.rssSgaCurvesTitle || "RSS/SGA Growth Curves";
+  const rssSgaCurvesTitle = tab.rssSgaCurvesTitle || "RSS/SGA Growth Curves";
 
   const rssSgaChartsTitle = tab.rssSgaChartsTitle || "Charts";
 
@@ -395,76 +399,6 @@ function RssTabRenderer({ tab }: { tab: any }) {
           tab.rssGrowthCharts.length > 0 && (
             <ul className="list-disc pl-6 space-y-2">
               {tab.rssGrowthCharts.map((item: any, index: number) => {
-                const fileUrl = item.file ? getImageUrl(item.file) : "";
-                const href = fileUrl || item.url || "";
-                const isClickable = !!href;
-                return (
-                <li key={index}>
-                  {isClickable ? (
-                    <Link
-                      href={href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={`${navigationMenuTriggerStyle()} flex flex-row items-center text-blue-900 transition-colors underline`}
-                    >
-                      {item.title}
-                    </Link>
-                  ) : (
-                    <span className="text-blue-900 underline">
-                      {item.title}
-                    </span>
-                  )}
-                </li>
-              );
-              })}
-            </ul>
-          )}
-      </section>
-
-      {/* RSS/SGA Growth Curves */}
-      <section className="space-y-4">
-        <h2 className="text-2xl font-bold">{rssSgaCurvesTitle}</h2>
-        {tab.rssSgaCurvesDescription && (
-          <div className="prose max-w-none">
-            <RichTextRenderer content={tab.rssSgaCurvesDescription} />
-          </div>
-        )}
-        {Array.isArray(tab.rssSgaSpreadsheets) &&
-          tab.rssSgaSpreadsheets.length > 0 && (
-            <ul className="list-disc pl-6 space-y-2">
-              {tab.rssSgaSpreadsheets.map((item: any, index: number) => {
-                const fileUrl = item.file ? getImageUrl(item.file) : "";
-                const href = fileUrl || item.url || "";
-                const isClickable = !!href;
-                return (
-                <li key={index}>
-                  {isClickable ? (
-                    <Link
-                      href={href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={`${navigationMenuTriggerStyle()} flex flex-row items-center text-blue-900 transition-colors underline`}
-                    >
-                      {item.title}
-                    </Link>
-                  ) : (
-                    <span className="text-blue-900 underline">
-                      {item.title}
-                    </span>
-                  )}
-                </li>
-              );
-              })}
-            </ul>
-          )}
-      </section>
-
-      {/* Charts under RSS/SGA */}
-      {Array.isArray(tab.rssSgaCharts) && tab.rssSgaCharts.length > 0 && (
-        <section className="space-y-4">
-          <h2 className="text-2xl font-bold">{rssSgaChartsTitle}</h2>
-          <ul className="list-disc pl-6 space-y-2">
-              {tab.rssSgaCharts.map((item: any, index: number) => {
                 const fileUrl = item.file ? getImageUrl(item.file) : "";
                 const href = fileUrl || item.url || "";
                 const isClickable = !!href;
@@ -487,6 +421,76 @@ function RssTabRenderer({ tab }: { tab: any }) {
                   </li>
                 );
               })}
+            </ul>
+          )}
+      </section>
+
+      {/* RSS/SGA Growth Curves */}
+      <section className="space-y-4">
+        <h2 className="text-2xl font-bold">{rssSgaCurvesTitle}</h2>
+        {tab.rssSgaCurvesDescription && (
+          <div className="prose max-w-none">
+            <RichTextRenderer content={tab.rssSgaCurvesDescription} />
+          </div>
+        )}
+        {Array.isArray(tab.rssSgaSpreadsheets) &&
+          tab.rssSgaSpreadsheets.length > 0 && (
+            <ul className="list-disc pl-6 space-y-2">
+              {tab.rssSgaSpreadsheets.map((item: any, index: number) => {
+                const fileUrl = item.file ? getImageUrl(item.file) : "";
+                const href = fileUrl || item.url || "";
+                const isClickable = !!href;
+                return (
+                  <li key={index}>
+                    {isClickable ? (
+                      <Link
+                        href={href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`${navigationMenuTriggerStyle()} flex flex-row items-center text-blue-900 transition-colors underline`}
+                      >
+                        {item.title}
+                      </Link>
+                    ) : (
+                      <span className="text-blue-900 underline">
+                        {item.title}
+                      </span>
+                    )}
+                  </li>
+                );
+              })}
+            </ul>
+          )}
+      </section>
+
+      {/* Charts under RSS/SGA */}
+      {Array.isArray(tab.rssSgaCharts) && tab.rssSgaCharts.length > 0 && (
+        <section className="space-y-4">
+          <h2 className="text-2xl font-bold">{rssSgaChartsTitle}</h2>
+          <ul className="list-disc pl-6 space-y-2">
+            {tab.rssSgaCharts.map((item: any, index: number) => {
+              const fileUrl = item.file ? getImageUrl(item.file) : "";
+              const href = fileUrl || item.url || "";
+              const isClickable = !!href;
+              return (
+                <li key={index}>
+                  {isClickable ? (
+                    <Link
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`${navigationMenuTriggerStyle()} flex flex-row items-center text-blue-900 transition-colors underline`}
+                    >
+                      {item.title}
+                    </Link>
+                  ) : (
+                    <span className="text-blue-900 underline">
+                      {item.title}
+                    </span>
+                  )}
+                </li>
+              );
+            })}
           </ul>
         </section>
       )}
@@ -517,13 +521,15 @@ function RssTabRenderer({ tab }: { tab: any }) {
                             )}
                             {subBullets.length > 0 && (
                               <ul className="list-disc pl-6 space-y-1 mt-1">
-                                {subBullets.map((sub: any, subIndex: number) => (
-                                  <li key={subIndex}>
-                                    {sub.text != null && (
-                                      <RichTextRenderer content={sub.text} />
-                                    )}
-                                  </li>
-                                ))}
+                                {subBullets.map(
+                                  (sub: any, subIndex: number) => (
+                                    <li key={subIndex}>
+                                      {sub.text != null && (
+                                        <RichTextRenderer content={sub.text} />
+                                      )}
+                                    </li>
+                                  ),
+                                )}
                               </ul>
                             )}
                           </li>
@@ -541,6 +547,8 @@ function RssTabRenderer({ tab }: { tab: any }) {
           </section>
         );
       })()}
+
+      {/* Conversion calculator (under "How to add your child's information") */}
     </div>
   );
 }
@@ -596,10 +604,7 @@ function RichTextRenderer({ content }: { content: any }) {
             case "list":
               const ListTag = node.format === "unordered" ? "ul" : "ol";
               return (
-                <ListTag
-                  key={index}
-                  className="list-disc pl-6 mb-4 space-y-2"
-                >
+                <ListTag key={index} className="list-disc pl-6 mb-4 space-y-2">
                   {node.children?.map((item: any, itemIndex: number) => (
                     <li key={itemIndex}>{renderChildren(item.children)}</li>
                   ))}
@@ -664,4 +669,3 @@ function renderChildren(children: any[]): React.ReactNode {
     return renderChildren(child.children);
   });
 }
-

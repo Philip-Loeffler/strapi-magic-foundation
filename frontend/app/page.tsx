@@ -129,10 +129,9 @@ export default async function Page() {
               >
                 {imgUrl && (
                   <div className="relative w-full aspect-[360/265] bg-muted">
-                    <Image
+                    <img
                       src={imgUrl}
                       alt={card.title || ""}
-                      fill
                       className="object-cover"
                       sizes="360px"
                     />

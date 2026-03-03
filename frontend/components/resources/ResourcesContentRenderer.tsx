@@ -691,8 +691,9 @@ function SpreadTheWordTab({ content }: { content: any }) {
         </div>
       )}
       {hasItems && (
-        <div className="flex flex-wrap justify-center gap-8 sm:gap-12 w-full">
+        <div className="flex flex-wrap justify-center gap-8 sm:gap-12 pt-16 pb-8 px-4">
           {items.map((item: any, index: number) => {
+            console.log(items, "items in spread the word tab");
             const imageUrl = item.image ? getImageUrl(item.image) : null;
             const pdfFile = item.buttonFile || item.file;
             const pdfHref = pdfFile ? getImageUrl(pdfFile) : null;
@@ -708,12 +709,11 @@ function SpreadTheWordTab({ content }: { content: any }) {
               >
                 {imageUrl && (
                   <div className="relative w-full aspect-[360/265] bg-muted">
-                    <Image
+                    <img
                       src={imageUrl}
                       alt={item.title || ""}
-                      width={360}
-                      height={265}
-                      className="w-full h-auto object-cover"
+                      className="object-cover"
+                      sizes="360px"
                     />
                   </div>
                 )}
